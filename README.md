@@ -44,3 +44,7 @@ Happy Tails is a project focused on creating a pet adoption platform. The websit
 ## Stretch
 1. Recommender algorithm to show users pets 
 2. Automate the sending of “My Profile” to adoption clinics to allow users to adopt pets without ever leaving the site
+## Sketches
+![home_page](https://github.com/huyuexue/CPSC455_2023S_HappyTails/assets/70684186/d28e179d-a589-416b-a554-9b54f90324e3)
+![result_page](https://github.com/huyuexue/CPSC455_2023S_HappyTails/assets/70684186/79336bfb-ef78-448e-bf9e-ffc9e0352bc7)
+![upload_page](https://github.com/huyuexue/CPSC455_2023S_HappyTails/assets/70684186/76ac123e-5bb0-46fe-b0df-67d95f596baf)
