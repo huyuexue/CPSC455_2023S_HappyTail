@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navBar{
+  position: relative;
+  overflow: hidden;
+  background-color: #1e81b0;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navLinks{
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  list-style: none;
+}
+.navLinks li a{
   color: white;
+  padding: 5vw;
+  font-size: 2vw;
+  max-font-size: 20px;
+  text-decoration: none;
+}
+.navLinks li a:hover{
+  color: black;
+}
+#home{
+  font-size: max(20px,3vw);
 }
 
-.App-link {
-  color: #61dafb;
+.about{
+  padding: 20px;
+  text-align: center;
+  background-color: #abdbe3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.about h1{
+  display:block;
+  padding: 15px 30px;
+}
+#picture{
+  width: 50%;
+}
+
+.form{
+  background-color: #abdbe3;
+  padding: 15px 30px;
+}
+
+textarea {
+  width: 75%;
+  max-width: 500px;
+  min-height: 100px;
+  resize: vertical;
+}
+#imageLink{
+  width: 75%;
+  max-width: 600px;
+  min-width: 400px;
+}
+.button {
+  width: 100px;
+  height: 30px;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+#addButton{
+  background-color: #1e81b0;
+}
+#addButton:hover {
+  background-color: #154c79;
+}
+#inventoryList{
+  background-color: #fbe6b8;
+  padding: 10px 30px;
+}
+#itemList{
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.item{
+  box-shadow: 0 4px 8px 0 #abdbe3;
+  width: 40%;
+  min-width: 100px;
+  max-width: 300px;
+  height: auto;
+  float: left;
+  margin: 15px;
+  padding: 10px;
+}
+.item:hover {
+  box-shadow: 0 8px 16px 0 #76b5c5;
+}
+.item img{
+  max-width: 100%;
+  height: auto;
+}
+#deleteAll{
+  color : red;
+}
+.deleteButton{
+  float: right;
+}
+
+.quantity{
+  font-style:italic;
+}
+
+#warning{
+  font-style: italic;
+  color: red;
+}
+
+.detail{
+  margin-left: 20px;
+
 }
