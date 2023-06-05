@@ -77,7 +77,7 @@ textarea {
   flex-direction: row;
   flex-wrap: wrap;
 }
-.item{
+.pet{
   box-shadow: 0 4px 8px 0 #abdbe3;
   width: 40%;
   min-width: 100px;
@@ -87,12 +87,23 @@ textarea {
   margin: 15px;
   padding: 10px;
 }
-.item:hover {
+.pet:hover {
   box-shadow: 0 8px 16px 0 #76b5c5;
 }
-.item img{
-  max-width: 100%;
-  height: auto;
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+}
+
+.imageContainer img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 #deleteAll{
   color : red;
@@ -113,4 +124,31 @@ textarea {
 .detail{
   margin-left: 20px;
 
+}
+
+.popupWindow{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail {
+  background: white;
+  width: 80vw;
+  max-width: 420px;
+  padding: 2rem 1rem;
+}
+.detail img {
+  width: 100%;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-around;
 }
