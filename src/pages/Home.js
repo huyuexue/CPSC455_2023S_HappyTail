@@ -1,8 +1,8 @@
-import AddNewPet from "./addNewPet/AddNewPet";
-import PetsBrief from "./pets/PetsBrief";
-import PetDetail from "./petDetail/PetDetail";
+import AddNewPet from "../components/forms/AddNewPet";
+import PetsBrief from "../components/pets/PetsBrief";
+import PetDetail from "../components/petDetail/PetDetail";
 import {useSelector} from "react-redux";
-import {detailViewStatus} from "./petDetail/petDetailSlice";
+import {detailViewStatus} from "../components/petDetail/petDetailSlice";
 
 export default function Home({itemsList}){
     const detailViewIsOpen = useSelector(detailViewStatus)
