@@ -1,0 +1,27 @@
+
+  
+  .prev-btn,
+  .next-btn {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .prev-btn:hover,
+  .next-btn:hover {
+    background-color: #ddd;
+  }
+  
+  
+
+  
+  
+  
+  
+
+
+  
