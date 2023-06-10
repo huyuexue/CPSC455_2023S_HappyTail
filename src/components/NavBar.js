@@ -2,9 +2,14 @@ import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typ
 import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function NavBar() {
-    const pages = ['Home', 'About', 'Blog'];
+    const buttonRoutes = {
+        "Home": "/",
+        "About": "/about",
+        "Blog": "/blog"
+    }
     const [anchorElNav, setAnchorElNav] = useState(null);
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -73,10 +78,12 @@ export default function NavBar() {
                             display: {xs: 'block', md: 'none'},
                         }}
                     >
-                        {pages.map((page) => (
-                            <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center">{page}</Typography>
-                            </MenuItem>
+                        {Object.entries(buttonRoutes).map(([name, route]) => (
+                            <Link to={route} style= { { textDecoration: 'none' }}>
+                                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">{name}</Typography>
+                                </MenuItem>
+                            </Link>
                         ))}
                     </Menu>
                 </Box>
@@ -98,14 +105,16 @@ export default function NavBar() {
                     Happy Tails
                 </Typography>
                 <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                    {pages.map((page) => (
-                        <Button
-                            key={page}
-                            // onClick={handleCloseNavMenu}
-                            sx={{my: 2, color: 'white', display: 'block'}}
-                        >
-                            {page}
-                        </Button>
+                    {Object.entries(buttonRoutes).map(([name, route]) => (
+                        <Link to={route} style= { { textDecoration: 'none' }}>
+                            <Button
+                                key={name}
+                                onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block'}}
+                            >
+                                {name}
+                            </Button>
+                        </Link>
                     ))}
                 </Box>
             </Toolbar>
