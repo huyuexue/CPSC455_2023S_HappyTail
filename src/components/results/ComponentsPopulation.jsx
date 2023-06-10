@@ -1,6 +1,7 @@
-import { PetPropertySelections, SortingSelections } from "./Selections";
+import { PetPropertySelections } from "./FilterSelection";
 import * as React from "react";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 export function SelectPetProperties() {
     const [age, setSorting] = React.useState("");
@@ -14,7 +15,7 @@ export function SelectPetProperties() {
         setBreed(event.target.value);
     };
 
-    const sortings = [
+    const ageItems = [
         { label: "Puppy", value: "puppy" },
         { label: "Young", value: "young" },
         { label: "Adult", value: "adult" },
@@ -32,7 +33,7 @@ export function SelectPetProperties() {
         <PetPropertySelections
             label="Age"
             value={age}
-            items={sortings}
+            items={ageItems}
             onChange={handleSortingChange}
         />
         <PetPropertySelections
@@ -41,11 +42,12 @@ export function SelectPetProperties() {
             items={breedItems}
             onChange={handleBreedChange}
         />
+        <Button variant="contained">Apply</Button>
         </Box>
     );
-    }
+}
 
-    export function SelectSortings() {
+export function SelectSortings() {
     const [sorting, setSorting] = React.useState("");
 
     const handleSortingChange = (event) => {
@@ -62,7 +64,7 @@ export function SelectPetProperties() {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <SortingSelections
+        <PetPropertySelections
             label="Sort By"
             value={sorting}
             items={sortings}
