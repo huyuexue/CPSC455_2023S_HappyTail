@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Layout from "./components/Layout";
 import BrowsePage from "./pages/Browse";
+import ResultPage from "./pages/Result";
+
 import {StyledEngineProvider} from "@mui/material";
 
 
@@ -15,6 +17,7 @@ function App() {
                     <Route index element={<Home/>}/>
                     <Route path="about" element={<About/>}/>
                     <Route path="browse" element={<BrowsePage/>}/>
+                    <Route path="result" element={<ResultPage/>}/>
                 </Route>
             </Routes>
         </StyledEngineProvider>

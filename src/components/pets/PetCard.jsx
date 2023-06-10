@@ -6,10 +6,10 @@ export default function PetCard(props) {
 
     return (
         <div className="pet" key={props.pet.id}
-             onClick={() => {
-                 dispatch(selectPet(props.pet));
-                 dispatch(openDetailView());
-             }}>
+            onClick={() => {
+                dispatch(selectPet(props.pet));
+                dispatch(openDetailView());
+            }}>
             <div className="imageContainer">
                 <img src={props.pet.pictureUrl} alt="Not available"/>
             </div>
