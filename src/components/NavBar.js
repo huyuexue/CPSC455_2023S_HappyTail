@@ -8,7 +8,7 @@ export default function NavBar() {
     const buttonRoutes = {
         "Home": "/",
         "About": "/about",
-        "Blog": "/blog",
+        // "Blog": "/blog",
         "Browse": "/browse"
     }
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -31,7 +31,9 @@ export default function NavBar() {
         //     </ul>
         // </div>
         // based on https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
-        <AppBar position="static">
+        <AppBar position="static" style={{
+            height: "10vh"
+        }}>
             <Toolbar>
                 <PetsIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
                 <Typography

@@ -7,6 +7,7 @@ import BrowsePage from "./pages/Browse";
 
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
+import AccountDetailsPage from "./pages/AccountDetails";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                         <Route index element={<Home/>}/>
                         <Route path="about" element={<About/>}/>
                         <Route path="browse" element={<BrowsePage/>}/>
+                        <Route path="account/details" element={<AccountDetailsPage/>}/>
                     </Route>
                 </Routes>
             </ThemeProvider>
