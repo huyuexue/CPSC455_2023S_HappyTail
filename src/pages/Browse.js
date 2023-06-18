@@ -15,8 +15,6 @@ export default function BrowsePage() {
                     }}>
                         <h2>Pet Filters</h2>
                         <SelectPetProperties></SelectPetProperties>
-                        <h2>Sorting</h2>
-                        <SelectSortings></SelectSortings>
                     </Paper>
 
                 </Grid>

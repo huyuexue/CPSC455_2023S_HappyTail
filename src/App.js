@@ -5,19 +5,23 @@ import About from "./pages/About";
 import Layout from "./components/Layout";
 import BrowsePage from "./pages/Browse";
 
-import {StyledEngineProvider} from "@mui/material";
+import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
+import {GlobalTheme} from "./style/theme";
 
 
 function App() {
     return (
         <StyledEngineProvider injectFirst>
-            <Routes>
-                <Route path="/" element={<Layout/>}>
-                    <Route index element={<Home/>}/>
-                    <Route path="about" element={<About/>}/>
-                    <Route path="browse" element={<BrowsePage/>}/>
-                </Route>
-            </Routes>
+            <ThemeProvider theme={GlobalTheme}>
+                <CssBaseline />
+                <Routes>
+                    <Route path="/" element={<Layout/>}>
+                        <Route index element={<Home/>}/>
+                        <Route path="about" element={<About/>}/>
+                        <Route path="browse" element={<BrowsePage/>}/>
+                    </Route>
+                </Routes>
+            </ThemeProvider>
         </StyledEngineProvider>
     );
 }

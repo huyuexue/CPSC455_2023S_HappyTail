@@ -46,30 +46,3 @@ export function SelectPetProperties() {
         </Box>
     );
 }
-
-export function SelectSortings() {
-    const [sorting, setSorting] = React.useState("");
-
-    const handleSortingChange = (event) => {
-        setSorting(event.target.value);
-    };
-
-    const sortings = [
-        { label: "Best match", value: "BestMatch" },
-        { label: "Newest addition", value: "NewestAddition" },
-        { label: "Oldest addition", value: "OldestAddition" },
-        { label: "Most urgent", value: "MostUrgent" },
-        { label: "Nearest", value: "Nearest" },
-    ];
-
-    return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <PetPropertySelections
-            label="Sort By"
-            value={sorting}
-            items={sortings}
-            onChange={handleSortingChange}
-        />
-        </Box>
-    );
-}
