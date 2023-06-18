@@ -6,7 +6,7 @@ import PetResults from "../components/results/PetResults";
 export default function BrowsePage() {
     return (
         <div>
-            <Grid container spacing={2}>
+            <Grid container spacing={0}>
                 <Grid item xs={4}>
                     <Paper elevation={8} sx={{
                         borderRadius: 0,
@@ -21,7 +21,6 @@ export default function BrowsePage() {
 
                 </Grid>
                 <Grid item xs={8}>
-                    <h2>Results</h2>
                     <PetResults></PetResults>
                 </Grid>
             </Grid>
