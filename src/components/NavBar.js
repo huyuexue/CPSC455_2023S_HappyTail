@@ -31,9 +31,7 @@ export default function NavBar() {
         //     </ul>
         // </div>
         // based on https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
-        <AppBar position="static" style={{
-            height: "10vh"
-        }}>
+        <AppBar position="static">
             <Toolbar>
                 <PetsIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
                 <Typography

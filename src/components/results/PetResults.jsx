@@ -4,6 +4,7 @@ import PetCard from "../pets/PetCard";
 import {Grid, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
 import {useState} from "react";
 import PetsIcon from "@mui/icons-material/Pets";
+import {LocationOn, PriorityHigh, Restore, Schedule, Sort, Update} from "@mui/icons-material";
 
 export default function PetResults() {
     const dispatch = useDispatch();
@@ -11,10 +12,10 @@ export default function PetResults() {
 
     const sortings = [
         {label: "Recommended", value: "Recommended", icon: <PetsIcon/>},
-        {label: "Newest", value: "Newest", icon: <PetsIcon/>},
-        {label: "Oldest", value: "Oldest", icon: <PetsIcon/>},
-        {label: "Urgent", value: "Urgent", icon: <PetsIcon/>},
-        {label: "Nearest", value: "Nearest", icon: <PetsIcon/>},
+        {label: "Newest", value: "Newest", icon: <Update/>},
+        {label: "Oldest", value: "Oldest", icon: <Restore/>},
+        {label: "Urgent", value: "Urgent", icon: <PriorityHigh/>},
+        {label: "Nearest", value: "Nearest", icon: <LocationOn/>},
     ];
 
     const [open, setOpen] = useState(false);
@@ -24,9 +25,9 @@ export default function PetResults() {
     return (<>
             {/*https://mui.com/material-ui/react-menu/#menulist-composition*/}
             <SpeedDial
-                ariaLabel="SpeedDial tooltip example"
+                ariaLabel="Sorting Options"
                 sx={{position: 'absolute', bottom: 16, right: 16}}
-                icon={<SpeedDialIcon/>}
+                icon={<Sort/>}
                 onClose={handleClose}
                 onOpen={handleOpen}
                 open={open}

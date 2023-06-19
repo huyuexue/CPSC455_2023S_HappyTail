@@ -10,7 +10,7 @@ export default function BrowsePage() {
                 <Paper elevation={8} sx={{
                     borderRadius: 0,
                     padding: 2,
-                    height: "90vh",
+                    height: "100vh",
                 }}>
                     <SelectPetProperties></SelectPetProperties>
                 </Paper>
