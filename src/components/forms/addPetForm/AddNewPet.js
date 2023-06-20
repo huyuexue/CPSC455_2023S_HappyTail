@@ -1,9 +1,12 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {addPet} from "../pets/petsSlice";
+import {addPet} from "../../pets/petsSlice";
+import BasicSurvey from "./BasicSurvey";
+import AboutYou from "./AboutYou";
+import PetInfo from "./PetInfo";
 
 export default function AddNewPet(){
-    const [name, setName] = useState('')
+/*    const [name, setName] = useState('')
     const [species, setSpecies] = useState('')
     const [breed, setBreed] = useState('')
     const [gender, setGender] = useState('')
@@ -17,18 +20,7 @@ export default function AddNewPet(){
     const onBreedChanged = e => setBreed(e.target.value)
     const onGenderChanged = e => setGender(e.target.value)
     const onAgeChanged = e => setAge(e.target.value)
-    const onPictureChanged = (e) => {
-        const file = e.target.files[0];
-        console.log(file.type)
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const imageDataURL = event.target.result;
-                setPictureUrl(imageDataURL);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+
     const onDescriptionChanged = e => setDescription(e.target.value)
 
     const dispatch = useDispatch();
@@ -95,7 +87,123 @@ export default function AddNewPet(){
             </form>
         </div>
 
-    )
+    )*/
+    const[curPage, setCurPage] = useState(0);
+    const[formData, setFormData] = useState({
+        species:'',
+        extra: false,
+        otherSpecies: 'Please specify',
+        spayed: '',
+        reason:'',
+        length:'',
+        email:'',
+        firstName:'',
+        lastName:'',
+        phoneNumber:'',
+        postalCode:'',
+        city:'',
+        province:'',
+        petName:'',
+        photo: null,
+        characteristics:'',
+        facts:'',
+        petLocation: '',
+        petStory:'',
+        relatedDocs:'',
+    });
 
+    const nextPage = () => {
+        setCurPage(curPage + 1);
+    };
+
+    const previousPage = () => {
+        setCurPage(curPage - 1);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Perform form submission logic with formData
+        console.log(formData);
+    };
+
+    const setExtra = (e) =>{
+        setFormData((prevData) => ({
+            ...prevData,
+            ["extra"]: e,
+        }));
+        if(e === false) {
+            setFormData((prevData) => ({
+                ...prevData,
+                ["otherSpecies"]: 'Please specify',
+            }));
+        }
+    }
+    const onOtherSpeciesFocus = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            ["otherSpecies"]: '',
+        }));
+
+    };
+
+    const onPhotoChanged = (e) => {
+        const file = e.target.files[0];
+        console.log(file.type)
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const imageDataURL = event.target.result;
+                setFormData((prevData) => ({
+                    ...prevData,
+                    ["photo"]: imageDataURL,
+                }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const renderFormPage = () => {
+        switch (curPage) {
+            case 0:
+                return <BasicSurvey formData={formData} handleChange={handleChange} setExtra={setExtra} onOtherSpeciesFocus={onOtherSpeciesFocus}/>;
+           case 1:
+                return <AboutYou formData={formData} handleChange={handleChange} />;
+           case 2:
+                return <PetInfo formData={formData} handleChange={handleChange} onPhotoChanged={onPhotoChanged} />;
+/*             case 3:
+                return <Page4 formData={formData} />;*/
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            {renderFormPage()}
+            {curPage > 0 && (
+                <button type="button" onClick={previousPage}>
+                    Previous
+                </button>
+            )}
+            {curPage < 3 && (
+                <button type="button" onClick={nextPage}>
+                    Next
+                </button>
+            )}
+            {curPage === 3 && (
+                <button type="submit">
+                    Submit
+                </button>
+            )}
+        </form>
+    );
 
 }
