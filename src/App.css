@@ -80,7 +80,8 @@ textarea {
 .pet{
   box-shadow: 0 4px 8px 0 #abdbe3;
   width: 40%;
-  min-width: 100px;
+  min-width: 300px;
+  min-height: 300px;
   max-width: 300px;
   height: auto;
   float: left;
