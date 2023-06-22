@@ -1,6 +1,6 @@
 export default function Preview({formData, jumpToPage}){
     const species_d = formData.extra? formData.otherSpecies:(formData.species === "Please specify"? "" : formData.species);
-    const species = "a " + species_d;
+    const species = (species_d === "")?species_d : ("a " + species_d+".");
     const spayed = formData.spayed.charAt(0).toUpperCase() + formData.spayed.slice(1);
 
     const reader = new FileReader();
@@ -12,7 +12,7 @@ export default function Preview({formData, jumpToPage}){
                     Edit
                 </button>
                 <p>
-                    1. I need to rehome {species}.<br/>
+                    1. I need to rehome {species}<br/>
                     2. Is the pet spayed or neutered? {spayed}<br/>
                     3. Why does the pet need to find a new home? {formData.reason}<br/>
                     4. How long have you  own it? {formData.length}<br/>
