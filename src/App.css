@@ -153,3 +153,9 @@ textarea {
   display: flex;
   justify-content: space-around;
 }
+
+.vl {
+  border-left: 6px solid;
+  color: #1e81b0;
+  height: 200px;
+}
