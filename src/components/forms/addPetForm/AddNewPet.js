@@ -4,6 +4,7 @@ import {addPet} from "../../pets/petsSlice";
 import BasicSurvey from "./BasicSurvey";
 import AboutYou from "./AboutYou";
 import PetInfo from "./PetInfo";
+import Preview from "./Preview";
 
 export default function AddNewPet(){
 /*    const [name, setName] = useState('')
@@ -120,6 +121,14 @@ export default function AddNewPet(){
         setCurPage(curPage - 1);
     };
 
+    const jumpToPage = (page) => {
+        setCurPage(page);
+    };
+
+    const finalPage = () => {
+        setCurPage(3);
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -155,6 +164,7 @@ export default function AddNewPet(){
     };
 
     const onPhotoChanged = (e) => {
+
         const file = e.target.files[0];
         console.log(file.type)
         if (file) {
@@ -174,12 +184,12 @@ export default function AddNewPet(){
         switch (curPage) {
             case 0:
                 return <BasicSurvey formData={formData} handleChange={handleChange} setExtra={setExtra} onOtherSpeciesFocus={onOtherSpeciesFocus}/>;
-           case 1:
+            case 1:
                 return <AboutYou formData={formData} handleChange={handleChange} />;
-           case 2:
+            case 2:
                 return <PetInfo formData={formData} handleChange={handleChange} onPhotoChanged={onPhotoChanged} />;
-/*             case 3:
-                return <Page4 formData={formData} />;*/
+            case 3:
+                return <Preview formData={formData} jumpToPage={jumpToPage}/>;
             default:
                 return null;
         }
@@ -188,7 +198,7 @@ export default function AddNewPet(){
     return (
         <form onSubmit={handleSubmit}>
             {renderFormPage()}
-            {curPage > 0 && (
+            {curPage > 0 && curPage < 3 &&(
                 <button type="button" onClick={previousPage}>
                     Previous
                 </button>
@@ -196,6 +206,11 @@ export default function AddNewPet(){
             {curPage < 3 && (
                 <button type="button" onClick={nextPage}>
                     Next
+                </button>
+            )}
+            {curPage < 3 && (
+                <button type="button" onClick={finalPage}>
+                    Finish
                 </button>
             )}
             {curPage === 3 && (

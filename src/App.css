@@ -153,3 +153,16 @@ textarea {
   display: flex;
   justify-content: space-around;
 }
+
+.vl {
+  border-left: 6px solid;
+  color: #1e81b0;
+  height: 200px;
+}
+
+.previewPhoto{
+  width: 300px;
+  border: 1px solid #ccc;
+  background-size: cover;
+  background-position: center;
+}
