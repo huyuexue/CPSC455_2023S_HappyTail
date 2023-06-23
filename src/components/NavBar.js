@@ -8,8 +8,13 @@ export default function NavBar() {
     const buttonRoutes = {
         "Home": "/",
         "About": "/about",
-        // "Blog": "/blog",
+        "List a Pet": "/addNewPet",
+        "Blog": "/blog",
         "Browse": "/browse"
+    }
+
+    const rightButtonRoutes = {
+        "Login": "/login",
     }
     const [anchorElNav, setAnchorElNav] = useState(null);
     const handleOpenNavMenu = (event) => {
@@ -80,6 +85,13 @@ export default function NavBar() {
                         }}
                     >
                         {Object.entries(buttonRoutes).map(([name, route]) => (
+                            <Link to={route} style={{textDecoration: 'none'}}>
+                                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">{name}</Typography>
+                                </MenuItem>
+                            </Link>
+                        ))}
+                        {Object.entries(rightButtonRoutes).map(([name, route]) => (
                             <Link to={route} style= { { textDecoration: 'none' }}>
                                 <MenuItem key={name} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{name}</Typography>
@@ -107,7 +119,20 @@ export default function NavBar() {
                 </Typography>
                 <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                     {Object.entries(buttonRoutes).map(([name, route]) => (
-                        <Link to={route} style= { { textDecoration: 'none' }}>
+                        <Link to={route} style={{textDecoration: 'none'}}>
+                            <Button
+                                key={name}
+                                onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block'}}
+                            >
+                                {name}
+                            </Button>
+                        </Link>
+                    ))}
+                </Box>
+                <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}, justifyContent: 'flex-end'}}>
+                    {Object.entries(rightButtonRoutes).map(([name, route]) => (
+                        <Link to={route} style={{ textDecoration: 'none' }}>
                             <Button
                                 key={name}
                                 onClick={handleCloseNavMenu}
