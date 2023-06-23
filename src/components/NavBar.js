@@ -8,7 +8,7 @@ export default function NavBar() {
     const buttonRoutes = {
         "Home": "/",
         "About": "/about",
-        "Blog": "/blog",
+        // "Blog": "/blog",
         "Browse": "/browse"
     }
     const [anchorElNav, setAnchorElNav] = useState(null);

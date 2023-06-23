@@ -36,7 +36,6 @@ export const GlobalTheme = createTheme({
             styleOverrides: {
                 body: {
                     ...darkScrollbar(),
-                    color: "darkred",
                     backgroundColor: "#fcf8f5",
                     // backgroundColor: '#FEFA00',
                     "& h1": {

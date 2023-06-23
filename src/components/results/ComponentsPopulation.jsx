@@ -42,7 +42,7 @@ export function SelectPetProperties() {
             items={breedItems}
             onChange={handleBreedChange}
         />
-        <Button variant="contained">Apply</Button>
+        <Button variant="contained">Apply Filters</Button>
         </Box>
     );
 }
