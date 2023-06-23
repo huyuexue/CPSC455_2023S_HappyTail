@@ -1,4 +1,4 @@
-// https://mui.com/material-ui/react-stepper/#alternative-label
+// https://mui.com/material-ui/react-stepper/#non-linear
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -7,8 +7,15 @@ import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import InterestsForm from "./InterestsForm";
 
 const steps = ['Personal Information', 'Interests', 'Contact Information'];
+
+const subForms = [
+    <InterestsForm/>,
+    <InterestsForm/>,
+    <InterestsForm/>,
+]
 
 export default function AccountDetailsForm() {
     const [activeStep, setActiveStep] = React.useState(0);
@@ -61,7 +68,7 @@ export default function AccountDetailsForm() {
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{width: '100%'}}>
             <Stepper nonLinear activeStep={activeStep}>
                 {steps.map((label, index) => (
                     <Step key={label} completed={completed[index]}>
@@ -74,35 +81,33 @@ export default function AccountDetailsForm() {
             <div>
                 {allStepsCompleted() ? (
                     <React.Fragment>
-                        <Typography sx={{ mt: 2, mb: 1 }}>
+                        <Typography sx={{mt: 2, mb: 1}}>
                             All steps completed - you&apos;re finished
                         </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                            <Box sx={{ flex: '1 1 auto' }} />
+                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                            <Box sx={{flex: '1 1 auto'}}/>
                             <Button onClick={handleReset}>Reset</Button>
                         </Box>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
-                            Step {activeStep + 1}
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                        {subForms[activeStep]}
+                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                             <Button
                                 color="inherit"
                                 disabled={activeStep === 0}
                                 onClick={handleBack}
-                                sx={{ mr: 1 }}
+                                sx={{mr: 1}}
                             >
                                 Back
                             </Button>
-                            <Box sx={{ flex: '1 1 auto' }} />
-                            <Button onClick={handleNext} sx={{ mr: 1 }}>
+                            <Box sx={{flex: '1 1 auto'}}/>
+                            <Button onClick={handleNext} sx={{mr: 1}}>
                                 Next
                             </Button>
                             {activeStep !== steps.length &&
                                 (completed[activeStep] ? (
-                                    <Typography variant="caption" sx={{ display: 'inline-block' }}>
+                                    <Typography variant="caption" sx={{display: 'inline-block'}}>
                                         Step {activeStep + 1} already completed
                                     </Typography>
                                 ) : (
