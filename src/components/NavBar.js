@@ -7,8 +7,13 @@ import {Link} from "react-router-dom";
 export default function NavBar() {
     const buttonRoutes = {
         "Home": "/",
+        "Find Pet": "/result",
+        "List a Pet": "/addNewPet",
         "About": "/about",
-        "Blog": "/blog"
+    }
+    const rightButtonRoutes = {
+        "Login":"/login",
+
     }
     const [anchorElNav, setAnchorElNav] = useState(null);
     const handleOpenNavMenu = (event) => {
@@ -85,6 +90,13 @@ export default function NavBar() {
                                 </MenuItem>
                             </Link>
                         ))}
+                        {Object.entries(rightButtonRoutes).map(([name, route]) => (
+                            <Link to={route} style= { { textDecoration: 'none' }}>
+                                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">{name}</Typography>
+                                </MenuItem>
+                            </Link>
+                        ))}
                     </Menu>
                 </Box>
                 <PetsIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
@@ -107,6 +119,19 @@ export default function NavBar() {
                 <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                     {Object.entries(buttonRoutes).map(([name, route]) => (
                         <Link to={route} style= { { textDecoration: 'none' }}>
+                            <Button
+                                key={name}
+                                onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block'}}
+                            >
+                                {name}
+                            </Button>
+                        </Link>
+                    ))}
+                </Box>
+                <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}, justifyContent: 'flex-end'}}>
+                    {Object.entries(rightButtonRoutes).map(([name, route]) => (
+                        <Link to={route} style={{ textDecoration: 'none' }}>
                             <Button
                                 key={name}
                                 onClick={handleCloseNavMenu}

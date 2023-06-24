@@ -80,7 +80,8 @@ textarea {
 .pet{
   box-shadow: 0 4px 8px 0 #abdbe3;
   width: 40%;
-  min-width: 100px;
+  min-width: 300px;
+  min-height: 300px;
   max-width: 300px;
   height: auto;
   float: left;
@@ -151,4 +152,17 @@ textarea {
 .btn-container {
   display: flex;
   justify-content: space-around;
+}
+
+.vl {
+  border-left: 6px solid;
+  color: #1e81b0;
+  height: 200px;
+}
+
+.previewPhoto{
+  width: 300px;
+  border: 1px solid #ccc;
+  background-size: cover;
+  background-position: center;
 }

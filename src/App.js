@@ -8,6 +8,7 @@ import ResultPage from "./pages/Result";
 import LoginPage from './pages/Login';
 
 import {StyledEngineProvider} from "@mui/material";
+import AddNewPet from "./components/forms/addPetForm/AddNewPet";
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Home/>}/>
                     <Route path="about" element={<About/>}/>
-                    <Route path="browse" element={<BrowsePage/>}/>
+                    <Route path="addNewPet" element={<AddNewPet/>}/>
                     <Route path="result" element={<ResultPage/>}/>
                     <Route path="login" element={<LoginPage/>}/>
                 </Route>
