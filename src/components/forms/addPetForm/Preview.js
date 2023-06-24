@@ -45,7 +45,11 @@ export default function Preview({formData, jumpToPage}){
             <p>
                 Pet Name: {formData.petName}<br/>
                 Photo: <br/>
-                <img className="previewPhoto" src = {formData.photo} />
+                {(formData.photo === null)?'' : <img className="previewPhoto" src = {formData.photo} />}<br/>
+                Breed: {formData.petName}<br/>
+                Gender: {formData.petName}<br/>
+                Age: {formData.petName}<br/>
+                Description: {formData.petName}<br/>
             </p>
 
         </div>

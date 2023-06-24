@@ -23,12 +23,26 @@ const petDetailSlice = createSlice({
             reducer: (state, action) =>{
                 state.selected =  action.payload;
             }
+        },
+        afterUpdate: {
+            reducer: (state, action) =>{
+                state.selected.phoneNumber = action.payload.phone;
+                state.selected.email = action.payload.email;
+            },
+            prepare: (phone, email) => {
+                return {
+                    payload: {
+                        phone,
+                        email
+                    }
+                }
+            }
         }
     }
 
 });
 
-export const {openDetailView, closeDetailView, selectPet} = petDetailSlice.actions;
+export const {openDetailView, closeDetailView, selectPet, afterUpdate} = petDetailSlice.actions;
 export default petDetailSlice.reducer
 export const detailViewStatus = (state) => state.petDetail.isOpen;
 export const selectedPet = (state) => state.petDetail.selected;
