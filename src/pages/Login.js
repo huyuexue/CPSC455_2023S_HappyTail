@@ -58,6 +58,11 @@ export default function LoginPage(){
                     signInWithEmailAndPassword(auth, email,password)
                         .then(() => {
                             console.log('firebase signin sucess')
+                            auth.currentUser.getIdToken(true)
+                            .then((token)=>{
+                              localStorage.setItem('tokenId', token)
+                              window.location.href="/result"
+                            })
                         })
                         .catch((error) => {
                             setEmailErr('Your email or password is incorrect')
@@ -103,11 +108,10 @@ export default function LoginPage(){
                   
                 }}
               >
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" sx={{fontSize:30, fontWeight:"600"}}>
                   Sign in
                 </Typography>
                 <Box
-                  component="form"
                   sx={{ mt: 1, width:"100%"}}
                 >
                   <TextField
@@ -153,14 +157,14 @@ export default function LoginPage(){
                     label="Remember me"
                   />
                   <Button
-                    type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2}}
+                    onClick={()=>handleSubmit()}
                   >
                     Sign In
                   </Button>
-                  <Grid container justifyContent="space-between" xs={16} >
+                  <Grid container justifyContent="space-between" >
                     <Grid item xs={5} textAlign="center">
                       <Link href="#" variant="body2">
                         Forgot password?
@@ -172,15 +176,15 @@ export default function LoginPage(){
                       </Link>
                     </Grid>
                   </Grid>
-                  <Grid container justifyContent="space-around" xs={12} mt={2} borderTop={1}>
+                  <Grid container justifyContent="space-around" xs={12} sx={{marginY:"30px", borderTop:1, borderTopColor:"grey.500", paddingTop:2}}>
                   <IconButton color="primary" >
-                      <GoogleIcon />
+                      <GoogleIcon  sx={{ fontSize: 40 }}/>
                   </IconButton>
                   <IconButton color="primary">
-                      <FacebookIcon />
+                      <FacebookIcon sx={{ fontSize: 40 }}/>
                   </IconButton>
                   <IconButton color="primary">
-                      <TwitterIcon />
+                      <TwitterIcon sx={{ fontSize: 40 }}/>
                   </IconButton>
                   </Grid>
                   
