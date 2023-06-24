@@ -16,20 +16,24 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import TwitterIcon from '@mui/icons-material/Twitter';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
+
+
 
 import {
     signInWithEmailAndPassword,
-    sendSignInLinkToEmail,
-    sendEmailVerification,
     setPersistence,
     browserLocalPersistence,
     browserSessionPersistence,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
+    GoogleAuthProvider
 } from 'firebase/auth'
 
 import{auth} from "../firebase/firebaseConfig"
 import { useState } from 'react';
+import { width } from '@mui/system';
+const provider = new GoogleAuthProvider();
 
 export default function LoginPage(){
     const handleSubmit = (event) => {
@@ -66,34 +70,28 @@ export default function LoginPage(){
 
 
     return (
-      <Container component="main" maxWidth="lg">
+      <Container component="main" sx={{width:{sm:"100%", md:"100%", lg:"80%"}, marginX:"auto"}}>
         <Box
           sx={{
             mt: "150px",
           }}
         >
-          <Grid container>
+          <Grid container spacing={2} justifyContent="space-around">
             <CssBaseline />
             <Grid
               item
-              xs={false}
-              sm={4}
-              md={6}
               sx={{
                 backgroundImage: "url(https://t0.gstatic.com/licensed-image?q=tbn:ANd9GcQkrjYxSfSHeCEA7hkPy8e2JphDsfFHZVKqx-3t37E4XKr-AT7DML8IwtwY0TnZsUcQ)",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+                display:{sm:"none", md:"block"},
+                width:"50%"
               }}
             />
             <Grid
               item
-              xs={12}
-              sm={8}
-              md={6}
-              component={Paper}
-              elevation={6}
-              square
+              sx={{width:"50%"}}
             >
               <Box
                 sx={{
@@ -102,6 +100,7 @@ export default function LoginPage(){
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
+                  
                 }}
               >
                 <Typography component="h1" variant="h5">
@@ -109,9 +108,7 @@ export default function LoginPage(){
                 </Typography>
                 <Box
                   component="form"
-                  noValidate
-                  onSubmit={handleSubmit}
-                  sx={{ mt: 1 }}
+                  sx={{ mt: 1, width:"100%"}}
                 >
                   <TextField
                     margin="normal"
@@ -163,18 +160,30 @@ export default function LoginPage(){
                   >
                     Sign In
                   </Button>
-                  <Grid container>
-                    <Grid item xs>
+                  <Grid container justifyContent="space-between" xs={16} >
+                    <Grid item xs={5} textAlign="center">
                       <Link href="#" variant="body2">
                         Forgot password?
                       </Link>
                     </Grid>
-                    <Grid item>
-                      <Link href="#" variant="body2">
-                        {"Don't have an account? Sign Up"}
+                    <Grid item xs={6} textAlign="center">
+                      <Link href="#" variant="body2" >
+                        Don't have an account? <br/> Sign Up
                       </Link>
                     </Grid>
                   </Grid>
+                  <Grid container justifyContent="space-around" xs={12} mt={2} borderTop={1}>
+                  <IconButton color="primary" >
+                      <GoogleIcon />
+                  </IconButton>
+                  <IconButton color="primary">
+                      <FacebookIcon />
+                  </IconButton>
+                  <IconButton color="primary">
+                      <TwitterIcon />
+                  </IconButton>
+                  </Grid>
+                  
                 </Box>
               </Box>
             </Grid>
