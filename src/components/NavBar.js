@@ -7,13 +7,14 @@ import {Link} from "react-router-dom";
 export default function NavBar() {
     const buttonRoutes = {
         "Home": "/",
-        "Find Pet": "/result",
-        "List a Pet": "/addNewPet",
         "About": "/about",
+        "List a Pet": "/addNewPet",
+        "Blog": "/blog",
+        "Browse": "/browse"
     }
-    const rightButtonRoutes = {
-        "Login":"/login",
 
+    const rightButtonRoutes = {
+        "Login": "/login",
     }
     const [anchorElNav, setAnchorElNav] = useState(null);
     const handleOpenNavMenu = (event) => {
@@ -84,7 +85,7 @@ export default function NavBar() {
                         }}
                     >
                         {Object.entries(buttonRoutes).map(([name, route]) => (
-                            <Link to={route} style= { { textDecoration: 'none' }}>
+                            <Link to={route} style={{textDecoration: 'none'}}>
                                 <MenuItem key={name} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{name}</Typography>
                                 </MenuItem>
@@ -118,7 +119,7 @@ export default function NavBar() {
                 </Typography>
                 <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                     {Object.entries(buttonRoutes).map(([name, route]) => (
-                        <Link to={route} style= { { textDecoration: 'none' }}>
+                        <Link to={route} style={{textDecoration: 'none'}}>
                             <Button
                                 key={name}
                                 onClick={handleCloseNavMenu}

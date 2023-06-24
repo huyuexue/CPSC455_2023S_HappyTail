@@ -1,95 +1,27 @@
-import {useState} from "react";
+import {Fragment, useState} from "react";
 import {useDispatch} from "react-redux";
 import {addPet} from "../../pets/petsSlice";
 import BasicSurvey from "./BasicSurvey";
 import AboutYou from "./AboutYou";
 import PetInfo from "./PetInfo";
 import Preview from "./Preview";
+import Stepper from "@mui/material/Stepper";
+import InterestsForm from "../InterestsForm";
+import Step from "@mui/material/Step";
+import StepButton from "@mui/material/StepButton";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import {useNavigate} from "react-router-dom";
+
+const steps = ['Basic Survey', 'About You', 'Pet Info', 'Preview'];
+
 
 export default function AddNewPet(){
-/*    const [name, setName] = useState('')
-    const [species, setSpecies] = useState('')
-    const [breed, setBreed] = useState('')
-    const [gender, setGender] = useState('')
-    const [age, setAge] = useState('')
-    const [pictureUrl, setPictureUrl] = useState(null);
-    const [description, setDescription] = useState('')
-    const [warning, setWarning] = useState('')
-
-    const onNameChanged = e => setName(e.target.value)
-    const onSpeciesChanged = e => setSpecies(e.target.value)
-    const onBreedChanged = e => setBreed(e.target.value)
-    const onGenderChanged = e => setGender(e.target.value)
-    const onAgeChanged = e => setAge(e.target.value)
-
-    const onDescriptionChanged = e => setDescription(e.target.value)
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const onAddButtonClicked = () => {
-        if (name && species.includes('-') && breed && gender.includes('-') && age && pictureUrl) {
-            dispatch(addPet(name, species, breed, gender, age, pictureUrl, description));
-            setName('')
-            setSpecies('')
-            setBreed('')
-            setGender('')
-            setAge('')
-            setPictureUrl(null)
-            setDescription('')
-        } else {
-            setWarning("Please fill in all required(*) filed!")
-        }
-    }
-
-    const onClearButtonClicked = () => {
-        setName('')
-        setSpecies('')
-        setBreed('')
-        setGender('')
-        setAge('')
-        setPictureUrl(null)
-        setDescription('')
-        setWarning('')
-    }
-
-    return (
-        <div className="form">
-            <h2>Add New Pet for Adoption</h2>
-            <form id="addNewPetFrom">
-                <label>Pet Name*:</label><br/>
-                <input type="text" name="petName" value = {name} onChange = {onNameChanged} /><br/>
-                <label>Species*:</label><br/>
-                <select value = {species} onChange = {onSpeciesChanged}>
-                    <option >Please select</option>
-                    <option >-Cat</option>
-                    <option >-Dog</option>
-                </select><br/>
-                <label>Breed*:</label><br/>
-                <input type="text" name="breed" value = {breed} onChange = {onBreedChanged} /><br/>
-                <label>Gender*:</label><br/>
-                <select value = {gender} onChange = {onGenderChanged}>
-                    <option >Please select</option>
-                    <option >-Male</option>
-                    <option >-Female</option>
-                </select><br/>
-                <label>Age*:</label><br/>
-                <input type="number" min="0" step="1" name="age" value = {age} onChange = {onAgeChanged} />
-                <br/>
-                <label>Picture*:</label><br/>
-                <input type="file" name="pictureUrl" onChange = {onPictureChanged} />
-                <br/>
-                <label>Description:</label><br/>
-                <textarea type="text" name="description" value = {description} onChange = {onDescriptionChanged} /><br/>
-                <br/>
-                <input type= "button"  className="addButton"  value = "Add" onClick={onAddButtonClicked} />
-                <input type= "button" className="clearFrom" value = "Clear Form" onClick={onClearButtonClicked} />
-                <br/>
-                <p id="warning">{warning}</p>
-            </form>
-        </div>
-
-    )*/
-    const[curPage, setCurPage] = useState(0);
     const[formData, setFormData] = useState({
         species:'',
         extra: false,
@@ -106,27 +38,73 @@ export default function AddNewPet(){
         province:'',
         petName:'',
         photo: null,
-        characteristics:'',
+        breed: '',
+        gender: '',
+        age: '',
+        description: '',
+/*        characteristics:'',
         facts:'',
         petLocation: '',
         petStory:'',
-        relatedDocs:'',
+        relatedDocs:'',*/
     });
 
-    const nextPage = () => {
-        setCurPage(curPage + 1);
+    const [activeStep, setActiveStep] = useState(0);
+    const [completed, setCompleted] = useState({});
+
+    const handleNext = () => {
+        checkFill();
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    const previousPage = () => {
-        setCurPage(curPage - 1);
+    const checkFill = () => {
+        if (activeStep === 0) {
+            if(formData.extra === false ){
+                if(formData.species === '') {
+                    return;
+                }
+            }else {
+                if( !formData.otherSpecies || formData.otherSpecies === 'Please specify'){
+                    return;
+                }
+            };
+            if(!formData.spayed || !formData.reason || !formData.length){
+                return;
+            }
+        } else if (activeStep === 1) {
+            if (!formData.email || !formData.firstName || !formData.lastName || !formData.phoneNumber ||
+                !formData.postalCode || !formData.city || !formData.province) {
+                return;
+            }
+        } else if (activeStep === 2) {
+            if (!formData.petName || !formData.breed || !formData.gender || !formData.age ||
+                !formData.description || !formData.photo) {
+                return;
+            }
+        } else {
+            return;
+        }
+        handleComplete();
+    }
+
+    const handleBack = () => {
+        checkFill();
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleStep = (step) => () => {
+        checkFill();
+        setActiveStep(step);
+    };
+
+    const handleComplete = () => {
+        const newCompleted = completed;
+        newCompleted[activeStep] = true;
+        setCompleted(newCompleted);
     };
 
     const jumpToPage = (page) => {
-        setCurPage(page);
-    };
-
-    const finalPage = () => {
-        setCurPage(3);
+        setActiveStep(page);
     };
 
     const handleChange = (e) => {
@@ -137,18 +115,38 @@ export default function AddNewPet(){
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Perform form submission logic with formData
-        console.log(formData);
-    };
+    const handleSubmit = () => {
+        if (Object.keys(completed).length !== 3) {
+            return;
+        }
+        dispatch(addPet({
+            spayed: formData.spayed,
+            reason: formData.reason,
+            length: formData.length,
+            email: formData.email,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            phoneNumber: formData.phoneNumber,
+            postalCode: formData.postalCode,
+            city: formData.city,
+            province: formData.province,
+            name: formData.petName,
+            species: (formData.extra === true) ? formData.otherSpecies : formData.species,
+            breed: formData.breed,
+            gender: formData.gender,
+            age: formData.age,
+            pictureUrl: formData.photo,
+            description: formData.description,
+        }));
+        navigate('/');
+    }
 
-    const setExtra = (e) =>{
+    const setExtra = (e) => {
         setFormData((prevData) => ({
             ...prevData,
             ["extra"]: e,
         }));
-        if(e === false) {
+        if (e === false) {
             setFormData((prevData) => ({
                 ...prevData,
                 ["otherSpecies"]: 'Please specify',
@@ -164,7 +162,6 @@ export default function AddNewPet(){
     };
 
     const onPhotoChanged = (e) => {
-
         const file = e.target.files[0];
         console.log(file.type)
         if (file) {
@@ -180,45 +177,51 @@ export default function AddNewPet(){
         }
     };
 
-    const renderFormPage = () => {
-        switch (curPage) {
-            case 0:
-                return <BasicSurvey formData={formData} handleChange={handleChange} setExtra={setExtra} onOtherSpeciesFocus={onOtherSpeciesFocus}/>;
-            case 1:
-                return <AboutYou formData={formData} handleChange={handleChange} />;
-            case 2:
-                return <PetInfo formData={formData} handleChange={handleChange} onPhotoChanged={onPhotoChanged} />;
-            case 3:
-                return <Preview formData={formData} jumpToPage={jumpToPage}/>;
-            default:
-                return null;
-        }
-    };
+    const subForms = [
+        <BasicSurvey formData={formData} handleChange={handleChange} setExtra={setExtra}
+                     onOtherSpeciesFocus={onOtherSpeciesFocus}/>,
+        <AboutYou formData={formData} handleChange={handleChange}/>,
+        <PetInfo formData={formData} handleChange={handleChange} onPhotoChanged={onPhotoChanged}/>,
+        <Preview formData={formData} jumpToPage={jumpToPage}/>,
+    ]
 
     return (
-        <form onSubmit={handleSubmit}>
-            {renderFormPage()}
-            {curPage > 0 && curPage < 3 &&(
-                <button type="button" onClick={previousPage}>
-                    Previous
-                </button>
-            )}
-            {curPage < 3 && (
-                <button type="button" onClick={nextPage}>
-                    Next
-                </button>
-            )}
-            {curPage < 3 && (
-                <button type="button" onClick={finalPage}>
-                    Finish
-                </button>
-            )}
-            {curPage === 3 && (
-                <button type="submit">
-                    Submit
-                </button>
-            )}
-        </form>
-    );
+        <Box sx={{width: '100%'}}>
+            <Stepper nonLinear activeStep={activeStep}>
+                {steps.map((label, index) => (
+                    <Step key={label} completed={completed[index]}>
+                        <StepButton color="inherit" onClick={handleStep(index)}>
+                            {label}
+                        </StepButton>
+                    </Step>
+                ))}
+            </Stepper>
+            <div>
+                <Fragment>
+                    {subForms[activeStep]}
+                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                        <Button
+                            color="inherit"
+                            disabled={activeStep === 0}
+                            onClick={handleBack}
+                            sx={{mr: 1}}>
+                            Back
+                        </Button>
+                        <Box sx={{flex: '1 1 auto'}}/>
+                        <Button disabled={activeStep === 3} onClick={handleNext} sx={{mr: 1}}>
+                            Next
+                        </Button>
 
+                    </Box>
+                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                        <Button disabled={activeStep !== 3} onClick={handleSubmit} sx={{mr: 1}}>
+                            {activeStep === 3
+                                ? 'Submit'
+                                : ''}
+                        </Button>
+                    </Box>
+                </Fragment>
+            </div>
+        </Box>
+    );
 }
