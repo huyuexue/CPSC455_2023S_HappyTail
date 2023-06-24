@@ -1,10 +1,11 @@
 import {useSelector, useDispatch} from "react-redux";
-import {initialState} from "../pets/petsSlice";
 import PetCard from "../pets/PetCard";
 import {Grid, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
 import {useState} from "react";
 import PetsIcon from "@mui/icons-material/Pets";
 import {LocationOn, PriorityHigh, Restore, Schedule, Sort, Update} from "@mui/icons-material";
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
 
 export default function PetResults() {
     const dispatch = useDispatch();
@@ -26,8 +27,13 @@ export default function PetResults() {
             {/*https://mui.com/material-ui/react-menu/#menulist-composition*/}
             <SpeedDial
                 ariaLabel="Sorting Options"
-                sx={{position: 'absolute', bottom: 16, right: 16}}
-                icon={<Sort/>}
+                sx={{position: 'absolute', bottom: 45, right: 45}}
+                icon={
+                    <Fab variant="extended" color="primary" aria-label="add" sx={{ minWidth: '130px', minHeight: '65px'}}>
+                        <Sort sx={{ mr: 1 }} />
+                        Sort by
+                    </Fab>
+                }
                 onClose={handleClose}
                 onOpen={handleOpen}
                 open={open}
