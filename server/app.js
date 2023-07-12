@@ -10,7 +10,7 @@ var petsRouter = require('./routes/pets');
 
 var app = express();
 
-const url = 'mongodb+srv://ht001-student:happytails123@ht-cluster.o1aefmq.mongodb.net/'
+const url = 'mongodb+srv://ht001-student:<password>@ht-cluster.o1aefmq.mongodb.net/'
 const dbName = 'happytails';
 async function connectDB(){
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, dbName });
