@@ -1,6 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, { useState } from 'react';
-import {petsState} from "./petsSlice";
 import PetCard from "./PetCard";
 import '../../style/PetsBrief.css';
 import { Box, Card } from "@mui/material";
@@ -12,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function PetsList() {
-    const petsCurState = useSelector(petsState);
+    const petsCurState = useSelector(state => state.pets.list);
     const pets = petsCurState.list;
     const navigate = useNavigate();
     const [activeIndex, setActiveIndex] = useState(0);
