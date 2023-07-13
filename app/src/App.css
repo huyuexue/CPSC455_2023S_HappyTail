@@ -166,3 +166,85 @@ textarea {
   background-size: cover;
   background-position: center;
 }
+
+.pet-personality-container {
+  display: flex;
+  align-items: center;
+}
+
+
+input[type="text"],input[type="number"],input[type="number"], select {
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 2px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
+.selected-options-box {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 5px;
+  min-width: 150px;
+  background-color: white;
+  margin-left: 10px;
+  min-height: 40px;
+  height: auto;
+  border-radius: 2px;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 70%;
+  align-items: center;
+
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  background: gainsboro;
+  margin-right: 10px;
+  padding: 1px;
+  border-radius: 2px;
+  height: 80%;
+  align-items: center;
+}
+
+.option span {
+  margin-right: 5px;
+  font-size: 1em;
+
+}
+
+.option button {
+  border: none;
+  background-color: transparent;
+  color: red;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.custom-file-input input[type="file"] {
+  position: absolute;
+  left: -9999px;
+}
+
+.custom-file-input button {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: lightgrey;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.custom-file-input span {
+  margin-left: 8px;
+}

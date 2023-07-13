@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import petsReducer from "./components/pets/petsSlice";
-import petDetailReducer from "./components/petDetail/petDetailSlice"
+import petsReducer from "./redux/pets/reducer";
+import petDetailReducer from "./redux/detail/reducer"
 import updateFormReducer from "./components/updatePet/updateFormSlice"
 
 export const store = configureStore({

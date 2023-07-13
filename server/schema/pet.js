@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const petSchema = new mongoose.Schema({
-  name: {
+  petName: {
     type: String,
     required: true
   },
@@ -45,7 +45,7 @@ const petSchema = new mongoose.Schema({
     type: [String],
     required: true
   },
-  spayedNeutered: {
+  spayed: {
     type: String,
     required: true
   },

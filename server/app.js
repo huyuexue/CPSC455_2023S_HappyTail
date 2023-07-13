@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,6 +11,7 @@ var petsRouter = require('./routes/pets');
 
 var app = express();
 
+app.use(cors());
 require('dotenv').config();
 const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;

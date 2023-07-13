@@ -1,9 +1,7 @@
 import {editItem, closeUpdateView, openUpdateView} from "./updateFormSlice";
 import {useDispatch, useSelector} from "react-redux";
-
-import { updatePet} from "../pets/petsSlice";
-import {afterUpdate, openDetailView, selectedPet} from "../petDetail/petDetailSlice";
 import {useState} from "react";
+import {openDetailView} from "../../redux/detail/reducer";
 
 export default function UpdateForm(){
     const dispatch = useDispatch();
@@ -29,8 +27,6 @@ export default function UpdateForm(){
                     <button
                         className="updateButton"
                         onClick={ () => {
-                            dispatch(updatePet(update.id,  phone, email));
-                            dispatch(afterUpdate(phone, email));
                             dispatch(closeUpdateView());
                             dispatch(openDetailView());
                         } }>

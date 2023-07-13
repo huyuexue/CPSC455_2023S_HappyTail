@@ -20,6 +20,7 @@ const updateFormSlice = createSlice({
         update: {
             reducer: (state, action) =>{
                 state.selected =  action.payload;
+                console.log(state.selected );
             }
         }
     }

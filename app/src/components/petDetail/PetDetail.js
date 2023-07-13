@@ -1,19 +1,20 @@
-import {selectedPet, closeDetailView} from "./petDetailSlice";
+
 import {useDispatch, useSelector} from "react-redux";
-import {deletePet} from "../pets/petsSlice";
 import {openUpdateView, update} from "../updatePet/updateFormSlice";
+import {deletePetAsync} from "../../redux/pets/thunks";
+import {closeDetailView} from "../../redux/detail/reducer";
 
 export default function PetDetail(){
     const dispatch = useDispatch();
-    const selected = useSelector(selectedPet)
+    const selected = useSelector(state => state.petDetail.selectItem)
     return (
             <aside className="popupWindow">
             <div className="detail">
-                <img src={selected.pictureUrl} alt="Not available"/>
-                <h3>{selected.name}</h3>
+                <img src={selected.picture} alt="Not available"/>
+                <h3>{selected.petName}</h3>
                 <p>Breed: {selected.breed}</p>
                 <p>Gender: {selected.gender}</p>
-                <p>Age: {selected.age}</p>
+                <p>Age: {Math.floor(selected.age/12) + " Year " + selected.age%12 + " Month"}</p>
                 <p>Description:{selected.description}</p>
                 <div className="horizontalLine"></div>
                 <h3>Contact Information</h3>
@@ -33,7 +34,7 @@ export default function PetDetail(){
                     <button
                         className="deleteItemButton"
                         onClick={ () => {
-                            dispatch(deletePet(selected.id));
+                            dispatch(deletePetAsync(selected._id));
                             dispatch(closeDetailView());
                         } }>
                         Delete

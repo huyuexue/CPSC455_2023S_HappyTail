@@ -45,11 +45,15 @@ export default function Preview({formData, jumpToPage}){
             <p>
                 Pet Name: {formData.petName}<br/>
                 Photo: <br/>
-                {(formData.photo === null)?'' : <img className="previewPhoto" src = {formData.photo} />}<br/>
-                Breed: {formData.petName}<br/>
-                Gender: {formData.petName}<br/>
-                Age: {formData.petName}<br/>
-                Description: {formData.petName}<br/>
+                {(formData.picture === null)?'' : <img className="previewPhoto" src = {formData.picture} />}<br/>
+                Breed: {formData.breed}<br/>
+                Gender: {formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1)}<br/>
+                Age: {formData.ageYear} Year {formData.ageMonth} Month <br/>
+                Size: {formData.size.charAt(0).toUpperCase() + formData.size.slice(1)} <br/>
+                Fur Type: {formData.furType.charAt(0).toUpperCase() + formData.furType.slice(1)} <br/>
+                House Trained: {formData.houseTrained.charAt(0).toUpperCase() + formData.houseTrained.slice(1)} <br/>
+                Pet Personality: {formData.petPersonality.join(", ").toUpperCase()}<br/>
+                Description: {formData.description}<br/>
             </p>
 
         </div>

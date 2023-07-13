@@ -1,19 +1,18 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, { useState } from 'react';
-import {petsState} from "./petsSlice";
 import PetCard from "./PetCard";
 import '../../style/PetsBrief.css';
 import { Box } from "@mui/material";
 import { Button } from "@mui/material";
-import { Stack } from "@mui/material";
-import { Grid } from "@mui/material";
-import SliderButton from '../buttons/SliderButton'; 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import {useEffect} from "react";
+import {getPetsAsync} from "../../redux/pets/thunks";
 
 export default function PetsBrief() {
-    const petsCurState = useSelector(petsState);
-    const pets = petsCurState.list;
+
+    const pets = useSelector(state => state.pets.list);
+    const dispatch = useDispatch();
 
     const [activeIndex, setActiveIndex] = useState(0);
     //keep track of index in the list of pets, and function to change it
@@ -28,7 +27,7 @@ export default function PetsBrief() {
     };
     //does same but backwards
 
-    React.useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
           setActiveIndex((prevIndex) => (prevIndex + 1) % pets.length);
         }, 6000); 
@@ -37,6 +36,10 @@ export default function PetsBrief() {
           clearInterval(interval); //if any changes in dependency, stops the callback function from executing. //clean resources before next render
         };
       }, [pets.length]); //runs on first render + whenever length changes
+
+    useEffect(() => {
+        dispatch(getPetsAsync());
+    }, [pets.length]); //TODO: need to fix this dispatch
 
       return (
         <Box display="flex" justifyContent="center" alignItems="center">
@@ -58,7 +61,7 @@ export default function PetsBrief() {
                   {pets.map((pet, index) => (
                     <div
                       className={`slide ${index === activeIndex ? 'active' : ''}`}
-                      key={pet.id}
+                      key={index}
                     >
                       {index === activeIndex && <PetCard pet={pet} />}
                     </div>
