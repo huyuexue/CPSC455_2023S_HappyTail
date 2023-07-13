@@ -1,6 +1,7 @@
 import './App.css';
 import {Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
+import Dashboard from './pages/Dashboard';
 import About from "./pages/About";
 import Layout from "./components/Layout";
 import BrowsePage from "./pages/Browse";
@@ -28,6 +29,7 @@ function App() {
                         <Route path="addNewPet" element={<AddNewPet/>}/>
                         <Route path="account/details" element={<AccountDetailsPage/>}/>
                         <Route path="login" element={<LoginPage/>}/>
+                        <Route path="dashboard" element={<Dashboard/>}/>
                     </Route>
                 </Routes>
             </ThemeProvider>
