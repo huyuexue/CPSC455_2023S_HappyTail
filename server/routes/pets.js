@@ -4,7 +4,7 @@ const Pet = require('../schema/pet');
 
 async function getAllPets() {
   try {
-    const pets = await Pet.find({});
+    const pets = await Pet.find({}, 'petName age breed picture');
     return pets;
   } catch (error) {
     console.error('Error retrieving pets:', error);
@@ -13,7 +13,7 @@ async function getAllPets() {
 }
 
 /* GET pets listing. */
-router.get('/', function(req, res, next) {
+router.get('/all', function(req, res, next) {
   getAllPets().then((p) => res.send(p));
 });
 
@@ -33,16 +33,17 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// GET a single pet by ID
+// GET a single pet by ID 
 router.delete('/:id', async (req, res, next) => {
   try {
     const petId = req.params.id; // Get the pet ID from the route parameter
     const pet = await Pet.findByIdAndRemove(petId); // Find the pet by ID
     if (!pet) {
       // If the pet is not found, return an appropriate response
-      return res.status(404).json({ error: 'Pet not found' });
+      //return res.status(404).json({ error: 'Pet not found' });
+      return res.json(false);
     }
-    res.json(pet); // Respond with the found pet as JSON
+    res.json(true);// Respond with the found pet as JSON
   } catch (error) {
     console.error('Error retrieving a pet:', error);
     res.status(500).json({ error: 'Failed to delete a pet' });

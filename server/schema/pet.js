@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+ 
 const petSchema = new mongoose.Schema({
   petName: {
     type: String,
@@ -56,7 +56,19 @@ const petSchema = new mongoose.Schema({
   postCode: {
     type: String,
     required: true
-  }
+  },
+  contactName: {
+    type: String,
+    required: true
+  },
+  contactEmail: {
+    type: String,
+    required: true
+  },
+  contactNumber: {
+    type: String,
+    required: true
+  },
 });
 
 const Pet = mongoose.model('Pet', petSchema);
