@@ -4,7 +4,7 @@ const Pet = require('../schema/pet');
 
 async function getAllPets() {
   try {
-    const pets = await Pet.find({}, 'name age breed picture');
+    const pets = await Pet.find({}, 'petName age breed picture');
     return pets;
   } catch (error) {
     console.error('Error retrieving pets:', error);
