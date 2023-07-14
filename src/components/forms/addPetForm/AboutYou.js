@@ -1,46 +1,35 @@
-export default function AboutYou({ formData, handleChange}){
+import {Divider, Grid, Stack, TextField} from "@mui/material";
+import Map from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+export default function AboutYou({formData, handleChange}) {
     return (
         <div className="from">
             <h2>About You</h2>
-            <label >Email:<br/>
-                <input type="text" name = "email" value = {formData.email}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
-
-            <label >First Name:<br/>
-                <input type="text" name = "firstName" value = {formData.firstName}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
-            <label >Last Name:<br/>
-                <input type="text" name = "lastName" value = {formData.lastName}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
-            <label >Phone Number:<br/>
-                <input type="text" name = "phoneNumber" value = {formData.phoneNumber}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
-
-            <h2>Location</h2>
-            <label >Postal Code:<br/>
-                <input type="text" name = "postalCode" value = {formData.postalCode}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
-
-            <label >City:<br/>
-                <input type="text" name = "city" value = {formData.city}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
-            <label >Province:<br/>
-                <input type="text" name = "province" value = {formData.province}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
+            <Grid container spacing={4} sx={{padding: 10}}>
+                <Grid item xs={3}>
+                    <Stack spacing={2}>
+                        <TextField id="outlined-basic" label="Email" variant="outlined"/>
+                        <TextField id="outlined-basic" label="First Name" variant="outlined"/>
+                        <TextField id="outlined-basic" label="Last Name" variant="outlined"/>
+                        <TextField id="outlined-basic" label="Phone Number" variant="outlined"/>
+                    </Stack>
+                </Grid>
+                <Grid item xs={0}>
+                    <Divider orientation="vertical"/>
+                </Grid>
+                <Grid item xs={8}>
+                    <Map
+                        initialViewState={{
+                            longitude: -122.4,
+                            latitude: 37.8,
+                            zoom: 14
+                        }}
+                        style={{width: 1, height: 1}}
+                        mapStyle="mapbox://styles/mapbox/streets-v9"
+                    />
+                </Grid>
+            </Grid>
         </div>
     )
 }

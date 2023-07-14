@@ -4,7 +4,7 @@ import {darkScrollbar} from "@mui/material";
 export const GlobalTheme = createTheme({
     palette: {
         background: {
-            paper: '#fff9f1', // your color
+            paper: "#fcf8f5", // your color
         },
         primary: {
             // light: will be calculated from palette.primary.main,

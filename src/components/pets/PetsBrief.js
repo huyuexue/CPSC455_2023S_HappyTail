@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import { Button } from "@mui/material";
 import { Stack } from "@mui/material";
 import { Grid } from "@mui/material";
-import SliderButton from '../buttons/SliderButton'; 
+import SliderButton from '../elements/buttons/SliderButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 

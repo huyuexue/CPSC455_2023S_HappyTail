@@ -8,11 +8,12 @@ import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InterestsForm from "./InterestsForm";
+import PersonalInformationForm from "./PersonalInformation";
 
 const steps = ['Personal Information', 'Interests', 'Contact Information'];
 
 const subForms = [
-    <InterestsForm/>,
+    <PersonalInformationForm/>,
     <InterestsForm/>,
     <InterestsForm/>,
 ]
@@ -68,7 +69,7 @@ export default function AccountDetailsForm() {
     };
 
     return (
-        <Box sx={{width: '100%'}}>
+        <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
             <Stepper nonLinear activeStep={activeStep}>
                 {steps.map((label, index) => (
                     <Step key={label} completed={completed[index]}>
@@ -91,7 +92,9 @@ export default function AccountDetailsForm() {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        {subForms[activeStep]}
+                        <Box sx={{minHeight: "70vh"}}>
+                            {subForms[activeStep]}
+                        </Box>
                         <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                             <Button
                                 color="inherit"

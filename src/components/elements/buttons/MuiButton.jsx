@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from "@mui/material";
-import '../../style/button.css';
+import '../../../style/button.css';
 import {Link} from "react-router-dom";
 
 export default function MuiButton(props) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import MuiButton from './MuiButton';
-import PostCodeSearchBar from '../forms/PostCodeSearchBar';
+import PostCodeSearchBar from '../../forms/PostCodeSearchBar';
 import { Stack, Box } from "@mui/material";
-import RehomeButton from "../RehomeButton";
+import RehomeButton from "../../RehomeButton";
 
 export default function ButtonBar() {
     return (

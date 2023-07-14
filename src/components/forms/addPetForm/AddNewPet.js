@@ -6,7 +6,7 @@ import AboutYou from "./AboutYou";
 import PetInfo from "./PetInfo";
 import Preview from "./Preview";
 import Stepper from "@mui/material/Stepper";
-import InterestsForm from "../InterestsForm";
+import InterestsForm from "../accountDetails/InterestsForm";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Typography from "@mui/material/Typography";
