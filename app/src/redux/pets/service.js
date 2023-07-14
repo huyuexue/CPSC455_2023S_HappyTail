@@ -1,5 +1,5 @@
 const getPets = async () => {
-    const res = await fetch("http://localhost:3001/pets", {
+    const res = await fetch("http://localhost:3001/pets/all", {
         method: 'GET'
     });
     return res.json();
