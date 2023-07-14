@@ -3,10 +3,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {openUpdateView, update} from "../updatePet/updateFormSlice";
 import {deletePetAsync} from "../../redux/pets/thunks";
 import {closeDetailView} from "../../redux/detail/reducer";
-
+import {useState,useEffect} from "react"; 
 export default function PetDetail(){
     const dispatch = useDispatch();
     const selected = useSelector(state => state.petDetail.selectItem)
+    const [dashboard, setDashboard] = useState(false);
+    useEffect(()=>{
+        if(window.location.pathname=="/dashboard"){
+            setDashboard(true)
+        }
+    },[])
     return (
             <aside className="popupWindow">
             <div className="detail">
@@ -22,7 +28,9 @@ export default function PetDetail(){
                 <p>Phone Number: {selected.phoneNumber}</p>
                 <p>Email: {selected.email}</p>
                 <div className='btn-container'>
-                    <button
+                    {dashboard?(
+                        <>
+                                                <button
                         className="updateItemButton"
                         onClick={ () => {
                             dispatch(update(selected));
@@ -39,6 +47,10 @@ export default function PetDetail(){
                         } }>
                         Delete
                     </button>
+                        </>
+                    ):(
+                        <></>
+                    )}
                     <button
                         className="close"
                         onClick={ () => {

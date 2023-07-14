@@ -11,11 +11,13 @@ var petsRouter = require('./routes/pets');
 
 var app = express();
 
+
 app.use(cors());
 require('dotenv').config();
 const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;
 const url = `mongodb+srv://${username}:${password}@ht-cluster.o1aefmq.mongodb.net/`
+
 const dbName = 'happytails';
 async function connectDB(){
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, dbName });

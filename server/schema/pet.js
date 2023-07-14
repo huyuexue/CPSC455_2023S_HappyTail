@@ -5,6 +5,10 @@ const petSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  userID:{
+    type: String,
+    required: false
+  },
   species: {
     type: String,
     required: true
