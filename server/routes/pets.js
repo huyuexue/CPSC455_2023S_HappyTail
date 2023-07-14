@@ -33,7 +33,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// GET a single pet by ID
+// GET a single pet by ID 
 router.delete('/:id', async (req, res, next) => {
   try {
     const petId = req.params.id; // Get the pet ID from the route parameter
