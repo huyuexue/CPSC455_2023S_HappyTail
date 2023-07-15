@@ -12,6 +12,7 @@ import React from "react";
 import {faHouseChimney} from "@fortawesome/free-solid-svg-icons";
 import {LargeIconButton} from "../components/elements/LargeIconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Link} from "react-router-dom";
 
 export default function Home({itemsList}) {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
@@ -28,15 +29,17 @@ export default function Home({itemsList}) {
                         <Stack spacing={2}>
                             {/*<PetSearchForm sx={{width: 100}}></PetSearchForm>*/}
                             <ButtonBar/>
-                            <LargeIconButton sx={{
-                                boxShadow: 3,
-                                width: 666,
-                            }}>
-                                <Stack spacing={1}>
-                                    <FontAwesomeIcon icon={faHouseChimney} size="5x"/>
-                                    <h3>Find a Home</h3>
-                                </Stack>
-                            </LargeIconButton>
+                            <Link to="/addNewPet" style={{textDecoration: 'none'}}>
+                                <LargeIconButton sx={{
+                                    boxShadow: 3,
+                                    width: 666,
+                                }}>
+                                    <Stack spacing={1}>
+                                        <FontAwesomeIcon icon={faHouseChimney} size="5x"/>
+                                        <h3>Find a Home</h3>
+                                    </Stack>
+                                </LargeIconButton>
+                            </Link>
                         </Stack>
                     </Box>
                 </Grid>

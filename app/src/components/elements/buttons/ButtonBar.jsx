@@ -1,25 +1,28 @@
 import React from 'react';
 import MuiButton from './MuiButton';
 import PostCodeSearchBar from '../../forms/PostCodeSearchBar';
-import {Stack, Box, Grid} from "@mui/material";
+import {Stack, Box, Grid, MenuItem, Typography} from "@mui/material";
 import RehomeButton from "../../RehomeButton";
 import InterestButton from "../InterestButton";
 import {faCat, faDog, faFrog} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
 export default function ButtonBar() {
     const buttons = [
-        {icon: faCat, label: "Cats"},
-        {icon: faDog, label: "Dogs"},
-        {icon: faFrog, label: "Amphibians"}
+        {icon: faCat, label: "Cats", link: "/browse"},
+        {icon: faDog, label: "Dogs", link: "/browse"},
+        {icon: faFrog, label: "Amphibians", link: "/browse"}
     ]
     return (
-        <Grid container  spacing={2} sx={{
+        <Grid container spacing={2} sx={{
             padding: 2,
             height: 1
         }}>
             {buttons.map((button) =>
                 <Grid item>
-                    <InterestButton icon={button.icon} label={button.label}></InterestButton>
+                    <Link to={button.link} style={{textDecoration: 'none'}}>
+                        <InterestButton icon={button.icon} label={button.label}></InterestButton>
+                    </Link>
                 </Grid>
             )}
         </Grid>

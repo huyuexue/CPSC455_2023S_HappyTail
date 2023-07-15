@@ -10,12 +10,11 @@ import Typography from '@mui/material/Typography';
 import InterestsForm from "./InterestsForm";
 import PersonalInformationForm from "./PersonalInformation";
 
-const steps = ['Personal Information', 'Interests', 'Contact Information'];
+const steps = ['Interests', 'Personal Information'];
 
 const subForms = [
+    <InterestsForm/>,
     <PersonalInformationForm/>,
-    <InterestsForm/>,
-    <InterestsForm/>,
 ]
 
 export default function AccountDetailsForm() {
