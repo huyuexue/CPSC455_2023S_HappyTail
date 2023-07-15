@@ -48,6 +48,7 @@ export default function PetResults() {
                     />
                 ))}
             </SpeedDial>
+            {/* render pet card view*/}
             <Grid container spacing={3} sx={{
                 padding: 2
             }}>

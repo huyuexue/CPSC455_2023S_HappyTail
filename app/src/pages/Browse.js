@@ -12,12 +12,14 @@ export default function BrowsePage() {
                     padding: 2,
                     height: "100vh",
                 }}>
+                    {/* This is where the filter form constructed */}
                     <SelectPetProperties></SelectPetProperties>
                 </Paper>
 
             </Grid>
 
             <Grid item xs={8}>
+                {/* This is where the results will be displayed */}
                 <PetResults></PetResults>
             </Grid>
         </Grid>

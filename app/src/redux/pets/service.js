@@ -91,9 +91,17 @@ const getSearchResults = async ({searchTerm, sortTerm}) => {
     return res.json();
 };
 
+const getFilteredPets = async ({age, breed, size, gender, coatLength}) => {
+    const res = await fetch(`http://localhost:3001/pets/filter?age=${age}&breed=${breed}&size=${size}&gender=${gender}&coatLength=${coatLength}`, {
+        method: 'GET'
+    });
+    return res.json();
+};
+
 export default {
     getPets,
     addPet,
     deletePet,
-    getSearchResults
+    getSearchResults,
+    getFilteredPets
 };

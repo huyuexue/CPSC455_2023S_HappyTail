@@ -1,5 +1,5 @@
 import {createSlice, nanoid} from "@reduxjs/toolkit";
-import {addPetAsync, deletePetAsync, getPetsAsync, getSearchResultsAsync} from "./thunks";
+import {addPetAsync, deletePetAsync, getPetsAsync, getSearchResultsAsync, getFilteredPetsAsync} from "./thunks";
 
 const initialState  = {
     list:[],
@@ -21,7 +21,7 @@ const petsReducer = createSlice({
                 state.search = action.payload;
 
             },
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -63,6 +63,16 @@ const petsReducer = createSlice({
             })
             .addCase(getSearchResultsAsync.rejected, (state, action) => {
                 console.log("rejected to search");
+            })
+            .addCase(getFilteredPetsAsync.pending, (state, action) => {
+                console.log("waiting to get filtered pets");
+            })
+            .addCase(getFilteredPetsAsync.fulfilled, (state, action) => {
+                state.list = action.payload;
+                console.log(state.list);
+            })
+            .addCase(getFilteredPetsAsync.rejected, (state, action) => {
+                console.log("rejected to get filtered pets");
             });
 
     }
