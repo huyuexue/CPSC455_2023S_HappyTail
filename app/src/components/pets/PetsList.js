@@ -13,38 +13,51 @@ import {useEffect} from "react";
 import {getPetsAsync} from "../../redux/pets/thunks";
 
 export default function PetsList() {
-
-  const pets = useSelector(state => state.pets.list);
+  const[token, setToken]=useState("");
+  const[refresh, setRefresh]=useState(false);
+  const [pets, setPets] = useState([]);
   const dispatch = useDispatch();
  
-  const [activeIndex, setActiveIndex] = useState(0);
   const auth = getAuth();
   const navigate = useNavigate();
     //keep track of index in the list of pets, and function to change it
 
     //does same but backwards
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setActiveIndex((prevIndex) => (prevIndex + 1) % pets.length);
-      }, 6000); 
-  
-      return () => {
-        clearInterval(interval); //if any changes in dependency, stops the callback function from executing. //clean resources before next render
-      };
-    }, [pets.length]); //runs on first render + whenever length changes
-
   useEffect(() => {
-      dispatch(getPetsAsync());
-  }, [pets.length]); //TODO: need to fix this dispatch
-      
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-        //   const token= await user.getIdToken()
-    } else {
-           // alert("login please")
+    if (token !=""){
+      getPets()
     }
+    setRefresh(false)
+  }, [token, refresh]); 
+
+  const getPets=async ()=>{
+    const res = await fetch("http://localhost:3001/pets/byuser", {
+      method: 'GET',
+      headers: { 
+                  'Content-Type': 'application/json',
+                  authorization: token},
     });
+    const data=await res.json();
+    console.log(data) 
+    setPets(data)
+   }
+
+  const getToken=async (user)=>{
+    const token= await user.getIdToken()
+    console.log(token)
+    setToken(token)
+  }
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getToken(user)
+      } else {
+             // alert("login please")
+      }
+      });
+  }, []);   
+
 
 
       return (
@@ -60,7 +73,7 @@ export default function PetsList() {
                       key={pet.id}
                       display="flex" justifyContent="center" alignItems="center"
                     >
-                      { <PetCard pet={pet} />}
+                      { <PetCard pet={pet} setRefresh={setRefresh} token={token} />}
                     </Grid>
                   ))}
 
@@ -68,9 +81,9 @@ export default function PetsList() {
 
                       display="flex" justifyContent="center" alignItems="center"
                     >
-                  <Card className="pet-card" sx={{width: 345, height: 438, display:'flex', justifyContent:"center", alignItems:'center'}} onClick={()=>navigate('/addNewPet')}>
-                    <AddCircleOutlineRoundedIcon fontSize="large" color="primary"/>
-                  </Card>
+              
+                    <AddCircleOutlineRoundedIcon fontSize="large" color="primary" onClick={()=>navigate('/addNewPet')}/>
+    
                     
                   </Grid>
 

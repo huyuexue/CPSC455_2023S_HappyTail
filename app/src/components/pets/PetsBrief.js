@@ -14,6 +14,7 @@ export default function PetsBrief() {
 
     const pets = useSelector(state => state.pets.list);
     const dispatch = useDispatch();
+    const[refresh, setRefresh]=useState(false);
 
     const [activeIndex, setActiveIndex] = useState(0);
     //keep track of index in the list of pets, and function to change it
@@ -48,7 +49,7 @@ export default function PetsBrief() {
                 <h1>Browse Pets</h1>
                 <Carousel sx={{width: 350}}>
                     {pets.map((pet) => (
-                        <PetCard pet={pet}  sx={{width: 350}}/>
+                        <PetCard pet={pet}  setRefresh={setRefresh} sx={{width: 350}}/>
                     ))}
                 </Carousel>
             </Stack>

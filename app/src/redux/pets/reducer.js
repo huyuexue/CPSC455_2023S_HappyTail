@@ -34,7 +34,7 @@ const petsReducer = createSlice({
             .addCase(getPetsAsync.rejected, (state, action) => {
                 console.log("rejected  to get all");
             })
-            .addCase(addPetAsync.pending, (state, action) => {
+                        .addCase(addPetAsync.pending, (state, action) => {
                 console.log("waiting to add");
             })
             .addCase(addPetAsync.fulfilled, (state, action) => {
