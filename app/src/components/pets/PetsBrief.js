@@ -1,13 +1,14 @@
 import {useDispatch, useSelector} from "react-redux";
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PetCard from "./PetCard";
 import '../../style/PetsBrief.css';
-import { Box } from "@mui/material";
-import { Button } from "@mui/material";
+import {Box, Stack} from "@mui/material";
+import {Button} from "@mui/material";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {useEffect} from "react";
 import {getPetsAsync} from "../../redux/pets/thunks";
+import Carousel from "react-material-ui-carousel";
 
 export default function PetsBrief() {
 
@@ -29,48 +30,29 @@ export default function PetsBrief() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-          setActiveIndex((prevIndex) => (prevIndex + 1) % pets.length);
-        }, 6000); 
-    
+            setActiveIndex((prevIndex) => (prevIndex + 1) % pets.length);
+        }, 6000);
+
         return () => {
-          clearInterval(interval); //if any changes in dependency, stops the callback function from executing. //clean resources before next render
+            clearInterval(interval); //if any changes in dependency, stops the callback function from executing. //clean resources before next render
         };
-      }, [pets.length]); //runs on first render + whenever length changes
+    }, [pets.length]); //runs on first render + whenever length changes
 
     useEffect(() => {
         dispatch(getPetsAsync());
     }, [pets.length]); //TODO: need to fix this dispatch
 
-      return (
+    return (
         <Box display="flex" justifyContent="center" alignItems="center">
-          <div className="main-slide">
-            <h2>Pets Looking for A Forever Home</h2>
-            <div className="slideshow-container">
-              <Box display="flex" flexDirection="column" alignItems="center">
-                <div className="buttons">
-                  
-                  <Button onClick={handlePrev}>
-                      <ArrowBackIosIcon />
-                  </Button>
-                  <Button onClick={handleNext}>
-                      <ArrowForwardIosIcon />
-                  </Button>
-                  
-                </div>
-                <div className="slideshow">
-                  {pets.map((pet, index) => (
-                    <div
-                      className={`slide ${index === activeIndex ? 'active' : ''}`}
-                      key={index}
-                    >
-                      {index === activeIndex && <PetCard pet={pet} />}
-                    </div>
-                  ))}
-                </div>
-              </Box>
-            </div>
-          </div>
+            <Stack justifyContent="center" alignItems="center" spacing={3}>
+                <h1>Browse Pets</h1>
+                <Carousel sx={{width: 350}}>
+                    {pets.map((pet) => (
+                        <PetCard pet={pet}  sx={{width: 350}}/>
+                    ))}
+                </Carousel>
+            </Stack>
         </Box>
-      );
-      
+    );
+
 }
