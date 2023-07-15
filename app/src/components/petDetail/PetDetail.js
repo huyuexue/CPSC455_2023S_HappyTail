@@ -51,7 +51,6 @@ export default function PetDetail({pet, setOpen, token}){
             contactEmail:email,
             contactNumber:number,
         }
-       alert(token)
         const res = await fetch(`http://localhost:3001/pets/${id}`, {
             method: 'PATCH',
             headers: {
@@ -86,7 +85,7 @@ export default function PetDetail({pet, setOpen, token}){
                     required
                     fullWidth
                     id="outlined-helperText"
-                    label="Helper text"
+                    label="name"
                     defaultValue={name}
                     helperText="name"
                     onChange={e => setName(e.target.value)}
@@ -97,7 +96,7 @@ export default function PetDetail({pet, setOpen, token}){
                     required
                     fullWidth
                     id="outlined-helperText"
-                    label="Helper text"
+                    label="number"
                     defaultValue={number}
                     helperText="number"
                     onChange={e => setNumber(e.target.value)}
@@ -107,7 +106,7 @@ export default function PetDetail({pet, setOpen, token}){
                     required
                     fullWidth
                     id="outlined-helperText"
-                    label="Helper text"
+                    label="email"
                     defaultValue={email}
                     helperText="email"
                     onChange={e => setEmail(e.target.value)}
