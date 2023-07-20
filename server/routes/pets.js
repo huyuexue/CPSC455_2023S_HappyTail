@@ -33,6 +33,29 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+// GET filtered pets
+router.get('/filter', async (req, res, next) => {
+  try {
+    const {age, breed, size, gender, coatLength } = req.query;
+    console.log("pass query");
+    const query = {};
+    if (age !== '') query.age = age;
+    if (breed !== '') query.breed = breed;
+    if (size !== '') query.size = size;
+    if (gender !== '') query.gender = gender;
+    if (coatLength !== '') query.coatLength = coatLength;
+    const pets = await Pet.find(query);
+    if (!pets) {
+      // If the pet is not found, return an appropriate response
+      return res.status(404).json({ error: 'Pet not found' });
+    }
+    res.json(pets); // Respond with the found pet as JSON
+  } catch (error) {
+    console.error('Error retrieving a pet:', error);
+    res.status(500).json({ error: 'Failed to retrieve a pet' });
+  }
+});
+
 // GET a single pet by ID 
 router.delete('/:id', async (req, res, next) => {
   try {

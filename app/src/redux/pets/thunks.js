@@ -74,3 +74,10 @@ export const getSearchResultsAsync = createAsyncThunk(
         return await PetsService.getSearchResults({searchTerm, sortTerm});
     }
 );
+
+export const getFilteredPetsAsync = createAsyncThunk(
+    'getFilteredPets',
+    async ({age, breed, size, gender, coatLength}) => {
+        return await PetsService.getFilteredPets({age, breed, size, gender, coatLength});
+    }
+);

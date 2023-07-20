@@ -4,17 +4,17 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {ageItems, breedItems, coatlengthItems, genderItems, sizeItems} from "../forms/options";
 
-export function SelectPetProperties() {
+export function SelectPetProperties({ onApplyFilters }) {
     // filter properties get inspired by https://www.petfinder.com/search/dogs-for-adoption/ca/british-columbia/vancouver/
-    const [age, setSorting] = React.useState("");
+    const [age, setAge] = React.useState("");
     const [breed, setBreed] = React.useState("");
     const [size, setSize] = React.useState("");
     const [gender, setGender] = React.useState("");
     const [coatlength, setCoatlength] = React.useState("");
-   
 
-    const handleSortingChange = (event) => {
-        setSorting(event.target.value);
+
+    const handleAgeChange = (event) => {
+        setAge(event.target.value);
     };
 
     const handleBreedChange = (event) => {
@@ -33,6 +33,25 @@ export function SelectPetProperties() {
         setCoatlength(event.target.value);
     };
 
+    const handleApplyFilters = async () => {
+        const filters = {
+            age,
+            breed,
+            size,
+            gender,
+            coatlength
+        };
+        const response = await fetch('/pets', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(filters)
+        });
+        const result = await response.json();
+        onApplyFilters(result);
+    };
+
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -40,7 +59,7 @@ export function SelectPetProperties() {
             label="Age"
             value={age}
             items={ageItems}
-            onChange={handleSortingChange}
+            onChange={handleAgeChange}
         />
         <PetPropertySelections
             label="Breed"
@@ -66,7 +85,7 @@ export function SelectPetProperties() {
             items={coatlengthItems}
             onChange={handleCoatlengthChange}
         />
-        <Button variant="contained">Apply Filters</Button>
+        <Button variant="contained" onClick={handleApplyFilters}>Apply Filters</Button>
         </Box>
     );
 }
