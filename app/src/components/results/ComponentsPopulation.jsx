@@ -41,12 +41,11 @@ export function SelectPetProperties({ onApplyFilters }) {
             gender,
             coatlength
         };
-        const response = await fetch('/pets', {
-            method: 'POST',
+        const response = await fetch('/pets?' + new URLSearchParams(filters), {
+            method: 'GET',
             headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(filters)
+                'Content-Type': 'application/json'
+            }
         });
         const result = await response.json();
         onApplyFilters(result);
@@ -85,7 +84,7 @@ export function SelectPetProperties({ onApplyFilters }) {
             items={coatlengthItems}
             onChange={handleCoatlengthChange}
         />
-        <Button variant="contained" onClick={handleApplyFilters}>Apply Filters</Button>
+        <Button variant="contained" onClick={() => handleApplyFilters().then(result => onApplyFilters(result))}>Apply Filters</Button>
         </Box>
     );
 }

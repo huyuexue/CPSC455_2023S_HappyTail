@@ -95,7 +95,7 @@ const getFilteredPets = async ({age, breed, size, gender, coatLength}) => {
     const res = await fetch(`http://localhost:3001/pets/filter?age=${age}&breed=${breed}&size=${size}&gender=${gender}&coatLength=${coatLength}`, {
         method: 'GET'
     });
-    return res.json();
+    return await res.json();
 };
 
 export default {
