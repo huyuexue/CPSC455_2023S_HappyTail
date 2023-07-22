@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const Pet = require('../schema/pet'); 
+const { petPersonalityMatch, petMatch } = require('../helpers/searchHelpers');
+
 
 async function getAllPets() {
   try {
@@ -11,6 +13,20 @@ async function getAllPets() {
     throw error;
   }
 }
+
+router.get('/search', async(req, res) => {
+  const petPersonalities = req.query.petPersonality;
+  //const personalityArray = petPersonalities.split(',');
+  try {
+    //const matchingPets = await Pet.find({ petPersonality: { $in: personalityArray } }).select('_id');
+    const matchingPets = await petMatch(req.query);
+    
+    res.json({ matchingPets });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'fetch error' });
+  }
+});
 
 /* GET pets listing. */
 router.get('/all', function(req, res, next) {
