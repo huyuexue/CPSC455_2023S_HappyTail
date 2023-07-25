@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import uploadImageToS3 from './imageUpload';
 
-const ImageUpload = () => {
+const ImageUpload = ({handleChange}) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -16,6 +16,7 @@ const ImageUpload = () => {
         .then((url) => {
           //setImageUrl(url);
           console.log(url);
+          handleChange("setPhoto", {picture: url});
         })
         .catch((error) => {
           console.error('Error uploading image:', error);

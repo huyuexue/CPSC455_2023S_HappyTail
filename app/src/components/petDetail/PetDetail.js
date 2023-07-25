@@ -1,7 +1,4 @@
-
-import {useDispatch, useSelector} from "react-redux";
-import {openUpdateView, update} from "../updatePet/updateFormSlice";
-import {useState,useEffect} from "react"; 
+import {useState,useEffect} from "react";
 import TextField from "@mui/material/TextField";
 import {useNavigate} from "react-router-dom";
 export default function PetDetail({pet, setOpen, token}){

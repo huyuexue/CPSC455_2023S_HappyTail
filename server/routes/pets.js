@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Pet = require('../schema/pet'); 
 const { petPersonalityMatch, petMatch } = require('../helpers/searchHelpers');
+const {getAuth} = require("firebase-admin/auth");
 
 
 async function getAllPets() {
