@@ -1,10 +1,13 @@
 import React from 'react';
 import AWS from 'aws-sdk';
 
+const awsKey = process.env.REACT_APP_ACCESS_KEY_ID;
+const awsSecretKey = process.env.REACT_APP_SECRET_ACCESS_KEY;
+
 //const s3 = new AWS.S3();
 const s3 = new AWS.S3({
-    accessKeyId: 'AKIASXNJ4N6WP6UPL4OP',
-    secretAccessKey: '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',
+    accessKeyId: awsKey,
+    secretAccessKey: awsSecretKey,
     region: 'us-east-1',
   });
 const bucketName = 'happytailsimages';
@@ -21,11 +24,13 @@ async function uploadImageToS3(file) {
     params.ContentType = file.type;
   
     try {
-      const data = await s3.upload(params).promise();
-      return data.Location; 
+        console.log("awsKey: " + awsKey);
+        console.log("awsSecretKey: " + awsSecretKey);
+        const data = await s3.upload(params).promise();
+        return data.Location;
     } catch (error) {
-      console.error('Error uploading image:', error);
-      throw new Error('Image upload failed');
+        console.error('Error uploading image:', error);
+        throw new Error('Image upload failed');
     }
   }
   

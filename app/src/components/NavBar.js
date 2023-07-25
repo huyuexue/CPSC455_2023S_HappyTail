@@ -9,9 +9,8 @@ export default function NavBar() {
     const [isLogin, setIsLogin] = useState(false);
     const buttonRoutes = {
         "Home": "/",
+        "Browse": "/browse",
         "About": "/about",
-        "Blog": "/blog",
-        "Browse": "/browse"
     }
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
