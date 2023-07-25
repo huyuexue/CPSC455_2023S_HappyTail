@@ -13,7 +13,7 @@ export default function Preview({formData, jumpToPage}){
                 </button>
                 <p>
                     1. I need to rehome {species}<br/>
-                    2. Is the pet spayed or neutered? {spayed}<br/>
+                    2. Is the pet altered? {spayed}<br/>
                     3. Why does the pet need to find a new home? {formData.reason}<br/>
                     4. How long have you  own it? {formData.length}<br/>
                 </p>

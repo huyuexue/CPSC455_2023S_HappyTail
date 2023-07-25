@@ -28,7 +28,7 @@ export default function BasicSurvey({ formData, handleChange, setExtra, onOtherS
                 )}<br/>
             </label> <br/>
 
-            <label>2. Is the pet spayed or neutered?
+            <label>2. Is the pet altered?
                 <select name="spayed" value = {formData.spayed} onChange = {handleChange}>
                     <option value = ''>-Please select-</option>
                     <option value = "yes">Yes</option>

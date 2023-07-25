@@ -2,7 +2,6 @@ import React from 'react';
 import MuiButton from './MuiButton';
 import PostCodeSearchBar from '../../forms/PostCodeSearchBar';
 import {Stack, Box, Grid, MenuItem, Typography} from "@mui/material";
-import RehomeButton from "../../RehomeButton";
 import InterestButton from "../InterestButton";
 import {faCat, faDog, faFrog} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
