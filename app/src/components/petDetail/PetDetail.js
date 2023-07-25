@@ -26,6 +26,9 @@ export default function PetDetail({pet, setOpen, token}){
         });
         const data = await res.json();
         setPetInfo(data)
+        setEmail(data.contactEmail)
+        setName(data.contactName)
+        setNumber(data.contactNumber)
         console.log(data)
     };
 
@@ -79,8 +82,10 @@ export default function PetDetail({pet, setOpen, token}){
                 <p>Age: {Math.floor(petInfo.age/12) + " Year " + petInfo.age%12 + " Month"}</p>
                 <p>Description:{petInfo.description}</p>
                 <div className="horizontalLine"></div>
-                <h3>Contact Information</h3>
-                <TextField
+                {dashboard?(
+                        <>
+                    <h3>Contact Information</h3>
+                    <TextField
                     margin="normal"
                     required
                     fullWidth
@@ -111,6 +116,18 @@ export default function PetDetail({pet, setOpen, token}){
                     helperText="email"
                     onChange={e => setEmail(e.target.value)}
                   />
+                     
+                        </>
+                    ):(
+                        <>
+                        <h3>Contact Information</h3>
+                        <p>Name:{petInfo.contactName}</p>
+                        <p>Email:{petInfo.contactEmail}</p>
+                        <p>number:{petInfo.contactNumber}</p>
+                        </>
+                    )}
+
+
                 <div className='btn-container'>
                     {dashboard?(
                         <>

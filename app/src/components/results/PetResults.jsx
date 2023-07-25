@@ -20,6 +20,7 @@ export default function PetResults() {
     ];
 
     const [open, setOpen] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -53,7 +54,7 @@ export default function PetResults() {
                 padding: 2
             }}>
                 {pets.map(pet => (<Grid item xs={4}>
-                    <PetCard key={pet.id} pet={pet}></PetCard>
+                    <PetCard key={pet.id} pet={pet} setRefresh={setRefresh}></PetCard>
                 </Grid>))}
             </Grid>
         </>

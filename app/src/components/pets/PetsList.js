@@ -39,8 +39,12 @@ export default function PetsList() {
                   authorization: token},
     });
     const data=await res.json();
-    console.log(data) 
-    setPets(data)
+    if(res.status!=200){
+      console.log("fetch data failed") 
+      setPets([])
+    }else{
+      setPets(data)
+    }
    }
 
   const getToken=async (user)=>{
