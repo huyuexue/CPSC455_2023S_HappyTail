@@ -9,15 +9,6 @@ const s3 = new AWS.S3({
   });
 const bucketName = 'happytailsimages';
 
-AWS.config.credentials.refresh((error) => {
-    if (error) {
-      console.error('Error refreshing credentials:', error);
-      return;
-    }
-  
-    // Your S3 upload code here
-  });
-
 async function uploadImageToS3(file) {
     const fileName = file.name;
     const fileKey = `images/${fileName}`; 
