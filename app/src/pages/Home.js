@@ -14,8 +14,6 @@ import {LargeIconButton} from "../components/elements/LargeIconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 
-import ImageUpload from "../components/forms/imageUpload/upload"
-
 export default function Home({itemsList}) {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const updateIsOpen = useSelector(updateStatus)
@@ -50,7 +48,6 @@ export default function Home({itemsList}) {
             </Grid>
             {detailViewIsOpen && <PetDetail/>}
             {updateIsOpen && <UpdateForm/>}
-            <ImageUpload />
         </div>
     );
 }

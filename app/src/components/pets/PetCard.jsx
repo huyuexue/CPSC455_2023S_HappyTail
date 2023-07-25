@@ -11,7 +11,6 @@ export default function PetCard({pet, setRefresh, token}) {
         setRefresh(true)
     },[openDetail])
     return (
-
         <>
         <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}} onClick={() => {setOpenDetail(true)}}>
             <CardActionArea>
@@ -26,7 +25,11 @@ export default function PetCard({pet, setRefresh, token}) {
                         {pet.petName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {pet.breed}, {pet.age}
+                        {pet.breed},
+                        {pet.age >= 12
+                            ? `${Math.floor(pet.age/12)} Year ${pet.age % 12} Month`
+                            : `${pet.age} Month`
+                        }
                     </Typography>
                 </CardContent>
             </CardActionArea>
