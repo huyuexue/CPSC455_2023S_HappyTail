@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 const Pet = require('../schema/pet'); 
 
+const {getAuth} = require("firebase-admin/auth")
+
+
+
+
 async function getAllPets() {
   try {
     const pets = await Pet.find({}, 'petName age breed picture');
@@ -12,11 +17,59 @@ async function getAllPets() {
   }
 }
 
+async function middleware(req, res, next)  {
+  if (!req.headers.authorization) {
+    return res.status(403).json({ error: 'invaid token' });
+  }
+
+  const idToken=req.headers.authorization;
+  getAuth().verifyIdToken(idToken)
+  .then((decodedToken) => {
+    req.uid = decodedToken.uid;
+    next()
+  })
+  .catch((error) => {
+    return res.status(403).json({ error: 'invaid token' });
+  });
+}
+
+async function AuthCheck(req, res, next)  {
+  if (req.uid==undefined) {
+    return res.status(403).json({ error: 'invaid token' });
+  }
+  const petId = req.params.id; // Get the pet ID from the route parameter
+  const pet = await Pet.findById(petId);
+  if (!pet) {
+    // If the pet is not found, return an appropriate response
+    return res.status(404).json({ error: 'Pet not found' });
+  }
+  if (pet.uid==req.uid){
+    next()
+  }else{
+    return res.status(403).json({ error: 'incorrect auth' });
+  }
+
+}
+
 /* GET pets listing. */
 router.get('/all', function(req, res, next) {
   getAllPets().then((p) => res.send(p));
 });
 
+router.get('/byuser',middleware, async (req, res, next) => {
+  try {
+    console.log(req.uid)
+    const pet = await Pet.find({uid:req.uid}); // Find the pet by ID
+    if (!pet) {
+      // If the pet is not found, return an appropriate response
+      return res.status(404).json({ error: 'Pet not found' });
+    }
+    res.json(pet); // Respond with the found pet as JSON
+  } catch (error) {
+    console.error('Error retrieving a pet:', error);
+    res.status(500).json({ error: 'Failed to retrieve a pet' });
+  }
+});
 // GET a single pet by ID
 router.get('/:id', async (req, res, next) => {
   try {
@@ -58,8 +111,8 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET a single pet by ID 
-router.delete('/:id', async (req, res, next) => {
+// DELETE a single pet by ID 
+router.delete('/:id', middleware, AuthCheck, async (req, res, next) => {
   try {
     const petId = req.params.id; // Get the pet ID from the route parameter
     const pet = await Pet.findByIdAndRemove(petId); // Find the pet by ID
@@ -77,9 +130,10 @@ router.delete('/:id', async (req, res, next) => {
 
 
 // POST request to add a new pet
-router.post('/', async (req, res) => {
+router.post('/', middleware, async (req, res) => {
   try {
     const newPet = new Pet(req.body); // Create a new Pet instance with the request body data
+    newPet.uid= req.uid;
     const savedPet = await newPet.save(); // Save the new pet to the database
     res.status(201).json(savedPet); // Respond with the saved pet as JSON
   } catch (error) {
@@ -89,10 +143,11 @@ router.post('/', async (req, res) => {
 });
 
 // PATCH request to update a pet by ID
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', middleware, AuthCheck, async (req, res, next) => {
   try {
     const petId = req.params.id; // Get the pet ID from the route parameter
     const updates = req.body; // Get the updates from the request body
+    updates.uid=req.uid;
 
     const pet = await Pet.findByIdAndUpdate(petId, updates, { new: true });
 

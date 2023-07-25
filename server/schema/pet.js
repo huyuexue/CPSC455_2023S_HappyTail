@@ -5,7 +5,7 @@ const petSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  userID:{
+  uid:{
     type: String,
     required: false
   },
@@ -59,15 +59,15 @@ const petSchema = new mongoose.Schema({
   },
   contactName: {
     type: String,
-    required: true
+    required: false
   },
   contactEmail: {
     type: String,
-    required: true
+    required: false
   },
   contactNumber: {
     type: String,
-    required: true
+    required: false
   },
 });
 

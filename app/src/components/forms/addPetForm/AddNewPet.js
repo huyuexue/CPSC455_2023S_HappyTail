@@ -11,14 +11,42 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {addPetAsync} from "../../../redux/pets/thunks";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {useEffect} from "react";
 
 const steps = ['Basic Survey', 'About You', 'Pet Info', 'Preview'];
 
 
 export default function AddNewPet(){
+    const auth = getAuth();
+    const nav = useNavigate();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
 
+        } else {
+               nav('/login')
+        }
+        });
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const[token, setToken]=useState("");
+
+    const getToken=async (user)=>{
+        const token= await user.getIdToken()
+        console.log(token)
+        setToken(token)
+      }
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            getToken(user)
+          } else {
+                 // alert("login please")
+          }
+          });
+      }, []);
+
 
     const[formData, setFormData] = useState({
         petName:'',
@@ -51,6 +79,56 @@ export default function AddNewPet(){
 
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState({});
+
+    const addPet = async (formData) => {
+
+        var species;
+        if(formData.extra === true) {
+            species=formData.otherSpecies
+        } else{
+            species=formData.species
+        } 
+        const petage=formData.ageYear*12 +formData.ageMonth;
+
+        let input={
+            petName:formData.petName,
+            species: species,
+            breed: formData.breed,
+            gender: formData.gender,
+            age: petage,
+            picture: formData.picture,
+            description: formData.description,
+            houseTrained: true,
+            furType: formData.furType,
+            size: formData.size,
+            petPersonality: formData.petPersonality,
+            spayed: formData.spayed,
+            postCode: formData.postcode,
+            reason: formData.reason,
+            length: formData.length,
+            contactEmail: formData.email,
+            contactName: formData.firstName+formData.lastName,
+            contactNumber: formData.phoneNumber,
+            postalCode: formData.postalCode,
+            city: formData.city,
+            province: formData.province
+        }
+
+        console.log(input)
+        
+
+        const res = await fetch("http://localhost:3001/pets", {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+        },
+        body: JSON.stringify(input)});
+
+    const data = await res.json();
+    console.log(data);
+    };
+
 
     const handleNext = () => {
         checkFill();
@@ -130,36 +208,13 @@ export default function AddNewPet(){
         }
     };
 
-    const handleSubmit = () => {
-        if (Object.keys(completed).length !== 3) {
-            return;
-        }
-        dispatch(addPetAsync({
-            petName:formData.petName,
-            species: (formData.extra === true) ? formData.otherSpecies : formData.species,
-            breed: formData.breed,
-            gender: formData.gender,
-            age: formData.ageYear*12 +formData.ageMonth,
-            picture: formData.picture,
-            description: formData.description,
-            houseTrained: (formData.houseTrained === 'yes'),
-            furType: formData.furType,
-            size: formData.size,
-            petPersonality: formData.petPersonality,
-            spayed: formData.spayed,
-            postCode: formData.postcode,
-            /*reason: formData.reason,
-            length: formData.length,
-            email: formData.email,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            phoneNumber: formData.phoneNumber,
-            postalCode: formData.postalCode,
-            city: formData.city,
-            province: formData.province,*/
-        //TODO: check if we need these since use need to login
-        }));
-        navigate('/');//TODO: navigate to user dashboard
+    const handleSubmit = async() => { 
+
+
+
+
+        addPet (formData);
+        navigate('/dashboard');
     }
 
     const setExtra = (e) => {
@@ -243,7 +298,7 @@ export default function AddNewPet(){
 
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                        <Button disabled={activeStep !== 3} onClick={handleSubmit} sx={{mr: 1}}>
+                        <Button  onClick={()=>handleSubmit()} sx={{mr: 1}}>
                             {activeStep === 3
                                 ? 'Submit'
                                 : ''}

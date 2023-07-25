@@ -3,15 +3,24 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
 import {useState} from "react";
 import {Link} from "react-router-dom";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import UserMenu from "./menu";
 export default function NavBar() {
+    const [isLogin, setIsLogin] = useState(false);
     const buttonRoutes = {
         "Home": "/",
         "About": "/about",
-        "List a Pet": "/addNewPet",
         "Blog": "/blog",
         "Browse": "/browse"
     }
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+
+        } else {
+               setIsLogin(true)
+        }
+        });
 
     const rightButtonRoutes = {
         "Login": "/login",
@@ -131,17 +140,20 @@ export default function NavBar() {
                     ))}
                 </Box>
                 <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}, justifyContent: 'flex-end'}}>
-                    {Object.entries(rightButtonRoutes).map(([name, route]) => (
-                        <Link to={route} style={{ textDecoration: 'none' }}>
+                  {!isLogin?(<>
+                            <UserMenu/>
+
+                  </>):(<>
+                    <Link to={"/login"} style={{ textDecoration: 'none' }}>
                             <Button
-                                key={name}
                                 onClick={handleCloseNavMenu}
                                 sx={{my: 2, color: 'white', display: 'block'}}
                             >
-                                {name}
+                                login
                             </Button>
                         </Link>
-                    ))}
+                  </>)}
+    
                 </Box>
             </Toolbar>
         </AppBar>

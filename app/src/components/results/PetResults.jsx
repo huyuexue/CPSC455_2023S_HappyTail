@@ -6,7 +6,8 @@ import PetsIcon from "@mui/icons-material/Pets";
 import {LocationOn, PriorityHigh, Restore, Schedule, Sort, Update} from "@mui/icons-material";
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-
+import {useEffect} from "react";
+import {getPetsAsync} from "../../redux/pets/thunks";
 export default function PetResults() {
     const dispatch = useDispatch();
     const pets = useSelector(state => state.pets.list);
@@ -20,8 +21,14 @@ export default function PetResults() {
     ];
 
     const [open, setOpen] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    useEffect(() => {
+        dispatch(getPetsAsync());
+    }, [pets.length]); //TODO: need to fix this dispatch
+
 
     return (<>
             {/*https://mui.com/material-ui/react-menu/#menulist-composition*/}
@@ -53,7 +60,7 @@ export default function PetResults() {
                 padding: 2
             }}>
                 {pets.map(pet => (<Grid item xs={4}>
-                    <PetCard key={pet.id} pet={pet}></PetCard>
+                    <PetCard key={pet.id} pet={pet} setRefresh={setRefresh}></PetCard>
                 </Grid>))}
             </Grid>
         </>
