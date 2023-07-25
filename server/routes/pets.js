@@ -4,9 +4,6 @@ const Pet = require('../schema/pet');
 
 const {getAuth} = require("firebase-admin/auth")
 
-
-
-
 async function getAllPets() {
   try {
     const pets = await Pet.find({}, 'petName age breed picture');
@@ -70,6 +67,7 @@ router.get('/byuser',middleware, async (req, res, next) => {
     res.status(500).json({ error: 'Failed to retrieve a pet' });
   }
 });
+
 // GET a single pet by ID
 router.get('/:id', async (req, res, next) => {
   try {
@@ -100,10 +98,6 @@ router.get('/', async (req, res, next) => {
     if (gender !== '') query.gender = gender;
     if (coatLength !== '') query.coatLength = coatLength;
     const pets = await Pet.find(query);
-    // if (!pets) {
-    //   // If the pet is not found, return an appropriate response
-    //   return res.status(404).json({ error: 'Pet not found' });
-    // }
     res.json(pets); // Respond with the found pet as JSON
   } catch (error) {
     console.error('Error retrieving a pet:', error);
