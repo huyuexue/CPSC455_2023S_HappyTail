@@ -17,9 +17,7 @@ export default function PetResults() {
     var petsResult = pets;
 
     if (search.species != '') {
-        console.log(pets);
         petsResult = pets.filter(pet => pet.species === search.species);
-        console.log(petsResult);
     }
 
     const sortings = [
@@ -69,7 +67,7 @@ export default function PetResults() {
             <Grid container spacing={3} sx={{
                 padding: 2
             }}>
-                {petsResult.map(pet => (<Grid item xs={4}>
+                {petsResult.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
                     <PetCard key={pet.id} pet={pet} setRefresh={setRefresh}></PetCard>
                 </Grid>))}
             </Grid>
