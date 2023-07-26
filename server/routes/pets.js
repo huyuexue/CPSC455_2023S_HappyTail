@@ -7,7 +7,7 @@ const {getAuth} = require("firebase-admin/auth");
 
 async function getAllPets() {
   try {
-    const pets = await Pet.find({}, 'petName age breed picture');
+    const pets = await Pet.find({}, 'petName age breed picture species');
     return pets;
   } catch (error) {
     console.error('Error retrieving pets:', error);

@@ -1,9 +1,16 @@
-import {createSlice, nanoid} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {addPetAsync, deletePetAsync, getPetsAsync, getSearchResultsAsync, getFilteredPetsAsync} from "./thunks";
 
 const initialState  = {
     list:[],
-    search:"",
+    search: {
+        species:'',
+        age:'',
+        breed:'',
+        size:'',
+        gender:'',
+        coatLength: '',
+    },
     sort:"default"
 }
 
@@ -11,6 +18,11 @@ const petsReducer = createSlice({
     name: 'pets',
     initialState,
     reducers: {
+        updateSpecies: {
+            reducer: (state, action)=> {
+                state.search.species = action.payload;
+            }
+        },
         setSort: {
             reducer: (state, action) => {
                 state.sort = action.payload;
@@ -78,5 +90,5 @@ const petsReducer = createSlice({
     }
 });
 
-export const {setSort, setSearch} = petsReducer.actions;
+export const {updateSpecies, setSort, setSearch} = petsReducer.actions;
 export default petsReducer.reducer
