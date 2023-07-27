@@ -4,7 +4,7 @@ import PostCodeSearchBar from '../../forms/PostCodeSearchBar';
 import {Stack, Box, Grid, MenuItem, Typography} from "@mui/material";
 import InterestButton from "../InterestButton";
 import {faCat, faDog, faFrog} from "@fortawesome/free-solid-svg-icons";
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function ButtonBar() {
     const buttons = [
