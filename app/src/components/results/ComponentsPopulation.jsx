@@ -2,23 +2,11 @@ import { PetPropertySelections } from "./FilterSelection";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import {ageItems, breedItems, coatlengthItems, genderItems, sizeItems, speciesItems} from "../forms/options";
-import {useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {updateSpecies} from "../../redux/pets/reducer";
+import {ageItems, breedItems, coatlengthItems, genderItems, sizeItems} from "../forms/options";
+
 
 export function SelectPetProperties({ onApplyFilters }) {
     // filter properties get inspired by https://www.petfinder.com/search/dogs-for-adoption/ca/british-columbia/vancouver/
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const initialSpecies = queryParams.get('type') || '';
-    const [species, setSpecies] = React.useState(initialSpecies);
-    // update global store based on specie
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(updateSpecies(initialSpecies));
-    }, []); // Empty dependency array means this effect runs once on mount
 
     const [age, setAge] = React.useState("");
     const [breed, setBreed] = React.useState("");
@@ -26,9 +14,6 @@ export function SelectPetProperties({ onApplyFilters }) {
     const [gender, setGender] = React.useState("");
     const [coatlength, setCoatlength] = React.useState("");
 
-    const handleSpeciesChange = (event) => {
-        setSpecies(event.target.value);
-    };
 
     const handleAgeChange = (event) => {
         setAge(event.target.value);
@@ -72,12 +57,6 @@ export function SelectPetProperties({ onApplyFilters }) {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <PetPropertySelections
-                label="Species"
-                value={species}
-                items={speciesItems}
-                onChange={handleSpeciesChange}
-            />
             <PetPropertySelections
                 label="Age"
                 value={age}
