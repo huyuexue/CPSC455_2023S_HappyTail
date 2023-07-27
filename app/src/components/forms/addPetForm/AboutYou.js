@@ -7,16 +7,25 @@ export default function AboutYou({formData, handleChange}) {
             <Grid container spacing={4} sx={{padding: 10}}>
                 <Grid item xs={3}>
                     <Stack spacing={2}>
-                        <TextField id="outlined-basic" label="Email" variant="outlined"/>
-                        <TextField id="outlined-basic" label="First Name" variant="outlined"/>
-                        <TextField id="outlined-basic" label="Last Name" variant="outlined"/>
-                        <TextField id="outlined-basic" label="Phone Number" variant="outlined"/>
+                        <TextField id="outlined-basic" label="Email" value={formData.email} variant="outlined" onChange={handleChange}/>
+                        <TextField id="outlined-basic" label="First Name" value={formData.firstName} variant="outlined" onChange={handleChange}/>
+                        <TextField id="outlined-basic" label="Last Name" value={formData.lastName} variant="outlined" onChange={handleChange}/>
+                        <TextField id="outlined-basic" label="Phone Number" value={formData.phoneNumber}variant="outlined" onChange={handleChange}/>
                     </Stack>
                 </Grid>
                 <Grid item xs={0}>
                     <Divider orientation="vertical"/>
                 </Grid>
                 <Grid item xs={8}>
+                    <Stack spacing={2}>
+                        <TextField id="outlined-basic" label="Postal Code" value={formData.postalCode}
+                                   variant="outlined"
+                                   onChange={handleChange}/>
+                        <TextField id="outlined-basic" label="City" value={formData.city}
+                                   variant="outlined" onChange={handleChange}/>
+                        <TextField id="outlined-basic" label="Province" value={formData.province}
+                                   variant="outlined" onChange={handleChange}/>
+                    </Stack>
                 </Grid>
             </Grid>
         </div>

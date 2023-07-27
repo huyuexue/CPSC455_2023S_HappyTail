@@ -39,7 +39,8 @@ export default function PetsList() {
                   authorization: token},
     });
     const data=await res.json();
-    console.log(data) 
+    console.log("GOT");
+    console.log(data)
     setPets(data)
    }
 
@@ -66,8 +67,6 @@ export default function PetsList() {
             <h2>Pets Looking for A Forever Home</h2>
             <div className="slideshow-container">
               <Grid container spacing={1} alignItems="center" sx={{width:'100%', rowGap:'50px' }}>
-
-
                   {pets.map((pet, index) => (
                     <Grid item xs={4} 
                       key={pet.id}
