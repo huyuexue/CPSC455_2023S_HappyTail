@@ -48,8 +48,8 @@ export default function PetsBrief() {
             <Stack justifyContent="center" alignItems="center" spacing={3}>
                 <h1>Browse Pets</h1>
                 <Carousel sx={{width: 350}}>
-                    {pets.map((pet) => (
-                        <PetCard pet={pet}  setRefresh={setRefresh} sx={{width: 350}}/>
+                    {pets.map((pet,index) => (
+                        <PetCard pet={pet}  key={index} setRefresh={setRefresh} sx={{width: 350}}/>
                     ))}
                 </Carousel>
             </Stack>

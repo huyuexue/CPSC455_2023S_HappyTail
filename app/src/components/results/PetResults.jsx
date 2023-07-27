@@ -12,6 +12,14 @@ export default function PetResults() {
     const dispatch = useDispatch();
     const pets = useSelector(state => state.pets.list);
 
+    const search = useSelector(state => state.pets.search);
+
+    var petsResult = pets;
+
+    if (search.species != '') {
+        petsResult = pets.filter(pet => pet.species === search.species);
+    }
+
     const sortings = [
         {label: "Recommended", value: "Recommended", icon: <PetsIcon/>},
         {label: "Newest", value: "Newest", icon: <Update/>},
@@ -59,7 +67,7 @@ export default function PetResults() {
             <Grid container spacing={3} sx={{
                 padding: 2
             }}>
-                {pets.map(pet => (<Grid item xs={4}>
+                {petsResult.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
                     <PetCard key={pet.id} pet={pet} setRefresh={setRefresh}></PetCard>
                 </Grid>))}
             </Grid>

@@ -1,21 +1,33 @@
 var express = require('express');
 var router = express.Router();
 const Pet = require('../schema/pet'); 
-
-const {getAuth} = require("firebase-admin/auth")
-
-
+const { petPersonalityMatch, petMatch } = require('../helpers/searchHelpers');
+const {getAuth} = require("firebase-admin/auth");
 
 
 async function getAllPets() {
   try {
-    const pets = await Pet.find({}, 'petName age breed picture');
+    const pets = await Pet.find({}, 'petName age breed picture species');
     return pets;
   } catch (error) {
     console.error('Error retrieving pets:', error);
     throw error;
   }
 }
+
+router.get('/search', async(req, res) => {
+  const petPersonalities = req.query.petPersonality;
+  //const personalityArray = petPersonalities.split(',');
+  try {
+    //const matchingPets = await Pet.find({ petPersonality: { $in: personalityArray } }).select('_id');
+    const matchingPets = await petMatch(req.query);
+
+    res.json({ matchingPets });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'fetch error' });
+  }
+});
 
 async function middleware(req, res, next)  {
   if (!req.headers.authorization) {
@@ -109,7 +121,7 @@ router.get('/filter', async (req, res, next) => {
   }
 });
 
-// DELETE a single pet by ID 
+// DELETE a single pet by ID
 router.delete('/:id', middleware, AuthCheck, async (req, res, next) => {
   try {
     const petId = req.params.id; // Get the pet ID from the route parameter
