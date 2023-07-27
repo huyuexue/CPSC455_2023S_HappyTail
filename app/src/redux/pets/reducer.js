@@ -11,7 +11,8 @@ const initialState  = {
         gender:'',
         coatLength: '',
     },
-    sort:"default"
+    sort:"default",
+    searchList:[]
 }
 
 const petsReducer = createSlice({
@@ -20,7 +21,16 @@ const petsReducer = createSlice({
     reducers: {
         updateSpecies: {
             reducer: (state, action)=> {
-                state.search.species = action.payload;
+                var species = action.payload;
+                state.search.species = species;
+                if (species === '') {
+                    state.searchList = state.list;
+                }else if (species !== 'Any') {
+                    state.searchList = state.list.filter(pet => pet.species === species);
+                } else {
+                    state.searchList = state.list;
+                }
+                console.log(state.searchList);
             }
         },
         setSort: {
@@ -46,7 +56,7 @@ const petsReducer = createSlice({
             .addCase(getPetsAsync.rejected, (state, action) => {
                 console.log("rejected  to get all");
             })
-                        .addCase(addPetAsync.pending, (state, action) => {
+            .addCase(addPetAsync.pending, (state, action) => {
                 console.log("waiting to add");
             })
             .addCase(addPetAsync.fulfilled, (state, action) => {
