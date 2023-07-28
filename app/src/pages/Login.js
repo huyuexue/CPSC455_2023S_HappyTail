@@ -19,7 +19,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-
+import { useNavigate  } from "react-router-dom";
 
 
 import {
@@ -47,7 +47,7 @@ export default function LoginPage(){
     const [password, setPassword] = useState("");
     const [emailErr, setEmailErr] = useState("");
     const [passwordErr, setPsErr] = useState("");
-  
+    const nav = useNavigate();
     const loginWithFirebase = async () => {
             setEmailErr('')
             setPsErr('')
@@ -60,8 +60,9 @@ export default function LoginPage(){
                             console.log('firebase signin sucess')
                             auth.currentUser.getIdToken(true)
                             .then((token)=>{
-                              localStorage.setItem('tokenId', token)
-                              window.location.href="/dashboard"
+                                localStorage.setItem('tokenId', token)
+                              //window.location.href="/dashboard"
+                                nav("/dashboard");
                             })
                         })
                         .catch((error) => {
