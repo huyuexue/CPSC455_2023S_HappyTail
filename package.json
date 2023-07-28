@@ -4,7 +4,9 @@
       "server": "cd server && npm run start",
       "start": "concurrently \"npm run server\" \"npm run client\"",
       "server_dev": "cd server && npm run dev",
-      "dev": "concurrently \"npm run server_dev\" \"npm run client\""
+      "dev": "concurrently \"npm run server_dev\" \"npm run client\"",
+      "install-client": "cd app && npm install",
+      "build-client": "cd app && npm run build"
     },
     "devDependencies": {
       "concurrently": "^8.2.0"
