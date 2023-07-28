@@ -74,7 +74,7 @@ export default function PetsList() {
 
                   {pets.map((pet, index) => (
                     <Grid item xs={4} 
-                      key={pet.id}
+                      key={index}
                       display="flex" justifyContent="center" alignItems="center"
                     >
                       { <PetCard pet={pet} setRefresh={setRefresh} token={token} />}
