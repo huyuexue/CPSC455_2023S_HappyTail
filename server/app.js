@@ -16,16 +16,13 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
 
-
 var app = express();
-
-
-app.use(cors());
-
-
+const corsOptions = {
+    origin: "https://happytails-0zfr.onrender.com",
+}
+app.use(cors(corsOptions));
 
 //database
-
 require('dotenv').config();
 const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;
