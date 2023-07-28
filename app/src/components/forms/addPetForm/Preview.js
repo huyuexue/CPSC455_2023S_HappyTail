@@ -13,7 +13,7 @@ export default function Preview({formData, jumpToPage}){
                 </button>
                 <p>
                     1. I need to rehome {species}<br/>
-                    2. Is the pet spayed or neutered? {spayed}<br/>
+                    2. Is the pet altered? {spayed}<br/>
                     3. Why does the pet need to find a new home? {formData.reason}<br/>
                     4. How long have you  own it? {formData.length}<br/>
                 </p>
@@ -45,7 +45,7 @@ export default function Preview({formData, jumpToPage}){
             <p>
                 Pet Name: {formData.petName}<br/>
                 Photo: <br/>
-                {(formData.picture === null)?'' : <img className="previewPhoto" src = {formData.picture} />}<br/>
+                {(formData.picture === '')?'' : <img className="previewPhoto" src = {formData.picture} />}<br/>
                 Breed: {formData.breed}<br/>
                 Gender: {formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1)}<br/>
                 Age: {formData.ageYear} Year {formData.ageMonth} Month <br/>

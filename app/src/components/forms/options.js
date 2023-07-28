@@ -1,5 +1,10 @@
+
+export const speciesItems = [
+    { label: "Any", value: "Any" },
+    { label: "Cat", value: "cat" },
+    { label: "Dog", value: "dog" },
+];
 export const ageItems = [
-    { label: "Puppy", value: "puppy" },
     { label: "Young", value: "young" },
     { label: "Adult", value: "adult" },
     { label: "Senior", value: "senior" },

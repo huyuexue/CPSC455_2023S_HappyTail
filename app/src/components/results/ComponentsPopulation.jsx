@@ -4,8 +4,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {ageItems, breedItems, coatlengthItems, genderItems, sizeItems} from "../forms/options";
 
+
 export function SelectPetProperties({ onApplyFilters }) {
     // filter properties get inspired by https://www.petfinder.com/search/dogs-for-adoption/ca/british-columbia/vancouver/
+
     const [age, setAge] = React.useState("");
     const [breed, setBreed] = React.useState("");
     const [size, setSize] = React.useState("");
@@ -55,37 +57,37 @@ export function SelectPetProperties({ onApplyFilters }) {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <PetPropertySelections
-            label="Age"
-            value={age}
-            items={ageItems}
-            onChange={handleAgeChange}
-        />
-        <PetPropertySelections
-            label="Breed"
-            value={breed}
-            items={breedItems}
-            onChange={handleBreedChange}
-        />
-        <PetPropertySelections
-            label="Size"
-            value={size}
-            items={sizeItems}
-            onChange={handleSizeChange}
-        />
-        <PetPropertySelections
-            label="Gender"
-            value={gender}
-            items={genderItems}
-            onChange={handleGenderChange}
-        />
-        <PetPropertySelections
-            label="Coat Length"
-            value={coatlength}
-            items={coatlengthItems}
-            onChange={handleCoatlengthChange}
-        />
-        <Button variant="contained" onClick={handleApplyFilters}>Apply Filters</Button>
+            <PetPropertySelections
+                label="Age"
+                value={age}
+                items={ageItems}
+                onChange={handleAgeChange}
+            />
+            <PetPropertySelections
+                label="Breed"
+                value={breed}
+                items={breedItems}
+                onChange={handleBreedChange}
+            />
+            <PetPropertySelections
+                label="Size"
+                value={size}
+                items={sizeItems}
+                onChange={handleSizeChange}
+            />
+            <PetPropertySelections
+                label="Gender"
+                value={gender}
+                items={genderItems}
+                onChange={handleGenderChange}
+            />
+            <PetPropertySelections
+                label="Coat Length"
+                value={coatlength}
+                items={coatlengthItems}
+                onChange={handleCoatlengthChange}
+            />
+            <Button variant="contained" onClick={handleApplyFilters}>Apply Filters</Button>
         </Box>
     );
 }

@@ -152,10 +152,7 @@ export default function LoginPage(){
                  <Typography sx={{color:"red", fontSize: "12px", marginBottom:"12px"}}>
                   {passwordErr}
                 </Typography>
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
+
                   <Button
                     fullWidth
                     variant="contained"

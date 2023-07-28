@@ -10,11 +10,10 @@ import Chip from '@mui/material/Chip';
 
 
 export function PetPropertySelections(props) {
-    const { label, items } = props;
-    const [value, setValue] = React.useState("");
+    const { label, value, items, onChange } = props;
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        onChange(event.target.value);
     };
 
     return (

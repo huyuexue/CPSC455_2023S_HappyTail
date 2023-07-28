@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const Pet = require('../schema/pet'); 
+const { petPersonalityMatch, petMatch } = require('../helpers/searchHelpers');
+const {getAuth} = require("firebase-admin/auth");
+
 
 async function getAllPets() {
   try {
-    const pets = await Pet.find({}, 'petName age breed picture');
+    const pets = await Pet.find({}, 'petName age breed picture species');
     return pets;
   } catch (error) {
     console.error('Error retrieving pets:', error);
@@ -12,39 +15,19 @@ async function getAllPets() {
   }
 }
 
-async function middleware(req, res, next)  {
-  if (!req.headers.authorization) {
-    return res.status(403).json({ error: 'invaid token' });
-  }
+router.get('/search', async(req, res) => {
+  const petPersonalities = req.query.petPersonality;
+  //const personalityArray = petPersonalities.split(',');
+  try {
+    //const matchingPets = await Pet.find({ petPersonality: { $in: personalityArray } }).select('_id');
+    const matchingPets = await petMatch(req.query);
 
-  const idToken=req.headers.authorization;
-  getAuth().verifyIdToken(idToken)
-  .then((decodedToken) => {
-    req.uid = decodedToken.uid;
-    next()
-  })
-  .catch((error) => {
-    return res.status(403).json({ error: 'invaid token' });
-  });
-}
-
-async function AuthCheck(req, res, next)  {
-  if (req.uid==undefined) {
-    return res.status(403).json({ error: 'invaid token' });
+    res.json({ matchingPets });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'fetch error' });
   }
-  const petId = req.params.id; // Get the pet ID from the route parameter
-  const pet = await Pet.findById(petId);
-  if (!pet) {
-    // If the pet is not found, return an appropriate response
-    return res.status(404).json({ error: 'Pet not found' });
-  }
-  if (pet.uid==req.uid){
-    next()
-  }else{
-    return res.status(403).json({ error: 'incorrect auth' });
-  }
-
-}
+});
 
 async function middleware(req, res, next)  {
   if (!req.headers.authorization) {
@@ -152,7 +135,7 @@ router.get('/filter', async (req, res, next) => {
   }
 });
 
-// DELETE a single pet by ID 
+// DELETE a single pet by ID
 router.delete('/:id', middleware, AuthCheck, async (req, res, next) => {
   try {
     const petId = req.params.id; // Get the pet ID from the route parameter

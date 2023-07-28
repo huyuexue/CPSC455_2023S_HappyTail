@@ -1,16 +1,38 @@
-import {createSlice, nanoid} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {addPetAsync, deletePetAsync, getPetsAsync, getSearchResultsAsync, getFilteredPetsAsync} from "./thunks";
 
 const initialState  = {
     list:[],
-    search:"",
-    sort:"default"
+    search: {
+        species:'',
+        age:'',
+        breed:'',
+        size:'',
+        gender:'',
+        coatLength: '',
+    },
+    sort:"default",
+    searchList:[]
 }
 
 const petsReducer = createSlice({
     name: 'pets',
     initialState,
     reducers: {
+        updateSpecies: {
+            reducer: (state, action)=> {
+                var species = action.payload;
+                state.search.species = species;
+                if (species === '') {
+                    state.searchList = state.list;
+                }else if (species !== 'Any') {
+                    state.searchList = state.list.filter(pet => pet.species === species);
+                } else {
+                    state.searchList = state.list;
+                }
+                console.log(state.searchList);
+            }
+        },
         setSort: {
             reducer: (state, action) => {
                 state.sort = action.payload;
@@ -34,7 +56,7 @@ const petsReducer = createSlice({
             .addCase(getPetsAsync.rejected, (state, action) => {
                 console.log("rejected  to get all");
             })
-                        .addCase(addPetAsync.pending, (state, action) => {
+            .addCase(addPetAsync.pending, (state, action) => {
                 console.log("waiting to add");
             })
             .addCase(addPetAsync.fulfilled, (state, action) => {
@@ -78,5 +100,5 @@ const petsReducer = createSlice({
     }
 });
 
-export const {setSort, setSearch} = petsReducer.actions;
+export const {updateSpecies, setSort, setSearch} = petsReducer.actions;
 export default petsReducer.reducer

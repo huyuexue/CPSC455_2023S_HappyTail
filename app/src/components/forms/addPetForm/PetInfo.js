@@ -1,6 +1,7 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
+import ImageUpload from "../imageUpload/upload";
 
-export default function PetInfo({formData, handleChange, onPhotoChanged, onPostcodeFocus }){
+export default function PetInfo({formData, handleChange, onPostcodeFocus }){
     const [houseTrained, setHouseTrained] = useState(formData.houseTrained);
     const handleHouseTrainedChange = (e) => {
         const value = e.target.value;
@@ -9,6 +10,7 @@ export default function PetInfo({formData, handleChange, onPhotoChanged, onPostc
     };
 
     const [personalities, setPersonalities] = useState(formData.petPersonality);
+
 
     const handlePersonalityChange = (option) => {
         setPersonalities((prevPersonalities) => {
@@ -30,22 +32,6 @@ export default function PetInfo({formData, handleChange, onPhotoChanged, onPostc
         return personalities.includes(option);
     };
 
-    const fileInputRef = useRef(null);
-    const [selectedFileName, setSelectedFileName] = useState(formData.pictureName);
-
-    const handleFileInputChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setSelectedFileName(file.name);
-            onPhotoChanged(event, file.name);
-        } else {
-            setSelectedFileName(null);
-        }
-    };
-
-    const handleBrowseClick = () => {
-        fileInputRef.current.click();
-    };
     return (
         <div className="from">
             <h2>Pet Information</h2>
@@ -55,21 +41,13 @@ export default function PetInfo({formData, handleChange, onPhotoChanged, onPostc
                 /><br/>
             </label> <br/>
             <label >
-                <div className="custom-file-input">
-                    Photo:
-                    {/*<input
-                        ref={fileInputRef}
-                        type="file"
-                        name="photo"
-                        onChange={handleFileInputChange}
-                    />
-                    <button onClick={handleBrowseClick}>Browse</button>
-                    {selectedFileName && <span>{selectedFileName}</span>}*/}
-                    <input type="text" name = "picture" value = {formData.picture}
-                           onChange = {handleChange}
-                    /><br/>
-
-                </div>
+                Photo:
+                {formData.picture !== '' && (
+                    <div>
+                        <img className="previewPhoto" src={formData.picture} />
+                    </div>
+                )}
+                <ImageUpload handleChange={handleChange} />
             </label> <br/>
             <label >Breed:
                 <input type="text" name = "breed" value = {formData.breed}

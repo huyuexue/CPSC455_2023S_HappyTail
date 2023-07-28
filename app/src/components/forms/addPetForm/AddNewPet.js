@@ -59,7 +59,7 @@ export default function AddNewPet(){
         gender: '',
         ageYear: '',
         ageMonth: '',
-        picture: null,
+        picture: '',
         description: '',
         houseTrained: '',
         furType: '',
@@ -90,7 +90,8 @@ export default function AddNewPet(){
         } else{
             species=formData.species
         } 
-        const petage=formData.ageYear*12 +formData.ageMonth;
+        const petage=parseInt(formData.ageYear, 10)*12 + parseInt(formData.ageMonth,10);
+        console.log("formData.ageYear: " + formData.ageYear + ", formData.ageMonth: " + formData.ageMonth + ", total: " + petage)
 
         let input={
             petName:formData.petName,
@@ -200,6 +201,11 @@ export default function AddNewPet(){
                 ...prevData,
                 houseTrained: updatedFormData.houseTrained,
             }));
+        }else if (e === "setPhoto") {
+            setFormData((prevData) => ({
+                ...prevData,
+                picture: updatedFormData.picture,
+            }));
         }
         else {
             const { name, value } = e.target;
@@ -210,11 +216,7 @@ export default function AddNewPet(){
         }
     };
 
-    const handleSubmit = async() => { 
-
-
-
-
+    const handleSubmit = async() => {
         addPet (formData);
         navigate('/dashboard');
     }
@@ -247,27 +249,11 @@ export default function AddNewPet(){
 
     };
 
-    const onPhotoChanged = (e, fileName) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const imageDataURL = event.target.result;
-                setFormData((prevData) => ({
-                    ...prevData,
-                    ["picture"]: imageDataURL,
-                    ["pictureName"]: fileName,
-                }));
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
     const subForms = [
         <BasicSurvey formData={formData} handleChange={handleChange} setExtra={setExtra}
                      onOtherSpeciesFocus={onOtherSpeciesFocus}/>,
         <AboutYou formData={formData} handleChange={handleChange}/>,
-        <PetInfo formData={formData} handleChange={handleChange} onPhotoChanged={onPhotoChanged} onPostcodeFocus={onPostcodeFocus}/>,
+        <PetInfo formData={formData} handleChange={handleChange} onPostcodeFocus={onPostcodeFocus}/>,
         <Preview formData={formData} jumpToPage={jumpToPage}/>,
     ]
 

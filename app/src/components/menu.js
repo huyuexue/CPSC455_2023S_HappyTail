@@ -23,6 +23,7 @@ export default function UserMenu() {
 
   const signout = async () => {
    await auth.signOut()
+   nav("/")
     setAnchorEl(null);
   };
   

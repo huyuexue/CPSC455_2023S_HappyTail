@@ -1,26 +1,25 @@
-import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
+import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import UserMenu from "./menu";
 export default function NavBar() {
     const [isLogin, setIsLogin] = useState(false);
     const buttonRoutes = {
         "Home": "/",
+        "Browse": "/browse",
         "About": "/about",
-        "Blog": "/blog",
-        "Browse": "/browse"
     }
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
 
         } else {
-               setIsLogin(true)
+            setIsLogin(true)
         }
-        });
+    });
 
     const rightButtonRoutes = {
         "Login": "/login",
@@ -34,20 +33,10 @@ export default function NavBar() {
         setAnchorElNav(null);
     };
 
-
     return (
-        // <div className = "navBar">
-        //     <ul className = "navLinks">
-        //         <li><Link to="add">Add Item</Link></li>
-        //         <li><Link to="/" id = "home">Home</Link></li>
-        //         <li><Link to="about">About</Link></li>
-        //         <li><Link to="Browse">Browse</Link></li>
-        //     </ul>
-        // </div>
-        // based on https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
         <AppBar position="static">
             <Toolbar>
-                <PetsIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                <PetsIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                 <Typography
                     variant="h6"
                     noWrap
@@ -55,7 +44,7 @@ export default function NavBar() {
                     href="/"
                     sx={{
                         mr: 2,
-                        display: {xs: 'none', md: 'flex'},
+                        display: { xs: 'none', md: 'flex' },
                         fontWeight: 700,
                         color: 'inherit',
                         textDecoration: 'none',
@@ -64,7 +53,7 @@ export default function NavBar() {
                     Happy Tails
                 </Typography>
 
-                <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                     <IconButton
                         size="large"
                         aria-label="navigation menu"
@@ -73,7 +62,7 @@ export default function NavBar() {
                         onClick={handleOpenNavMenu}
                         color="inherit"
                     >
-                        <MenuIcon/>
+                        <MenuIcon />
                     </IconButton>
                     <Menu
                         id="menu-appbar"
@@ -90,26 +79,26 @@ export default function NavBar() {
                         open={Boolean(anchorElNav)}
                         onClose={handleCloseNavMenu}
                         sx={{
-                            display: {xs: 'block', md: 'none'},
+                            display: { xs: 'block', md: 'none' },
                         }}
                     >
                         {Object.entries(buttonRoutes).map(([name, route]) => (
-                            <Link to={route} style={{textDecoration: 'none'}}>
-                                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                            <MenuItem key={name} onClick={handleCloseNavMenu}>
+                                <Link to={route} style={{ textDecoration: 'none' }}>
                                     <Typography textAlign="center">{name}</Typography>
-                                </MenuItem>
-                            </Link>
+                                </Link>
+                            </MenuItem>
                         ))}
                         {Object.entries(rightButtonRoutes).map(([name, route]) => (
-                            <Link to={route} style= { { textDecoration: 'none' }}>
-                                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                            <MenuItem key={name} onClick={handleCloseNavMenu}>
+                                <Link to={route} style={{ textDecoration: 'none' }}>
                                     <Typography textAlign="center">{name}</Typography>
-                                </MenuItem>
-                            </Link>
+                                </Link>
+                            </MenuItem>
                         ))}
                     </Menu>
                 </Box>
-                <PetsIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
+                <PetsIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                 <Typography
                     variant="h5"
                     noWrap
@@ -117,7 +106,7 @@ export default function NavBar() {
                     href=""
                     sx={{
                         mr: 2,
-                        display: {xs: 'flex', md: 'none'},
+                        display: { xs: 'flex', md: 'none' },
                         flexGrow: 1,
                         fontWeight: 700,
                         color: 'inherit',
@@ -126,34 +115,35 @@ export default function NavBar() {
                 >
                     Happy Tails
                 </Typography>
-                <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {Object.entries(buttonRoutes).map(([name, route]) => (
-                        <Link to={route} style={{textDecoration: 'none'}}>
+                        <Link key={name} to={route} style={{ textDecoration: 'none' }}>
                             <Button
-                                key={name}
                                 onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block'}}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {name}
                             </Button>
                         </Link>
                     ))}
                 </Box>
-                <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}, justifyContent: 'flex-end'}}>
-                  {!isLogin?(<>
-                            <UserMenu/>
-
-                  </>):(<>
-                    <Link to={"/login"} style={{ textDecoration: 'none' }}>
-                            <Button
-                                onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block'}}
-                            >
-                                login
-                            </Button>
-                        </Link>
-                  </>)}
-    
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
+                    {!isLogin ? (
+                        <>
+                            <UserMenu />
+                        </>
+                    ) : (
+                        <>
+                            <Link to={"/login"} style={{ textDecoration: 'none' }}>
+                                <Button
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                >
+                                    login
+                                </Button>
+                            </Link>
+                        </>
+                    )}
                 </Box>
             </Toolbar>
         </AppBar>
