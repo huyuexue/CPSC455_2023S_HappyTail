@@ -54,7 +54,7 @@ export default function SignUpPage(){
     const [passwordErr, setPsErr] = useState("");
     const [confirmPSErr, setConfirPsErr] = useState("");
     
-    const[step, setStep]=useState(1)
+    const[step, setStep]=useState(0)
 
 
     const SignUpWithFirebase = async () => {
@@ -74,8 +74,9 @@ export default function SignUpPage(){
               const user = userCredential.user;
               user.getIdToken(true)
               .then((token)=>{
-                localStorage.setItem('tokenId', token)
-                setStep(2)
+
+                localStorage.setItem('token', token)
+                setStep(1)
               })
           })
           .catch((error) => {
@@ -88,8 +89,6 @@ export default function SignUpPage(){
 
     const Steps=()=>{
         switch(step){
-          case(2):
-                navigator("dashboard")
             case(1):
                 return(       
                 <Box
@@ -109,7 +108,7 @@ export default function SignUpPage(){
                     sx={{ mt: 1, width:"100%"}}
                   >
                     
-                    <UserInfo/>
+                    <UserInfo setNextStep={setStep}/>
 
                     
                   </Box>
@@ -247,7 +246,7 @@ export default function SignUpPage(){
               item
               sx={{width:"50%"}}
             >
-{Steps()}
+              {Steps()}
             </Grid>
           </Grid>
         </Box>
