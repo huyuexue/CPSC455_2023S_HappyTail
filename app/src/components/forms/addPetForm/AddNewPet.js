@@ -1,8 +1,8 @@
 import {Fragment, useState} from "react";
 import {useDispatch} from "react-redux";
-import BasicSurvey from "./BasicSurvey";
-import AboutYou from "./AboutYou";
-import PetInfo from "./PetInfo";
+import BasicInfo from "./BasicInfo";
+import ContactInfo from "./ContactInfo";
+import ExtraInfo from "./ExtraInfo";
 import Preview from "./Preview";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -10,14 +10,14 @@ import StepButton from "@mui/material/StepButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
-import {addPetAsync} from "../../../redux/pets/thunks";
+import {addPetAsync} from "../../../redux/userPets/thunks";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 
-const steps = ['Basic Survey', 'About You', 'Pet Info', 'Preview'];
+const steps = ['Pet Info', 'Extra Info', 'Contact Info', 'Preview'];
 
 
-export default function AddNewPet(){
+export default function AddNewPet({}){
     const auth = getAuth();
     const nav = useNavigate();
     onAuthStateChanged(auth, (user) => {
@@ -33,7 +33,6 @@ export default function AddNewPet(){
 
     const getToken=async (user)=>{
         const token= await user.getIdToken()
-        console.log(token)
         setToken(token)
       }
 
@@ -42,58 +41,47 @@ export default function AddNewPet(){
           if (user) {
             getToken(user)
           } else {
-                 // alert("login please")
+              // alert("login please")
           }
           });
       }, []);
 
 
+
     const[formData, setFormData] = useState({
-        petName:'',
+        // page 0
         species:'',
-        extra: false,
-        otherSpecies: 'Please specify',
+        picture: '',
+        petName:'',
         breed: '',
         gender: '',
         ageYear: '',
         ageMonth: '',
-        picture: '',
-        description: '',
-        houseTrained: '',
-        furType: '',
         size: '',
         spayed: '',
+        houseTrained: '',
+        // page 1
+        postCode: 'Please enter post code',
+        furType: '',
         petPersonality: [],
-        postcode: 'Please enter post code',
-        reason:'',
-        length:'',
-        email:'',
-        firstName:'',
-        lastName:'',
-        phoneNumber:'',
-        postalCode:'',
-        city:'',
-        province:'',
-        pictureName: '',
+        description: '',
+        reason:'', //TODO: delete or add to schema?
+        length:'', //TODO: delete or add to schema?
+        // page 2
+        contactEmail:'',
+        contactName:'',
+        contactNumber:'',
     });
+
 
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState({});
 
-    const addPet = async (formData) => {
-
-        var species;
-        if(formData.extra === true) {
-            species=formData.otherSpecies
-        } else{
-            species=formData.species
-        } 
-        const petage=parseInt(formData.ageYear, 10)*12 + parseInt(formData.ageMonth,10);
-        console.log("formData.ageYear: " + formData.ageYear + ", formData.ageMonth: " + formData.ageMonth + ", total: " + petage)
-
-        let input={
-            petName:formData.petName,
-            species: species,
+    const addPet = async () => {
+        const petage = parseInt(formData.ageYear, 10) * 12 + parseInt(formData.ageMonth, 10);
+        let input = {
+            petName: formData.petName,
+            species: formData.species,
             breed: formData.breed,
             gender: formData.gender,
             age: petage,
@@ -104,30 +92,14 @@ export default function AddNewPet(){
             size: formData.size,
             petPersonality: formData.petPersonality,
             spayed: formData.spayed,
-            postCode: formData.postcode,
+            postCode: formData.postCode,
             reason: formData.reason,
             length: formData.length,
-            contactEmail: formData.email,
-            contactName: formData.firstName+formData.lastName,
-            contactNumber: formData.phoneNumber,
-            postalCode: formData.postalCode,
-            city: formData.city,
-            province: formData.province
+            contactEmail: formData.contactEmail,
+            contactName: formData.contactName,
+            contactNumber: formData.contactNumber,
         }
-
-        console.log(input)
-        
-
-        const res = await fetch("http://localhost:3001/pets", {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        authorization: token,
-        },
-        body: JSON.stringify(input)});
-
-    const data = await res.json();
-    console.log(data);
+        dispatch(addPetAsync({input, token}));
     };
 
 
@@ -138,27 +110,20 @@ export default function AddNewPet(){
 
     const checkFill = () => {
         if (activeStep === 0) {
-            if(formData.extra === false ){
-                if(formData.species === '') {
-                    return;
-                }
-            }else {
-                if( !formData.otherSpecies || formData.otherSpecies === 'Please specify'){
-                    return;
-                }
-            };
-            if(!formData.spayed || !formData.reason || !formData.length){
+            if (!formData.species || !formData.picture || !formData.petName || !formData.breed || !formData.gender ||
+                !formData.ageYear ||! formData.ageMonth || !formData.size || !formData.spayed || !formData.houseTrained){
+                handleNotComplete();
                 return;
             }
         } else if (activeStep === 1) {
-            if (!formData.email || !formData.firstName || !formData.lastName || !formData.phoneNumber ||
-                !formData.postalCode || !formData.city || !formData.province) {
+            if (!formData.furType || !formData.reason || !formData.length || !formData.postCode ||
+                !formData.description || formData.petPersonality.length === 0) {
+                handleNotComplete();
                 return;
             }
         } else if (activeStep === 2) {
-            if (!formData.petName || !formData.breed || !formData.gender || !formData.ageYear ||! formData.ageMonth ||
-                !formData.size || !formData.furType || !formData.houseTrained || !formData.postcode ||
-                !formData.description || !formData.picture || formData.petPersonality.length === 0) {
+            if (!formData.contactEmail || !formData.contactName || !formData.contactNumber) {
+                handleNotComplete();
                 return;
             }
         } else {
@@ -183,13 +148,18 @@ export default function AddNewPet(){
         setCompleted(newCompleted);
     };
 
+    const handleNotComplete = () => {
+        const newCompleted = completed;
+        newCompleted[activeStep] = false;
+        setCompleted(newCompleted);
+    };
+
     const jumpToPage = (page) => {
         setActiveStep(page);
     };
 
     const handleChange = (e, updatedFormData) => {
         if (e === "setPetPersonality") {
-            console.log(updatedFormData.petPersonality);
             setFormData((prevData) => ({
                 ...prevData,
                 petPersonality: updatedFormData.petPersonality,
@@ -215,28 +185,12 @@ export default function AddNewPet(){
     };
 
     const handleSubmit = async() => {
-        addPet (formData);
-        navigate('/dashboard');
-    }
-
-    const setExtra = (e) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            ["extra"]: e,
-        }));
-        if (e === false) {
-            setFormData((prevData) => ({
-                ...prevData,
-                ["otherSpecies"]: 'Please specify',
-            }));
+        const values = Object.values(completed);
+        const trueValues = values.filter((value) => value === true);
+        if (trueValues.length === 3) {
+            addPet();
+            navigate('/dashboard');
         }
-    }
-    const onOtherSpeciesFocus = () => {
-        setFormData((prevData) => ({
-            ...prevData,
-            ["otherSpecies"]: '',
-        }));
-
     };
 
     const onPostcodeFocus = () => {
@@ -248,10 +202,9 @@ export default function AddNewPet(){
     };
 
     const subForms = [
-        <BasicSurvey formData={formData} handleChange={handleChange} setExtra={setExtra}
-                     onOtherSpeciesFocus={onOtherSpeciesFocus}/>,
-        <AboutYou formData={formData} handleChange={handleChange}/>,
-        <PetInfo formData={formData} handleChange={handleChange} onPostcodeFocus={onPostcodeFocus}/>,
+        <BasicInfo formData={formData} handleChange={handleChange} />,
+        <ExtraInfo formData={formData} handleChange={handleChange} onPostcodeFocus={onPostcodeFocus}/>,
+        <ContactInfo formData={formData} handleChange={handleChange}/>,
         <Preview formData={formData} jumpToPage={jumpToPage}/>,
     ]
 

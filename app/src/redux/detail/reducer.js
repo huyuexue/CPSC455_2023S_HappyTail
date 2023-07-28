@@ -1,16 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getDetailAsync, updateDetailAsync} from "./thunks";
+import {getDetailAsync,} from "./thunks";
+
 
 const initialState = {
     detailOpen: false,
-    updateOpen: false,
     selectItem: {},
-    updated: false,
 }
 const detailReducer = createSlice({
     name: 'detail',
     initialState,
     reducers: {
+        getSelectedItem: {
+            reducer: (state, action) => {
+                state.selectItem = action.payload;
+            }
+        },
         openDetailView: {
             reducer: (state, action) => {
                 state.detailOpen = true;
@@ -27,18 +31,6 @@ const detailReducer = createSlice({
                 state.detailOpen = false;
             }
         },
-        openUpdateView: {
-            reducer: (state, action) => {
-                state.updateOpen = true;
-                state.detailOpen = false;
-            }
-        },
-        closeUpdateView: {
-            reducer: (state, action) => {
-                state.updateOpen = false;
-                state.detailOpen = true;
-            }
-        },
     },
     extraReducers: (builder) => {
         builder
@@ -47,26 +39,12 @@ const detailReducer = createSlice({
             })
             .addCase(getDetailAsync.fulfilled, (state, action) => {
                 state.selectItem = action.payload
-                console.log(state.selectItem);
             })
             .addCase(getDetailAsync.rejected, (state, action) => {
                 console.log("get detail rejected");
-            })
-            .addCase(updateDetailAsync.pending, (state, action) => {
-                console.log("waiting to update detail");
-            })
-            .addCase(updateDetailAsync.fulfilled, (state, action) => {
-                state.selectItem = action.payload
-                state.updated = !state.updated;
-            })
-            .addCase(updateDetailAsync.rejected, (state, action) => {
-                console.log("update detail rejected");
             });
-
     }
 });
 
-export const {openDetailView, closeDetailView, closeDetailViewFull, openUpdateView, closeUpdateView} = detailReducer.actions;
+export const {getSelectedItem, openDetailView, closeDetailView, closeDetailViewFull} = detailReducer.actions;
 export default detailReducer.reducer
-export const detailViewStatus = (state) => state.detailView.detailOpen;
-export const updateStatus = (state) => state.detailView.updateOpen;

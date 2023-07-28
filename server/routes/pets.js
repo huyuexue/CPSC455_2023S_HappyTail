@@ -70,7 +70,6 @@ router.get('/all', function(req, res, next) {
 
 router.get('/byuser',middleware, async (req, res, next) => {
   try {
-    console.log(req.uid)
     const pet = await Pet.find({uid:req.uid}); // Find the pet by ID
     if (!pet) {
       // If the pet is not found, return an appropriate response
@@ -131,7 +130,7 @@ router.delete('/:id', middleware, AuthCheck, async (req, res, next) => {
       //return res.status(404).json({ error: 'Pet not found' });
       return res.json(false);
     }
-    res.json(true);// Respond with the found pet as JSON
+    res.json(petId);// Respond with deleted pet
   } catch (error) {
     console.error('Error retrieving a pet:', error);
     res.status(500).json({ error: 'Failed to delete a pet' });
@@ -155,12 +154,11 @@ router.post('/', middleware, async (req, res) => {
 // PATCH request to update a pet by ID
 router.patch('/:id', middleware, AuthCheck, async (req, res, next) => {
   try {
+
     const petId = req.params.id; // Get the pet ID from the route parameter
-    const updates = req.body; // Get the updates from the request body
+    const updates = req.body.pet; // Get the updates from the request body
     updates.uid=req.uid;
-
     const pet = await Pet.findByIdAndUpdate(petId, updates, { new: true });
-
     if (!pet) {
       // If the pet is not found, return an appropriate response
       return res.status(404).json({ error: 'Pet not found' });

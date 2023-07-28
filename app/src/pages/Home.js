@@ -2,8 +2,6 @@ import PetsBrief from "../components/pets/PetsBrief";
 import PetDetail from "../components/petDetail/PetDetail";
 import {useSelector} from "react-redux";
 import ButtonBar from "../components/elements/buttons/ButtonBar";
-import {updateStatus} from "../components/updatePet/updateFormSlice";
-import UpdateForm from "../components/updatePet/UpdateFrom";
 import {Grid, Stack, useMediaQuery, Box} from "@mui/material";
 import React from "react";
 import {faHouseChimney} from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +12,6 @@ import {useTheme} from "@mui/material/styles";
 
 export default function Home() {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
-    const updateIsOpen = useSelector(updateStatus);
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     return (
@@ -45,7 +42,6 @@ export default function Home() {
                 </Grid>
             </Grid>
             {detailViewIsOpen && <PetDetail/>}
-            {updateIsOpen && <UpdateForm/>}
         </div>
     );
 }

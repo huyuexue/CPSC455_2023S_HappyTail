@@ -12,7 +12,8 @@ const initialState  = {
         coatLength: '',
     },
     sort:"default",
-    searchList:[]
+    searchList:[],
+    isLoading: false
 }
 
 const petsReducer = createSlice({
@@ -30,7 +31,6 @@ const petsReducer = createSlice({
                 } else {
                     state.searchList = state.list;
                 }
-                console.log(state.searchList);
             }
         },
         setSort: {
@@ -48,33 +48,15 @@ const petsReducer = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getPetsAsync.pending, (state, action) => {
-                console.log("waiting to get all");
+                state.isLoading = true;
             })
             .addCase(getPetsAsync.fulfilled, (state, action) => {
                 state.list = action.payload;
+                state.isLoading = false;
             })
             .addCase(getPetsAsync.rejected, (state, action) => {
                 console.log("rejected  to get all");
-            })
-            .addCase(addPetAsync.pending, (state, action) => {
-                console.log("waiting to add");
-            })
-            .addCase(addPetAsync.fulfilled, (state, action) => {
-                state.list.push(action.payload);
-                console.log(state.list);
-            })
-            .addCase(addPetAsync.rejected, (state, action) => {
-                console.log("rejected to add");
-            })
-            .addCase(deletePetAsync.pending, (state, action) => {
-                console.log("waiting to delete");
-            })
-            .addCase(deletePetAsync.fulfilled, (state, action) => {
-                state.list = action.payload;
-                console.log(state.list);
-            })
-            .addCase(deletePetAsync.rejected, (state, action) => {
-                console.log("rejected to delete");
+                state.isLoading = false;
             })
             .addCase(getSearchResultsAsync.pending, (state, action) => {
                 console.log("waiting to search");

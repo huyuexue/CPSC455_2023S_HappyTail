@@ -17,12 +17,7 @@ export default function PetResults() {
     const dispatch = useDispatch();
     const pets = useSelector(state => state.pets.list);
     const petsResult = useSelector(state => state.pets.searchList)
-
-    const [refresh, setRefresh] = useState(false);//TODO: check with Richard
-
-    useEffect(() => {
-        dispatch(getPetsAsync());
-    }, [pets.length]); //TODO: need to fix this dispatch
+    const isLoading = useSelector(state => state.pets.isLoading);
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -30,28 +25,40 @@ export default function PetResults() {
     const [species, setSpecies] = React.useState(initialSpecies);
 
     useEffect(() => {
-        dispatch(updateSpecies(species));
+        dispatch(getPetsAsync());
     }, []);
+
+    useEffect(() => {
+        dispatch(updateSpecies(species));
+    }, [pets]);
+
     const handleSpeciesChange = (event) => {
         setSpecies(event);
         dispatch(updateSpecies(event));
     };
 
-    return (<>
-        <Box sx={{ width: "150px", marginLeft: "10px", marginRight: "10px" , marginTop: "10px", marginBottom: "10px"  }}>
-            <PetPropertySelections
-                label="Species"
-                value={species}
-                items={speciesItems}
-                onChange={handleSpeciesChange}
-            />
-        </Box>
-            {/* render pet card view*/}
-            <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
-                {petsResult.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
-                    <PetCard key={pet.id} pet={pet} setRefresh={setRefresh}></PetCard>
-                </Grid>))}
-            </Grid>
+    return (
+        <>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+            <Box sx={{ width: "150px", marginLeft: "10px", marginRight: "10px" , marginTop: "10px", marginBottom: "10px"  }}>
+                <PetPropertySelections
+                    label="Species"
+                    value={species}
+                    items={speciesItems}
+                    onChange={handleSpeciesChange}
+                />
+            </Box>
+                {/* render pet card view*/}
+                <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
+                    {petsResult.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
+                        <PetCard key={pet.id} pet={pet} ></PetCard>
+                    </Grid>))}
+                </Grid>
+        </>
+            )}
         </>
     );
 }
