@@ -18,7 +18,7 @@ admin.initializeApp({
 
 var app = express();
 const corsOptions = {
-    origin: "https://happytails-0zfr.onrender.com",
+    origin: "https://happytails-alpha.onrender.com/",
 }
 app.use(cors(corsOptions));
 
