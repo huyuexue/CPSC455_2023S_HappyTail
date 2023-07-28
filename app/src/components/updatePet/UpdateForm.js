@@ -82,6 +82,7 @@ export default function UpdateForm(){
     const handleClickUpdate = async () => {
         const newData = {
             ...updateData,
+            age: parseInt(updateData.ageYear, 10) * 12 + parseInt(updateData.ageMonth, 10),
             houseTrained: updateData.houseTrained === 'yes'? true: false,
         }
         try {
