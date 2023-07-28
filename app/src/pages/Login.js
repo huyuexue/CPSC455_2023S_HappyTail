@@ -60,7 +60,7 @@ export default function LoginPage(){
                             console.log('firebase signin sucess')
                             auth.currentUser.getIdToken(true)
                             .then((token)=>{
-                              localStorage.setItem('tokenId', token)
+                              localStorage.setItem('token', token)
                               window.location.href="/dashboard"
                             })
                         })

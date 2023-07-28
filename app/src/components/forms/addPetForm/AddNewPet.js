@@ -33,7 +33,9 @@ export default function AddNewPet(){
 
     const getToken=async (user)=>{
         const token= await user.getIdToken()
-        console.log(token)
+        console.log("from add pet",token)
+        const text = localStorage.getItem("token")
+        console.log("from get token", text)
         setToken(token)
       }
 

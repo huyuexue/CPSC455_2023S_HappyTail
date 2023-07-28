@@ -1,11 +1,9 @@
 import * as React from "react";
 import {Input, Stack, TextField,Button} from "@mui/material";
 import {useState} from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
 
 
-export default function UserInfo() {
+export default function UserInfo({setNextStep}) {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setlastName] = useState('');
@@ -14,6 +12,9 @@ export default function UserInfo() {
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
 
+    const submit=()=>{
+        setNextStep(2)
+    }
 
     return (
 

@@ -88,6 +88,8 @@ export default function SignUpPage(){
 
     const Steps=()=>{
         switch(step){
+          case(2):
+                navigator("dashboard")
             case(1):
                 return(       
                 <Box
