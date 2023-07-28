@@ -16,10 +16,10 @@ async function getAllPets() {
 }
 
 router.get('/search', async(req, res) => {
-  const petPersonalities = req.query.petPersonality;
   //const personalityArray = petPersonalities.split(',');
   try {
     //const matchingPets = await Pet.find({ petPersonality: { $in: personalityArray } }).select('_id');
+    console.log("in BE");
     const matchingPets = await petMatch(req.query);
 
     res.json({ matchingPets });

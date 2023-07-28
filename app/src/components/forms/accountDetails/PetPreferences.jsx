@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import {ageItems, breedItems, coatlengthItems, genderItems, sizeItems, personalityItems} from "../options";
+import {ageItems, breedItems, furTypeItems, genderItems, sizeItems, personalityItems} from "../options";
 import MultipleSelect from "../../elements/MultipleSelect";
 
 export default function PetPreferencesForm() {
@@ -38,7 +38,7 @@ export default function PetPreferencesForm() {
             <MultipleSelect name="Breed" items={breedItems}/>
             <MultipleSelect name="Size" items={sizeItems}/>
             <MultipleSelect name="Gender" items={genderItems}/>
-            <MultipleSelect name="Coat Length" items={coatlengthItems}/>
+            <MultipleSelect name="Coat Length" items={furTypeItems}/>
             <MultipleSelect name="Personality" items={personalityItems}/>
         </Box>
     );
