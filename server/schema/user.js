@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  firstName: {
+  uid: {
     type: String,
     required: true
   },
   lastName: {
+    type: String,
+    required: true
+  },
+  firstName: {
     type: String,
     required: true
   },
@@ -15,51 +19,51 @@ const userSchema = new mongoose.Schema({
   },
   number: {
     type: Number,
-    required: true
+    required: false
   },
   postCode: {
     type: Number,
-    required: true
+    required: false
   },
   city: {
     type: String,
-    required: true
+    required: false
   },
   address: {
     type: String,
-    required: true
+    required: false
   },
   houseTrained: {
     type: Boolean,
-    required: true
+    required: false
   },
   furType: {
     type: String,
-    required: true
+    required: false
   },
   petFriendly: {
     type: Boolean,
-    required: true
+    required: false
   },
   childFriendly: {
     type: Boolean,
-    required: true
+    required: false
   },
   size: {
     type: String,
-    required: true
+    required: false
   },
   behaviour: {
     type: String,
-    required: true
+    required: false
   },
   spayedNeutered: {
-    type: String,
-    required: true
+    type: Boolean,
+    required: false
   },
   coatLength: {
     type: String,
-    required: true
+    required: false
   }
 });
 

@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import BrowsePage from "./pages/Browse";
 import AccountDetailsPage from "./pages/AccountDetails";
 import LoginPage from './pages/Login';
+import SignUpPage from './pages/SignUp';
 
 
 import AddNewPet from "./components/forms/addPetForm/AddNewPet";
@@ -29,7 +30,9 @@ function App() {
                         <Route path="addNewPet" element={<AddNewPet/>}/>
                         <Route path="account/details" element={<AccountDetailsPage/>}/>
                         <Route path="login" element={<LoginPage/>}/>
+                        <Route path="signup" element={<SignUpPage/>}/>
                         <Route path="dashboard" element={<Dashboard/>}/>
+                        
                     </Route>
                 </Routes>
             </ThemeProvider>

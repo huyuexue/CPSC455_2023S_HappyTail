@@ -171,7 +171,7 @@ export default function LoginPage(){
                       </Link>
                     </Grid>
                     <Grid item xs={6} textAlign="center">
-                      <Link href="app/src/pages#" variant="body2" >
+                      <Link href="signup" variant="body2" >
                         Don't have an account? <br/> Sign Up
                       </Link>
                     </Grid>
