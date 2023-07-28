@@ -1,4 +1,4 @@
-const Pet = require('../schema/pet'); 
+const Pet = require('../schema/pet');
 
 async function petPersonalityMatch(petPersonalities) {
   const personalityArray = petPersonalities.split(',');
@@ -16,14 +16,15 @@ async function petPersonalityMatch(petPersonalities) {
 }
 
 async function petMatch(query) {
-    const { petPersonality, age, species, size, gender, breed, ...otherFields } = query;
-    const personalityArray = petPersonality ? petPersonality.split(',') : null;
-    const ageValue = age ? parseInt(age) : null;
-    const speciesValue = species ? species : null;
-    const sizeValue = size ? size : null;
-    const genderValue = gender ? gender : null;
-    const breedValue = breed ? breed : null;
-  
+    const {age, breed, size, gender, furType } = query;
+    //const personalityArray = petPersonality ? petPersonality.split(',') : null;
+    const ageValue = age !== 'any' ? age : null;
+    //onst speciesValue = species ? species : null;
+    const sizeValue = size !== 'any' ? size : null;
+    const genderValue = gender !== 'any' ? gender : null;
+    const breedValue = breed !== 'any' ? breed : null;
+    const furTypeValue = furType !== 'any' ? furType : null;
+
     try {
       // Query the database for pets matching the provided personalities
       //const matchingPets = await Pet.find({ petPersonality: { $in: personalityArray }}).select('_id');
@@ -31,34 +32,39 @@ async function petMatch(query) {
         petPersonality: { $in: personalityArray }
       };*/
       const dynamicQuery = {};
-      if(personalityArray) {
+      /*if(personalityArray) {
           dynamicQuery.petPersonality = { $in: personalityArray }
-      };
+      };*/
 
       if(ageValue) {
-        dynamicQuery.age = { $eq: parseInt(ageValue) };
+          if ( ageValue === 'young') {
+              dynamicQuery.age = { $lte: 24 };
+          } else if (ageValue === 'adult') {
+              dynamicQuery.age = { $gte: 25, $lte: 84};
+          } else{
+              dynamicQuery.age = { $gte: 85};
+          }
       }
 
-      if(speciesValue) {
+      /*if(speciesValue) {
         dynamicQuery.species = { $eq: speciesValue};
-      }
+      }*/
 
       if(sizeValue) {
-        dynamicQuery.size = { $eq: sizeValue};
+          dynamicQuery.size = { $eq: sizeValue};
       }
 
       if(genderValue) {
-        dynamicQuery.gender = { $eq: genderValue};
+          dynamicQuery.gender = { $eq: genderValue};
       }
 
       if(breedValue) {
-        dynamicQuery.breed = { $eq: breedValue};
+          dynamicQuery.breed = { $regex: `.*${breedValue}.*`, $options: 'i' };
       }
-      
-
-      const matchingPets = await Pet.find(dynamicQuery).select('_id petName age breed picture');
-      
-    
+        if(furTypeValue) {
+            dynamicQuery.furType = { $eq: furTypeValue};
+        }
+      const matchingPets = await Pet.find(dynamicQuery).select('_id petName age breed picture species');
       // Extract and return the list of pet IDs
       return matchingPets;
     } catch (error) {

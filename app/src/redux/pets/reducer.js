@@ -3,15 +3,7 @@ import {addPetAsync, deletePetAsync, getPetsAsync, getSearchResultsAsync, getFil
 
 const initialState  = {
     list:[],
-    search: {
-        species:'',
-        age:'',
-        breed:'',
-        size:'',
-        gender:'',
-        coatLength: '',
-    },
-    sort:"default",
+    species:'',
     searchList:[],
     isLoading: false
 }
@@ -23,10 +15,10 @@ const petsReducer = createSlice({
         updateSpecies: {
             reducer: (state, action)=> {
                 var species = action.payload;
-                state.search.species = species;
+                state.species = species;
                 if (species === '') {
                     state.searchList = state.list;
-                }else if (species !== 'Any') {
+                }else if (species !== 'any') {
                     state.searchList = state.list.filter(pet => pet.species === species);
                 } else {
                     state.searchList = state.list;
@@ -59,14 +51,15 @@ const petsReducer = createSlice({
                 state.isLoading = false;
             })
             .addCase(getSearchResultsAsync.pending, (state, action) => {
-                console.log("waiting to search");
+                state.isLoading = true;
             })
             .addCase(getSearchResultsAsync.fulfilled, (state, action) => {
-                state.list = action.payload;
-                console.log(state.list);
+                state.list = action.payload.matchingPets;
+                state.isLoading = false;
             })
             .addCase(getSearchResultsAsync.rejected, (state, action) => {
                 console.log("rejected to search");
+                state.isLoading = false;
             })
             .addCase(getFilteredPetsAsync.pending, (state, action) => {
                 console.log("waiting to get filtered pets");
