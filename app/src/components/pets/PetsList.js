@@ -57,7 +57,7 @@ export default function PetsList() {
       if (user) {
         getToken(user)
       } else {
-             // alert("login please")
+            navigate("/")
       }
       });
   }, []);   
