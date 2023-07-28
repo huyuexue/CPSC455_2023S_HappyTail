@@ -8,6 +8,12 @@ export default function About(){
                  src="https://www.thesprucepets.com/thmb/AUhVkJo7GEsadFm4jevINielAuQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/black-lab-names-5093386-hero-5d14645833114fda9f7e3e620e5e4d67.jpg" />
             <p> Happy Tails.<br/>
             </p>
+            <p> Developed by Tina Hu, Ayan, Richard Wang, James Ross and Ethan Nguyen<br/>
+                From UBC 2023 CPSC 445
+            </p>
+            <p>  Contact Us:<br/>
+                happytrail@student.ubc.ca
+            </p>
         </div>
     );
 }

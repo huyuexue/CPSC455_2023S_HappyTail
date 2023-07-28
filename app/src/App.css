@@ -173,7 +173,7 @@ textarea {
 }
 
 
-input[type="text"],input[type="number"],input[type="number"], select {
+input[type="number"],input[type="number"], select {
   border: 1px solid black;
   padding: 5px;
   border-radius: 2px;

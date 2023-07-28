@@ -152,10 +152,7 @@ export default function LoginPage(){
                  <Typography sx={{color:"red", fontSize: "12px", marginBottom:"12px"}}>
                   {passwordErr}
                 </Typography>
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
+
                   <Button
                     fullWidth
                     variant="contained"
@@ -164,28 +161,13 @@ export default function LoginPage(){
                   >
                     Sign In
                   </Button>
-                  <Grid container justifyContent="space-between" >
-                    <Grid item xs={5} textAlign="center">
-                      <Link href="app/src/pages#" variant="body2">
-                        Forgot password?
-                      </Link>
-                    </Grid>
+                  <Grid container justifyContent="center"  sx={{width:"100%"}}>
                     <Grid item xs={6} textAlign="center">
-                      <Link href="app/src/pages#" variant="body2" >
-                        Don't have an account? <br/> Sign Up
+                      <Link href="/about" variant="body2" >
+                        Don't have an account? <br/> please contact us
                       </Link>
                     </Grid>
-                  </Grid>
-                  <Grid container justifyContent="space-around" xs={12} sx={{marginY:"30px", borderTop:1, borderTopColor:"grey.500", paddingTop:2}}>
-                  <IconButton color="primary" >
-                      <GoogleIcon  sx={{ fontSize: 40 }}/>
-                  </IconButton>
-                  <IconButton color="primary">
-                      <FacebookIcon sx={{ fontSize: 40 }}/>
-                  </IconButton>
-                  <IconButton color="primary">
-                      <TwitterIcon sx={{ fontSize: 40 }}/>
-                  </IconButton>
+
                   </Grid>
                   
                 </Box>
