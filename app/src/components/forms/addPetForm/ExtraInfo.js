@@ -1,17 +1,7 @@
 import React, {useState} from "react";
-import ImageUpload from "../imageUpload/upload";
 
-export default function PetInfo({formData, handleChange, onPostcodeFocus }){
-    const [houseTrained, setHouseTrained] = useState(formData.houseTrained);
-    const handleHouseTrainedChange = (e) => {
-        const value = e.target.value;
-        setHouseTrained(value);
-        handleChange("setHouseTrained", {houseTrained: value});
-    };
-
+export default function ExtraInfo({formData, handleChange, onPostcodeFocus}){
     const [personalities, setPersonalities] = useState(formData.petPersonality);
-
-
     const handlePersonalityChange = (option) => {
         setPersonalities((prevPersonalities) => {
             if (prevPersonalities.includes(option)) {
@@ -34,49 +24,12 @@ export default function PetInfo({formData, handleChange, onPostcodeFocus }){
 
     return (
         <div className="from">
-            <h2>Pet Information</h2>
-            <label >Pet Name:
-                <input type="text" name = "petName" value = {formData.petName}
+            <h2>Extra Information</h2>
+            <label >Location:
+                <input type="text" name = "postCode" value = {formData.postCode}
                        onChange = {handleChange}
+                       onFocus = {onPostcodeFocus}
                 /><br/>
-            </label> <br/>
-            <label >
-                Photo:
-                {formData.picture !== '' && (
-                    <div>
-                        <img className="previewPhoto" src={formData.picture} />
-                    </div>
-                )}
-                <ImageUpload handleChange={handleChange} />
-            </label> <br/>
-            <label >Breed:
-                <input type="text" name = "breed" value = {formData.breed}
-                       onChange = {handleChange}
-                /><br/>
-            </label> <br/>
-            <label >Gender:
-                <select name="gender" value = {formData.gender} onChange = {handleChange}>
-                    <option value = ''>-Please select-</option>
-                    <option value = "female">Female</option>
-                    <option value = "male">Male</option>
-                </select><br/>
-            </label> <br/>
-            <label >Age:
-                <input type="number" name = "ageYear" value = {formData.ageYear}
-                       onChange = {handleChange}
-                /> Year
-                <input type="number" name = "ageMonth" value = {formData.ageMonth}
-                       onChange = {handleChange}
-                /> Month
-            </label> <br/><br/>
-            <label >Size:
-                <select name="size" value = {formData.size} onChange = {handleChange}>
-                    <option value = ''>-Please select-</option>
-                    <option value = "small">Small</option>
-                    <option value = "medium">Medium</option>
-                    <option value = "large">Large</option>
-                    <option value = "xl">Extra Large</option>
-                </select><br/>
             </label> <br/>
             <label >Fur Type:
                 <select name="furType" value = {formData.furType} onChange = {handleChange}>
@@ -87,19 +40,6 @@ export default function PetInfo({formData, handleChange, onPostcodeFocus }){
                     <option value = "long">Long</option>
                 </select><br/>
             </label> <br/>
-            <label >House Trained:
-                <input type="radio" value="yes" checked={houseTrained === "yes"} onChange={handleHouseTrainedChange}/>Yes
-                <input type="radio" value="no" checked={houseTrained === "no"} onChange={handleHouseTrainedChange}/>No
-            </label> <br/><br/>
-
-            <label >Location:
-                <input type="text" name = "postcode" value = {formData.postcode}
-                       onChange = {handleChange}
-                       onFocus = {onPostcodeFocus}
-                /><br/>
-            </label> <br/>
-
-
             <div className="pet-personality-container">
                 <label>Pet Personality:</label>
                 <div className="selected-options-box">
@@ -177,6 +117,16 @@ export default function PetInfo({formData, handleChange, onPostcodeFocus }){
                        onChange = {handleChange}
                 /><br/>
             </label> <br/>
+
+            <label>Reason for rehoming:<br/>
+                <textarea type="text" name="reason"
+                          value = {formData.reason} onChange = {handleChange} /><br/>
+            </label><br/>
+
+            <label>Length of ownership:
+                <input type="text" name="length"
+                       value = {formData.length} onChange = {handleChange} /><br/>
+            </label><br/>
         </div>
         )
 

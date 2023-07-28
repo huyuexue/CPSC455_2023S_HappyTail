@@ -1,129 +1,68 @@
 import {useState,useEffect} from "react";
-import TextField from "@mui/material/TextField";
 import {useNavigate} from "react-router-dom";
-export default function PetDetail({pet, setOpen, token}){
-
+import {useDispatch, useSelector} from "react-redux";
+import {closeDetailView, closeDetailViewFull} from "../../redux/detail/reducer";
+import {clearSelectInUserPets, getSelectedItem, openUpdateView} from "../../redux/userPets/reducer";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {deletePetAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
+import {capitalizeEachWord} from "../../utils";
+import {capitalize} from "@mui/material";
+export default function PetDetail({}){
+    const dispatch = useDispatch();
+    const auth = getAuth();
     const [dashboard, setDashboard] = useState(false);
-    const [petInfo, setPetInfo] = useState([]);
-    const [email, setEmail] = useState(pet.contactEmail);
-    const [number, setNumber] = useState(pet.contactNumber);
-    const [name, setName] = useState(pet.contactName);
+    const petInfo = useSelector(state => state.petDetail.selectItem);
+
+    const id = petInfo._id;
     const nav = useNavigate();
+
+    const[token, setToken]=useState("");
+
+    const getToken=async (user)=>{
+        const token= await user.getIdToken()
+        setToken(token)
+    }
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                getToken(user)
+            } else {
+                // alert("login please")
+            }
+        });
+    }, []);
+
     useEffect(()=>{
         if(window.location.pathname=="/dashboard"){
             setDashboard(true)
         }
-        getPet(pet._id)
-    },[])
-
-    const getPet = async (id) => {
-        const link = `http://localhost:3001/pets/${id}`;
-        const res = await fetch(link, {
-            method: 'GET'
-        });
-        const data = await res.json();
-        setPetInfo(data)
-        setEmail(data.contactEmail)
-        setName(data.contactName)
-        setNumber(data.contactNumber)
-        console.log(data)
-    };
-
-    const deletePet = async (id) => {
-        console.log(token)
-        const res = await fetch(`http://localhost:3001/pets/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: token,
-            },
-        });
-        const data = await res.json();
-        if (!res.ok) {
-            const error = data?.message;
-            alert("Delete fail")
-        }else(nav("/dashboard"))
-    };
-
-    const updatePet = async (id) => {
-        let input={
-            contactName:name,
-            contactEmail:email,
-            contactNumber:number,
-        }
-        const res = await fetch(`http://localhost:3001/pets/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: token,
-            },
-            body:JSON.stringify(input)
-        });
-        const data = await res.json();
-        console.log(data)
-        if (!res.ok) {
-            const error = data?.message;
-            alert("update fail")
-        }
-        return data;
-    };
-    
+    },[]);
 
     return (
             <aside className="popupWindow">
             <div className="detail">
                 <img src={petInfo.picture} alt="Not available"/>
                 <h3>{petInfo.petName}</h3>
-                <p>Breed: {petInfo.breed}</p>
-                <p>Gender: {petInfo.gender}</p>
-                <p>Age: {Math.floor(petInfo.age/12) + " Year " + petInfo.age%12 + " Month"}</p>
+                <p>Breed: {capitalizeEachWord(petInfo.breed)}</p>
+                <p>Gender: {capitalizeEachWord(petInfo.gender)}</p>
+                <p>Age: {petInfo.age >= 12
+                    ? `${Math.floor(petInfo.age/12)} Year ${petInfo.age % 12} Month`
+                    : `${petInfo.age} Month`
+                }</p>
+                <p>Size: {capitalizeEachWord(petInfo.size)}</p>
+                <p>Spayed: {capitalizeEachWord(petInfo.spayed)}</p>
+                <p>House Trained: {petInfo.houseTrained? "Yes":"No"}</p>
+                <div className="horizontalLine"></div>
+                <p>Location: {petInfo.postCode}</p>
+                <p>Fur Type: {capitalizeEachWord(petInfo.furType)}</p>
+                <p>Pet Personality: {petInfo.petPersonality?
+                    petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
                 <p>Description:{petInfo.description}</p>
                 <div className="horizontalLine"></div>
-                {dashboard?(
-                        <>
-                    <h3>Contact Information</h3>
-                    <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="outlined-helperText"
-                    label="name"
-                    defaultValue={name}
-                    helperText="name"
-                    onChange={e => setName(e.target.value)}
-                    sx={{border:"1px solid transparent !important"}}
-                  />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="outlined-helperText"
-                    label="number"
-                    defaultValue={number}
-                    helperText="number"
-                    onChange={e => setNumber(e.target.value)}
-                  />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="outlined-helperText"
-                    label="email"
-                    defaultValue={email}
-                    helperText="email"
-                    onChange={e => setEmail(e.target.value)}
-                  />
-                     
-                        </>
-                    ):(
-                        <>
-                        <h3>Contact Information</h3>
-                        <p>Name:{petInfo.contactName}</p>
-                        <p>Email:{petInfo.contactEmail}</p>
-                        <p>number:{petInfo.contactNumber}</p>
-                        </>
-                    )}
-
+                <p>Name: {capitalizeEachWord(petInfo.contactName)}</p>
+                <p>Email: {capitalizeEachWord(petInfo.contactEmail)}</p>
+                <p>Phone Number: {capitalizeEachWord(petInfo.contactNumber)}</p>
 
                 <div className='btn-container'>
                     {dashboard?(
@@ -131,16 +70,18 @@ export default function PetDetail({pet, setOpen, token}){
                         <button
                         className="updateItemButton"
                         onClick={ () => {
-                           updatePet(pet._id)
-                            setOpen(false)
+                            dispatch(getSelectedItem(petInfo));
+                            dispatch(closeDetailView());
+                            dispatch(openUpdateView());
                         } }>
-                        Update
+                        Edit
                     </button>
                     <button
                         className="deleteItemButton"
                         onClick={ () => {
-                            deletePet(pet._id)
-                            setOpen(false)
+                            dispatch(deletePetAsync({id, token}));
+                            dispatch(closeDetailViewFull());
+                            dispatch(clearSelectInUserPets());
                         } }>
                         Delete
                     </button>
@@ -151,7 +92,9 @@ export default function PetDetail({pet, setOpen, token}){
                     <button
                         className="close"
                         onClick={ () => {
-                            setOpen(false)
+                            dispatch(getUserPetsAsync({token}));
+                            dispatch(closeDetailViewFull());
+                            dispatch(clearSelectInUserPets());
                         } }>
                         Close
                     </button>

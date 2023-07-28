@@ -10,7 +10,7 @@ export default function BrowsePage() {
     const paperHeight = isSmallScreen ? '40vh' : '100vh';
     return (
         <Grid container spacing={0} justifyContent={isSmallScreen ? "center" : "flex-start"}>
-            <Grid xs={12} sm={2}>
+            <Grid item xs={12} sm={2}>
                 <Paper elevation={8} sx={{
                     borderRadius: 0,
                     padding: 2,

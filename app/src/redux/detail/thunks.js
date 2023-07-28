@@ -8,9 +8,3 @@ export const getDetailAsync = createAsyncThunk(
     }
 );
 
-export const updateDetailAsync = createAsyncThunk(
-    'updateItemDetail',
-    async ({id}) => {
-        return await DetailService.updatePet({});
-    }
-);

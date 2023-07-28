@@ -11,11 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 import {getPetsAsync} from "../../redux/pets/thunks";
+import {getUserPetsAsync} from "../../redux/userPets/thunks";
 
 export default function PetsList() {
   const[token, setToken]=useState("");
-  const[refresh, setRefresh]=useState(false);
-  const [pets, setPets] = useState([]);
+  const pets = useSelector(state => state.user.list);
   const dispatch = useDispatch();
  
   const auth = getAuth();
@@ -26,30 +26,13 @@ export default function PetsList() {
 
   useEffect(() => {
     if (token !=""){
-      getPets()
+      dispatch(getUserPetsAsync({token}));
     }
-    setRefresh(false)
-  }, [token, refresh]); 
+  }, [token]);
 
-  const getPets=async ()=>{
-    const res = await fetch("http://localhost:3001/pets/byuser", {
-      method: 'GET',
-      headers: { 
-                  'Content-Type': 'application/json',
-                  authorization: token},
-    });
-    const data=await res.json();
-    if(res.status!=200){
-      console.log("fetch data failed") 
-      setPets([])
-    }else{
-      setPets(data)
-    }
-   }
 
   const getToken=async (user)=>{
     const token= await user.getIdToken()
-    console.log(token)
     setToken(token)
   }
   useEffect(() => {
@@ -67,19 +50,21 @@ export default function PetsList() {
       return (
         <Box display="flex" justifyContent="center" alignItems="center">
           <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
-            <h2>Pets Looking for A Forever Home</h2>
+            <h2>My Listing</h2>
             <div className="slideshow-container">
               <Grid container spacing={1} alignItems="center" sx={{width:'100%', rowGap:'50px' }}>
-
-
-                  {pets.map((pet, index) => (
-                    <Grid item xs={4} 
-                      key={index}
-                      display="flex" justifyContent="center" alignItems="center"
-                    >
-                      { <PetCard pet={pet} setRefresh={setRefresh} token={token} />}
-                    </Grid>
-                  ))}
+                  {Array.isArray(pets) && pets.length > 0 ?  (
+                      pets.map((pet, index) => (
+                        <Grid item xs={4}
+                          key={index}
+                          display="flex" justifyContent="center" alignItems="center"
+                        >
+                          { <PetCard pet={pet} token={token} />}
+                        </Grid>
+                      ))
+                  ): (
+                      <p>No pets to display.</p>
+                  )}
 
                   <Grid item xs={4} 
 

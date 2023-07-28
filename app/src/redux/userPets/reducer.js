@@ -1,38 +1,47 @@
-import {createSlice, nanoid} from "@reduxjs/toolkit";
-import {addPetAsync, deletePetAsync, getUserPetsAsync, getSearchResultsAsync} from "./thunks";
+import {createSlice} from "@reduxjs/toolkit";
+import {addPetAsync, deletePetAsync, getUserPetsAsync, updateDetailAsync} from "./thunks";
 
 const initialState  = {
     list:[],
-    search:"",
-    sort:"default"
+    updateOpen: false,
+    selectItem: {},
 }
 
 const userPetsReducer = createSlice({
     name: 'userPets',
     initialState,
     reducers: {
-        setSort: {
+        getSelectedItem: {
             reducer: (state, action) => {
-                state.sort = action.payload;
+                state.selectItem = action.payload;
             }
         },
-        setSearch: {
+        openUpdateView: {
             reducer: (state, action) => {
-                state.search = action.payload;
-
-            },
-        }
+                state.updateOpen = true;
+            }
+        },
+        closeUpdateView: {
+            reducer: (state, action) => {
+                state.updateOpen = false;
+            }
+        },
+        clearSelectInUserPets: {
+            reducer: (state, action) => {
+                state.selectItem = {};
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(getUserPetsAsync.pending, (state, action) => {
-                console.log("waiting to get all");
+                console.log("waiting to get list by user");
             })
             .addCase(getUserPetsAsync.fulfilled, (state, action) => {
                 state.list = action.payload;
             })
             .addCase(getUserPetsAsync.rejected, (state, action) => {
-                console.log("rejected  to get all");
+                console.log("rejected to get list by user");
             })
             .addCase(addPetAsync.pending, (state, action) => {
                 console.log("waiting to add");
@@ -48,26 +57,23 @@ const userPetsReducer = createSlice({
                 console.log("waiting to delete");
             })
             .addCase(deletePetAsync.fulfilled, (state, action) => {
-                state.list = action.payload;
-                console.log(state.list);
+                const id = action.payload;
+                state.list = state.list.filter((item) => item._id !== id);
             })
             .addCase(deletePetAsync.rejected, (state, action) => {
                 console.log("rejected to delete");
             })
-            .addCase(getSearchResultsAsync.pending, (state, action) => {
-                console.log("waiting to search");
+            .addCase(updateDetailAsync.pending, (state, action) => {
+                console.log("waiting to update detail");
             })
-            .addCase(getSearchResultsAsync.fulfilled, (state, action) => {
-                state.list = action.payload;
-                console.log(state.list);
+            .addCase(updateDetailAsync.fulfilled, (state, action) => {
+                state.selectItem = action.payload;
             })
-            .addCase(getSearchResultsAsync.rejected, (state, action) => {
-                console.log("rejected to search");
+            .addCase(updateDetailAsync.rejected, (state, action) => {
+                console.log("update detail rejected");
             });
-            
-
     }
 });
 
-export const {setSort, setSearch} = userPetsReducer.actions;
+export const {getSelectedItem, openUpdateView, closeUpdateView, clearSelectInUserPets} = userPetsReducer.actions;
 export default userPetsReducer.reducer

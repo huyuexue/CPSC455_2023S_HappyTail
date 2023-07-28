@@ -24,8 +24,6 @@ async function uploadImageToS3(file) {
     params.ContentType = file.type;
   
     try {
-        console.log("awsKey: " + awsKey);
-        console.log("awsSecretKey: " + awsSecretKey);
         const data = await s3.upload(params).promise();
         return data.Location;
     } catch (error) {
