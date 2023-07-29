@@ -12,6 +12,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 import {getPetsAsync} from "../../redux/pets/thunks";
 import {getUserPetsAsync} from "../../redux/userPets/thunks";
+import { TurnLogin, TurnLogout } from "../../redux/login/reducer";
 
 export default function PetsList() {
   const[token, setToken]=useState("");
@@ -39,6 +40,7 @@ export default function PetsList() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         getToken(user)
+
       } else {
             navigate("/")
       }

@@ -14,9 +14,11 @@ import AddNewPet from "./components/forms/addPetForm/AddNewPet";
 
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
+import { useState } from 'react';
 
 
 function App() {
+
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={GlobalTheme}>
