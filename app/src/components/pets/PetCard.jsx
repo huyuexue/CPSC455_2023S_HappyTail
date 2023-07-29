@@ -1,4 +1,3 @@
-
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {openDetailView} from "../../redux/detail/reducer";
@@ -44,11 +43,14 @@ export default function PetCard({pet, token}) {
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-{/*                <CardActions>
+                <CardActions>
                     <Button size="small" color="primary">
                         Share
                     </Button>
-                </CardActions>*/}
+                    <Button size="small" color="primary">
+                        Save
+                    </Button>
+                </CardActions>
             </Card>
             {detailViewIsOpen && (<PetDetail token={token}/>)}
             {updateIsOpen && <UpdateForm/>}
