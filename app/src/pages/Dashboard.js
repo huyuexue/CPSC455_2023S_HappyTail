@@ -13,7 +13,7 @@ export default function Dashboard({itemsList}){
 
     const nav = useNavigate();
 
-
+    window.location.reload();
 
     return (
         <div className="Dashboard">
