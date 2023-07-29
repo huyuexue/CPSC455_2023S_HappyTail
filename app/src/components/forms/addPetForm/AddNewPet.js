@@ -25,7 +25,7 @@ export default function AddNewPet({}) {
         if (user) {
 
         } else {
-            // nav('/login')
+            nav('/login')
         }
     });
     const dispatch = useDispatch();
@@ -59,9 +59,9 @@ export default function AddNewPet({}) {
         ageMonth: '',
         size: '',
         spayed: '',
-        houseTrained: '',select
+        houseTrained: '',
         // page 1
-        postCode: 'Please enter post code',
+        postCode: '',
         furType: '',
         petPersonality: [],
         description: '',

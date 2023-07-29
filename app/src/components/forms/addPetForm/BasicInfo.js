@@ -1,6 +1,8 @@
 import ImageUpload from "../imageUpload/upload";
 import React, {useState} from "react";
 import {Grid} from "@mui/material";
+import {PetPropertySelections} from "../../results/FilterSelection";
+import {ageItems, furTypeItems, genderItems, sizeItems} from "../options";
 
 export default function BasicInfo({formData, handleChange, update}) {
 
@@ -20,6 +22,7 @@ export default function BasicInfo({formData, handleChange, update}) {
                 <>
                     {update ? "" :
                         <label>I am looking for a home for a
+
                             <select name="species" value={formData.species} onChange={onSpeciesChanged}>
                                 <option value=''>-Please select-</option>
                                 <option value="cat">Cat</option>

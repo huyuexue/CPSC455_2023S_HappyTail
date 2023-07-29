@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InterestsForm from "./InterestsForm";
 import PersonalInformationForm from "./PersonalInformation";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {useNavigate} from "react-router-dom";
 
 const steps = ['Interests', 'Personal Information'];
 
@@ -18,6 +20,15 @@ const subForms = [
 ]
 
 export default function AccountDetailsForm() {
+    const auth = getAuth();
+    const nav = useNavigate();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+
+        } else {
+            nav('/login')
+        }
+    });
     const [activeStep, setActiveStep] = React.useState(0);
     const [completed, setCompleted] = React.useState({});
 
