@@ -33,47 +33,33 @@ import {
 import{auth} from "../firebase/firebaseConfig"
 import { useState } from 'react';
 import { width } from '@mui/system';
+import {useAuth} from "../components/AuthContext";
 const provider = new GoogleAuthProvider();
 
 export default function LoginPage(){
-    const handleSubmit = (event) => {
-        console.log(email+password)
-        loginWithFirebase()
-    };
-
     const [showPassword, setShowPassword] = useState(false);
-    const [remember, setRemember] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [emailErr, setEmailErr] = useState("");
     const [passwordErr, setPsErr] = useState("");
+    const { loggedIn, login } = useAuth(); // Use the provided functions from useAuth hook
+    const [email, setEmail] = useState(""); // Define email state variable
+    const [password, setPassword] = useState(""); // Define password state variable
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(email + password);
+        loginWithFirebase();
+    };
+
     const nav = useNavigate();
     const loginWithFirebase = async () => {
-            setEmailErr('')
-            setPsErr('')
-            const persistence = remember ? browserLocalPersistence : browserSessionPersistence
+        setEmailErr('');
+        setPsErr('');
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const token = await userCredential.user.getIdToken(true);
 
-            setPersistence(auth, persistence)
-                .then(() => {
-                    signInWithEmailAndPassword(auth, email,password)
-                        .then(() => {
-                            console.log('firebase signin sucess')
-                            auth.currentUser.getIdToken(true)
-                            .then((token)=>{
-                                localStorage.setItem('tokenId', token)
-                                window.location.href="/dashboard"
-                                //nav("/dashboard");
-                            })
-                        })
-                        .catch((error) => {
-                            setEmailErr('Your email or password is incorrect')
-                            setPsErr('Your email or password is incorrect')
-                        })
-                })
-                .catch((error) => {})
-        }
-
-
+        localStorage.setItem('tokenId', token);
+        nav("/dashboard");
+    };
 
     return (
       <Container component="main" sx={{width:{sm:"100%", md:"100%", lg:"80%"}, marginX:"auto"}}>
@@ -158,7 +144,7 @@ export default function LoginPage(){
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2}}
-                    onClick={()=>handleSubmit()}
+                    onClick={(event) => handleSubmit(event)}
                   >
                     Sign In
                   </Button>
