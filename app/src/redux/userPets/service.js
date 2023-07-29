@@ -1,5 +1,5 @@
 const getUserPets = async ({token}) => {
-    const res = await fetch("https://ht-backend.onrender.com/pets/byuser", {
+    const res = await fetch("0.0.0.0:3001/pets/byuser", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -10,7 +10,7 @@ const getUserPets = async ({token}) => {
 };
 
 const addPet = async ({input, token}) => {
-    const res = await fetch("https://ht-backend.onrender.com/pets", {
+    const res = await fetch("0.0.0.0:3001/pets", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const addPet = async ({input, token}) => {
 };
 
 const deletePet = async ({id,token}) => {
-    const res = await fetch(`https://ht-backend.onrender.com/pets/${id}`, {
+    const res = await fetch(`0.0.0.0:3001/pets/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const deletePet = async ({id,token}) => {
 };
 
 const updatePet = async ({pet, token}) => {
-    const link = `https://ht-backend.onrender.com/pets/${pet._id}`;
+    const link = `0.0.0.0:3001/pets/${pet._id}`;
     const res = await fetch(link, {
         method: 'PATCH',
         headers: {
