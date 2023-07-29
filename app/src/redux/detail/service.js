@@ -1,6 +1,7 @@
+const baseUrl = "https://happytails-be-alpha.onrender.com";
 
 const getPet = async (id) => {
-    const link = `https://ht-backend.onrender.com/pets/${id.id}`;
+    const link = `${baseUrl}/pets/${id.id}`;
     const res = await fetch(link, {
         method: 'GET'
     });
