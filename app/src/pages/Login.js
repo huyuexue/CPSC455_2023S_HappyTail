@@ -61,7 +61,7 @@ export default function LoginPage(){
                             auth.currentUser.getIdToken(true)
                             .then((token)=>{
                                 localStorage.setItem('tokenId', token)
-                                window.location.href="/dashboard"
+                                window.location.href="/#/dashboard"
                                 //nav("/dashboard");
                             })
                         })
