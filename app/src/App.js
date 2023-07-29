@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, HashRouter} from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from './pages/Dashboard';
 import About from "./pages/About";
@@ -21,6 +21,7 @@ function App() {
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={GlobalTheme}>
                 <CssBaseline/>
+
                 <Routes>
                     <Route path="/" element={<Layout/>}>
                         <Route index element={<Home/>}/>
@@ -32,6 +33,7 @@ function App() {
                         <Route path="dashboard" element={<Dashboard/>}/>
                     </Route>
                 </Routes>
+
             </ThemeProvider>
         </StyledEngineProvider>
     );
