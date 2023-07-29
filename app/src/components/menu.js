@@ -6,12 +6,16 @@ import {Avatar} from '@mui/material';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {TurnLogout} from "../redux/login/reducer";
+import {useSelector, useDispatch} from 'react-redux'
 
 export default function UserMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const nav = useNavigate();
     const auth = getAuth();
+    const dispatch = useDispatch()
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -24,6 +28,8 @@ export default function UserMenu() {
 
     const signout = async () => {
         await auth.signOut()
+        console.log("logout")
+        dispatch(TurnLogout())
         nav("/")
         setAnchorEl(null);
     };

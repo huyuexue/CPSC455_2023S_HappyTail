@@ -5,8 +5,24 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import UserMenu from "./menu";
+import { useSelector, useDispatch } from 'react-redux'
+import { TurnLogin, TurnLogout } from "../redux/login/reducer";
+import {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function NavBar() {
     const [isLogin, setIsLogin] = useState(false);
+    const dispatch = useDispatch()
+    const[token, setToken]=useState("");
+    const isLoginR = useSelector((state) => state.login.value)
+    const navigate = useNavigate();
+
+    const getToken=async (user)=>{
+        const token= await user.getIdToken()
+        localStorage.setItem("token", token)
+      }
+
+
     const buttonRoutes = {
         "Home": "/",
         "Browse": "/browse",
@@ -16,9 +32,11 @@ export default function NavBar() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
-
+            console.log("login")
+            dispatch(TurnLogin())
         } else {
-            setIsLogin(true)
+            console.log("logout")
+            dispatch(TurnLogout())
         }
     });
 
@@ -129,7 +147,7 @@ export default function NavBar() {
                     ))}
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
-                    {!isLogin ? (
+                    {!isLoginR ? (
                         <>
                             <UserMenu />
                         </>

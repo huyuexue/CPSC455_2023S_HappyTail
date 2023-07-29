@@ -20,7 +20,8 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useNavigate  } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { TurnLogin, TurnLogout } from '../redux/login/reducer';
 
 import {
     signInWithEmailAndPassword,
@@ -35,11 +36,12 @@ import { useState } from 'react';
 import { width } from '@mui/system';
 const provider = new GoogleAuthProvider();
 
-export default function LoginPage(){
+export default function LoginPage({set}){
     const handleSubmit = (event) => {
         console.log(email+password)
         loginWithFirebase()
     };
+    const dispatch = useDispatch()
 
     const [showPassword, setShowPassword] = useState(false);
     const [remember, setRemember] = useState(false);
@@ -61,7 +63,8 @@ export default function LoginPage(){
                             auth.currentUser.getIdToken(true)
                             .then((token)=>{
                                 localStorage.setItem('tokenId', token)
-                              //window.location.href="/dashboard"
+                                window.location.href="/#/dashboard"
+                                dispatch(TurnLogin())
                                 nav("/dashboard");
                             })
                         })

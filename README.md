@@ -1,7 +1,7 @@
 # CPSC455_2023S_HappyTail
 
 # Project Description:
-Happy Tails is a project focused on creating a pet adoption platform. The website aims to provide a user-friendly interface where users can upload information about pets available for adoption, including cats and dogs. The platform caters to pets that are abandoned, stray, abused, or simply in need of a new home. Happy Tails will store data such as pet profiles, including details such as breed, age, gender, and photos. User information, including preferences gathered from the survey, will also be stored to facilitate personalised pet matches. Users will be able to browse through the available pets, view their profiles, and fill out a survey that collects their preferences. This additional functionality aims to provide personalised pet recommendations, optimising the chances of finding a suitable pet match.
+Happy Tails is a project focused on creating a pet adoption platform. The website aims to provide a user-friendly interface where users can upload information about pets available for adoption, including cats and dogs. The platform caters to pets that are abandoned, stray, abused, or simply in need of a new home. Happy Tails will store data such as pet profiles, including details such as breed, age, gender, and photos. Users will be able to browse through the available pets, view their profiles, and contact the organization or individual responsible for the pet's adoption.
 
 # Project Requirements:
 
