@@ -1,29 +1,39 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./style/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import {AuthProvider} from "./components/AuthContext";
+import { AuthProvider } from "./components/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-      <AuthProvider>
-        <Provider store={store}>
-          <Router>
-            <Routes>
-              <Route path="/*" element={<App />} />
-            </Routes>
-          </Router>
-        </Provider>
-      </AuthProvider>
-  </React.StrictMode>
-);
+function AppWithAuthProvider() {
+    const [authLoaded, setAuthLoaded] = React.useState(false);
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setAuthLoaded(true);
+        }, 1000);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+        return () => clearTimeout(timer);
+    }, []);
+    return authLoaded ? (
+        <AuthProvider>
+            <Provider store={store}>
+                <Router>
+                    <Routes>
+                        <Route path="/*" element={<App />} />
+                    </Routes>
+                </Router>
+            </Provider>
+        </AuthProvider>
+    ) : null;
+}
+
+root.render(
+    <React.StrictMode>
+        <AppWithAuthProvider />
+    </React.StrictMode>
+);
 reportWebVitals();

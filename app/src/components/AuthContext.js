@@ -64,9 +64,31 @@ export function AuthProvider({ children }) {
         return () => unsubscribe();
     }, []);
 
-    return (
+    const [userLoaded, setUserLoaded] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                user.getIdToken().then((token) => {
+                    setToken(token);
+                    localStorage.setItem('tokenId', token);
+                    setLoggedIn(true);
+                    setUserLoaded(true); // Mark the user as loaded
+                });
+            } else {
+                setLoggedIn(false);
+                setToken('');
+                localStorage.removeItem('tokenId');
+                setUserLoaded(true); // Mark the user as loaded
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    return userLoaded ? (
         <AuthContext.Provider value={{ loggedIn, token, login, logout }}>
             {children}
         </AuthContext.Provider>
-    );
+    ) : null;
 }
