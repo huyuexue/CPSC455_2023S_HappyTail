@@ -17,10 +17,11 @@ admin.initializeApp({
 });
 
 var app = express();
-const corsOptions = {
+/*const corsOptions = {
     origin: "https://happytails-alpha.onrender.com/",
 }
-app.use(cors(corsOptions));
+app.use(cors(corsOptions));*/
+app.use(cors());
 
 //database
 require('dotenv').config();
