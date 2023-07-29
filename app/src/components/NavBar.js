@@ -11,6 +11,7 @@ export default function NavBar() {
         "Home": "/",
         "Browse": "/browse",
         "About": "/about",
+        "Upload": "upload"
     }
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {

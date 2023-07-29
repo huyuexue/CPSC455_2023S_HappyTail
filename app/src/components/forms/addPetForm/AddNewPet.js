@@ -11,66 +11,66 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {addPetAsync} from "../../../redux/userPets/thunks";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {useEffect} from "react";
+import {Container} from "@mui/material";
 
 const steps = ['Pet Info', 'Extra Info', 'Contact Info', 'Preview'];
 
 
-export default function AddNewPet({}){
+export default function AddNewPet({}) {
     const auth = getAuth();
     const nav = useNavigate();
     onAuthStateChanged(auth, (user) => {
         if (user) {
 
         } else {
-               nav('/login')
+            // nav('/login')
         }
-        });
+    });
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const[token, setToken]=useState("");
+    const [token, setToken] = useState("");
 
-    const getToken=async (user)=>{
-        const token= await user.getIdToken()
+    const getToken = async (user) => {
+        const token = await user.getIdToken()
         setToken(token)
-      }
+    }
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-          if (user) {
-            getToken(user)
-          } else {
-              // alert("login please")
-          }
-          });
-      }, []);
+            if (user) {
+                getToken(user)
+            } else {
+                // alert("login please")
+            }
+        });
+    }, []);
 
 
-
-    const[formData, setFormData] = useState({
+    const [formData, setFormData] = useState({
         // page 0
-        species:'',
+        species: '',
         picture: '',
-        petName:'',
+        petName: '',
         breed: '',
         gender: '',
         ageYear: '',
         ageMonth: '',
         size: '',
         spayed: '',
-        houseTrained: '',
+        houseTrained: '',select
         // page 1
         postCode: 'Please enter post code',
         furType: '',
         petPersonality: [],
         description: '',
-        reason:'', //TODO: delete or add to schema?
-        length:'', //TODO: delete or add to schema?
+        reason: '', //TODO: delete or add to schema?
+        length: '', //TODO: delete or add to schema?
         // page 2
-        contactEmail:'',
-        contactName:'',
-        contactNumber:'',
+        contactEmail: '',
+        contactName: '',
+        contactNumber: '',
     });
 
 
@@ -111,7 +111,7 @@ export default function AddNewPet({}){
     const checkFill = () => {
         if (activeStep === 0) {
             if (!formData.species || !formData.picture || !formData.petName || !formData.breed || !formData.gender ||
-                !formData.ageYear ||! formData.ageMonth || !formData.size || !formData.spayed || !formData.houseTrained){
+                !formData.ageYear || !formData.ageMonth || !formData.size || !formData.spayed || !formData.houseTrained) {
                 handleNotComplete();
                 return;
             }
@@ -169,14 +169,13 @@ export default function AddNewPet({}){
                 ...prevData,
                 houseTrained: updatedFormData.houseTrained,
             }));
-        }else if (e === "setPhoto") {
+        } else if (e === "setPhoto") {
             setFormData((prevData) => ({
                 ...prevData,
                 picture: updatedFormData.picture,
             }));
-        }
-        else {
-            const { name, value } = e.target;
+        } else {
+            const {name, value} = e.target;
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
@@ -184,7 +183,7 @@ export default function AddNewPet({}){
         }
     };
 
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
         const values = Object.values(completed);
         const trueValues = values.filter((value) => value === true);
         if (trueValues.length === 3) {
@@ -202,49 +201,54 @@ export default function AddNewPet({}){
     };
 
     const subForms = [
-        <BasicInfo formData={formData} handleChange={handleChange} />,
+        <BasicInfo formData={formData} handleChange={handleChange}/>,
         <ExtraInfo formData={formData} handleChange={handleChange} onPostcodeFocus={onPostcodeFocus}/>,
         <ContactInfo formData={formData} handleChange={handleChange}/>,
         <Preview formData={formData} jumpToPage={jumpToPage}/>,
     ]
 
     return (
-        <Box sx={{width: '100%'}}>
-            <Stepper nonLinear activeStep={activeStep}>
-                {steps.map((label, index) => (
-                    <Step key={label} completed={completed[index]}>
-                        <StepButton color="inherit" onClick={handleStep(index)}>
-                            {label}
-                        </StepButton>
-                    </Step>
-                ))}
-            </Stepper>
-            <div>
-                <Fragment>
-                    {subForms[activeStep]}
-                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                        <Button
-                            color="inherit"
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            sx={{mr: 1}}>
-                            Back
-                        </Button>
-                        <Box sx={{flex: '1 1 auto'}}/>
-                        <Button disabled={activeStep === 3} onClick={handleNext} sx={{mr: 1}}>
-                            Next
-                        </Button>
+        <Container>
+            <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
+                <Box sx={{width: '100%'}}>
+                    <Stepper nonLinear activeStep={activeStep}>
+                        {steps.map((label, index) => (
+                            <Step key={label} completed={completed[index]}>
+                                <StepButton color="inherit" onClick={handleStep(index)}>
+                                    {label}
+                                </StepButton>
+                            </Step>
+                        ))}
+                    </Stepper>
+                    <div>
+                        <Fragment>
+                            {subForms[activeStep]}
+                            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                <Button
+                                    color="inherit"
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    sx={{mr: 1}}>
+                                    Back
+                                </Button>
+                                <Box sx={{flex: '1 1 auto'}}/>
+                                <Button disabled={activeStep === 3} onClick={handleNext} sx={{mr: 1}}>
+                                    Next
+                                </Button>
 
-                    </Box>
-                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                        <Button  onClick={()=>handleSubmit()} sx={{mr: 1}}>
-                            {activeStep === 3
-                                ? 'Submit'
-                                : ''}
-                        </Button>
-                    </Box>
-                </Fragment>
-            </div>
-        </Box>
+                            </Box>
+                            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                <Button onClick={() => handleSubmit()} sx={{mr: 1}}>
+                                    {activeStep === 3
+                                        ? 'Submit'
+                                        : ''}
+                                </Button>
+                            </Box>
+                        </Fragment>
+                    </div>
+                </Box>
+            </Box>
+        </Container>
+
     );
 }
