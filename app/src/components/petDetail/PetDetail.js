@@ -34,7 +34,8 @@ export default function PetDetail({}){
     }, []);
 
     useEffect(()=>{
-        if(window.location.pathname=="/dashboard"){
+        console.log(window.location.hash)
+        if(window.location.hash=="#/dashboard"){
             setDashboard(true)
         }
     },[]);
