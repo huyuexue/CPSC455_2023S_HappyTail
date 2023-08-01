@@ -7,18 +7,13 @@ import Layout from "./components/Layout";
 import BrowsePage from "./pages/Browse";
 import AccountDetailsPage from "./pages/AccountDetails";
 import LoginPage from './pages/Login';
-
-
 import AddNewPet from "./components/forms/addPetForm/AddNewPet";
-
-
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
-import { useState } from 'react';
+import UpdatePet from "./components/updatePet/UpdatePet";
 
 
 function App() {
-
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={GlobalTheme}>
@@ -32,6 +27,7 @@ function App() {
                         <Route path="account/details" element={<AccountDetailsPage/>}/>
                         <Route path="login" element={<LoginPage/>}/>
                         <Route path="dashboard" element={<Dashboard/>}/>
+                        <Route path="updatePet" element={<UpdatePet/>}/>
                     </Route>
                 </Routes>
             </ThemeProvider>

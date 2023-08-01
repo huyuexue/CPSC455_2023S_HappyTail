@@ -3,7 +3,6 @@ import {addPetAsync, deletePetAsync, getUserPetsAsync, updateDetailAsync} from "
 
 const initialState  = {
     list:[],
-    updateOpen: false,
     selectItem: {},
 }
 

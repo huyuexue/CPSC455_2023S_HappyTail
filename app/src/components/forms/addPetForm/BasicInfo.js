@@ -21,19 +21,22 @@ export default function BasicInfo({formData, handleChange, update}) {
             <Grid item xs={12} sm={6}>
                 <>
                     {update ? "" :
-                        <label>I am looking for a home for a
+                        <>
+                            <span className="required-field" />
+                            <label>I am looking for a home for a
 
-                            <select name="species" value={formData.species} onChange={onSpeciesChanged}>
-                                <option value=''>-Please select-</option>
-                                <option value="cat">Cat</option>
-                                <option value="dog">Dog</option>
-                            </select>
-                        </label>
+                                <select name="species" value={formData.species} onChange={onSpeciesChanged}>
+                                    <option value=''>-Please select-</option>
+                                    <option value="cat">Cat</option>
+                                    <option value="dog">Dog</option>
+                                </select>
+                            </label>
+                        </>
                     }
                 </>
                 <br/><br/>
                 <label>
-                    {update ? "" : "Photo:"}
+                    <span className="required-field" /> Photo:
                     {formData.picture !== '' && (
                         <div>
                             <img className="previewPhoto" src={formData.picture}/>
@@ -44,16 +47,19 @@ export default function BasicInfo({formData, handleChange, update}) {
 
             </Grid>
             <Grid item xs={6}>
+                <span className="required-field" />
                 <label>Pet Name:
                     <input type="text" name="petName" value={formData.petName}
                            onChange={handleChange}
                     /><br/>
                 </label> <br/>
+                <span className="required-field" />
                 <label>Breed:
                     <input type="text" name="breed" value={formData.breed}
                            onChange={handleChange}
                     /><br/>
                 </label> <br/>
+                <span className="required-field" />
                 <label>Gender:
                     <select name="gender" value={formData.gender} onChange={handleChange}>
                         <option value=''>-Please select-</option>
@@ -61,14 +67,16 @@ export default function BasicInfo({formData, handleChange, update}) {
                         <option value="male">Male</option>
                     </select><br/>
                 </label> <br/>
+                <span className="required-field" />
                 <label>Age:
-                    <input type="number" name="ageYear" value={formData.ageYear}
+                    <input type="number" name="ageYear" value={formData.ageYear} min={0}
                            onChange={handleChange}
                     /> Year
-                    <input type="number" name="ageMonth" value={formData.ageMonth}
+                    <input type="number" name="ageMonth" value={formData.ageMonth} min={0} max={12}
                            onChange={handleChange}
                     /> Month
                 </label> <br/><br/>
+                <span className="required-field" />
                 <label>Size:
                     <select name="size" value={formData.size} onChange={handleChange}>
                         <option value=''>-Please select-</option>
@@ -78,6 +86,7 @@ export default function BasicInfo({formData, handleChange, update}) {
                         <option value="xl">Extra Large</option>
                     </select><br/>
                 </label> <br/>
+                <span className="required-field" />
                 <label>Altered:
                     <select name="spayed" value={formData.spayed} onChange={handleChange}>
                         <option value=''>-Please select-</option>
@@ -86,7 +95,7 @@ export default function BasicInfo({formData, handleChange, update}) {
                         <option value="not_sure">Not Sure</option>
                     </select><br/>
                 </label><br/>
-
+                <span className="required-field" />
                 <label>House Trained:
                     <input type="radio" value="yes" checked={houseTrained === "yes"}
                            onChange={handleHouseTrainedChange}/>Yes
@@ -94,6 +103,7 @@ export default function BasicInfo({formData, handleChange, update}) {
                            onChange={handleHouseTrainedChange}/>No
                 </label> <br/><br/>
             </Grid>
+            <span className="required-field" style={{ fontStyle: 'italic', fontSize: '14px', color: 'grey' }}> Requires Fields.</span>
         </Grid>
 
 

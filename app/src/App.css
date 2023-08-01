@@ -248,3 +248,9 @@ input[type="number"] {
 .custom-file-input span {
   margin-left: 8px;
 }
+
+.required-field::before {
+  content: '*';
+  color: red;
+  margin-right: 2px;
+}

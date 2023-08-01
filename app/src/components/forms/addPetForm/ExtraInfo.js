@@ -26,12 +26,14 @@ export default function ExtraInfo({formData, handleChange, onPostcodeFocus}) {
     return (
         <Grid container spacing={0} paddingTop={5}>
             <Grid item xs={12} sm={6}>
+                <span className="required-field" />
                 <label>Location:
                     <input type="text" name="postCode" value={formData.postCode} placeholder={"Postal code"}
                            onChange={handleChange}
                            onFocus={onPostcodeFocus}
                     /><br/>
                 </label> <br/>
+                <span className="required-field" />
                 <label>Fur Type:
                     <select name="furType" value={formData.furType} onChange={handleChange}>
                         <option value=''>-Please select-</option>
@@ -132,6 +134,7 @@ export default function ExtraInfo({formData, handleChange, onPostcodeFocus}) {
                            value={formData.length} onChange={handleChange}/><br/>
                 </label><br/>
             </Grid>
+            <span className="required-field" style={{ fontStyle: 'italic', fontSize: '14px', color: 'grey' }}> Requires Fields.</span>
         </Grid>
 
     )

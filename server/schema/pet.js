@@ -31,7 +31,7 @@ const petSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   houseTrained: {
     type: Boolean,
@@ -47,7 +47,7 @@ const petSchema = new mongoose.Schema({
   },
   petPersonality: {
     type: [String],
-    required: true
+    required: false
   },
   spayed: {
     type: String,
@@ -59,13 +59,25 @@ const petSchema = new mongoose.Schema({
   },
   contactName: {
     type: String,
-    required: false
+    required: true
   },
   contactEmail: {
     type: String,
-    required: false
+    required: true
   },
   contactNumber: {
+    type: String,
+    required: true
+  },
+  addInfo: {
+    type: String,
+    required: false
+  },
+  reason: {
+    type: String,
+    required: false
+  },
+  length: {
     type: String,
     required: false
   },

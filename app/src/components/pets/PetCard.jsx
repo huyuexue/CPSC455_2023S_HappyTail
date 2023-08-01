@@ -3,7 +3,7 @@ import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typog
 import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
 import PetDetail from "../petDetail/PetDetail";
-import UpdateForm from "../updatePet/UpdateForm";
+import UpdatePet from "../updatePet/UpdatePet";
 import {getSelectedItem} from "../../redux/userPets/reducer";
 import {capitalizeEachWord} from "../../utils";
 export default function PetCard({pet, token}) {
@@ -53,7 +53,7 @@ export default function PetCard({pet, token}) {
                 </CardActions>
             </Card>
             {detailViewIsOpen && (<PetDetail token={token}/>)}
-            {updateIsOpen && <UpdateForm/>}
+            {updateIsOpen && <UpdatePet/>}
         </>
     )
 }

@@ -76,7 +76,8 @@ export default function PetDetail({}) {
                                     onClick={() => {
                                         dispatch(getSelectedItem(petInfo));
                                         dispatch(closeDetailView());
-                                        dispatch(openUpdateView());
+                                        //dispatch(openUpdateView());
+                                        nav('/updatePet');
                                     }}>
                                     Edit
                                 </button>
