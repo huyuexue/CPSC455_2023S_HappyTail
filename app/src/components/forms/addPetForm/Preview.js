@@ -7,54 +7,49 @@ export default function Preview({formData, jumpToPage}){
     return (
         <div className="from">
             <div>
-                <h2>Basic Survey</h2>
+                <h2>Basic Information</h2>
                 <button type="button" onClick={() => jumpToPage(0)}>
                     Edit
                 </button>
                 <p>
-                    1. I need to rehome {species}<br/>
-                    2. Is the pet altered? {spayed}<br/>
-                    3. Why does the pet need to find a new home? {formData.reason}<br/>
-                    4. How long have you  own it? {formData.length}<br/>
+                    I need to rehome {species}<br/>
+                    Photo: <br/>
+                    {(formData.picture === '')?'' : <img className="previewPhoto" src = {formData.picture} />}<br/>
+                    <span style={{ color: 'red' }}>*</span>Pet Name: {formData.petName}<br/>
+                    Breed: {formData.breed}<br/>
+                    Gender: {formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1)}<br/>
+                    Age: {formData.ageYear} Year {formData.ageMonth} Month <br/>
+                    Size: {formData.size.charAt(0).toUpperCase() + formData.size.slice(1)} <br/>
+                    Altered: {spayed}<br/>
+                    House Trained: {formData.houseTrained.charAt(0).toUpperCase() + formData.houseTrained.slice(1)} <br/>
                 </p>
 
             </div>
-            <h2>About You</h2>
+            <>
+                <h2>Extra Information</h2>
                 <button type="button" onClick={() => jumpToPage(1)}>
                     Edit
                 </button>
                 <p>
-                    Email: {formData.email}<br/>
-                    First Name: {formData.firstName}<br/>
-                    Last Name: {formData.lastName}<br/>
-                    Phone Number: {formData.phoneNumber}<br/>
+                    Location: {formData.postCode}<br/>
+                    Fur Type: {formData.furType.charAt(0).toUpperCase() + formData.furType.slice(1)} <br/>
+                    Pet Personality: {formData.petPersonality.join(", ").toUpperCase()}<br/>
+                    Description: {formData.description}<br/>
+                    Reason for rehoming: {formData.reason}<br/>
+                    Length of ownership: {formData.length}<br/>
                 </p>
-            <h2>Location</h2>
-                <button type="button" onClick={() => jumpToPage(1)}>
-                    Edit
-                </button>
-                <p>
-                    Postal Code: {formData.postalCode}<br/>
-                    City: {formData.city}<br/>
-                    Province: {formData.province}<br/>
-                </p>
-            <h2>Pet Information</h2>
+            </>
+            <h2>Contact Information</h2>
                 <button type="button" onClick={() => jumpToPage(2)}>
                     Edit
                 </button>
-            <p>
-                Pet Name: {formData.petName}<br/>
-                Photo: <br/>
-                {(formData.picture === '')?'' : <img className="previewPhoto" src = {formData.picture} />}<br/>
-                Breed: {formData.breed}<br/>
-                Gender: {formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1)}<br/>
-                Age: {formData.ageYear} Year {formData.ageMonth} Month <br/>
-                Size: {formData.size.charAt(0).toUpperCase() + formData.size.slice(1)} <br/>
-                Fur Type: {formData.furType.charAt(0).toUpperCase() + formData.furType.slice(1)} <br/>
-                House Trained: {formData.houseTrained.charAt(0).toUpperCase() + formData.houseTrained.slice(1)} <br/>
-                Pet Personality: {formData.petPersonality.join(", ").toUpperCase()}<br/>
-                Description: {formData.description}<br/>
-            </p>
+                <p>
+                    Name: {formData.contactName}<br/>
+                    Email: {formData.contactEmail}<br/>
+                    Phone Number: {formData.contactNumber}<br/>
+                </p>
+
+
 
         </div>
     )

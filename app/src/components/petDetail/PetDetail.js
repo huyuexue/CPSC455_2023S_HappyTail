@@ -103,9 +103,8 @@ export default function PetDetail({}) {
                             Close
                         </button>
                     </div>
+                </div>
             </Paper>
-        </div>
-</aside>
-
-)
+        </aside>
+    )
 }

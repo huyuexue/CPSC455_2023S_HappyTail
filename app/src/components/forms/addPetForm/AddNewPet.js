@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {addPetAsync} from "../../../redux/userPets/thunks";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 import {Container} from "@mui/material";
 
@@ -189,6 +189,8 @@ export default function AddNewPet({}) {
         if (trueValues.length === 3) {
             addPet();
             navigate('/dashboard');
+        } else {
+            alert('Please complete all required fields before submitting.');
         }
     };
 
