@@ -9,6 +9,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {useEffect} from "react";
 import {getPetsAsync} from "../../redux/pets/thunks";
 import Carousel from "react-material-ui-carousel";
+import {getFavoriteAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
+import {DataFetching} from "../DataFetching";
 
 export default function PetsBrief() {
 
@@ -28,6 +30,8 @@ export default function PetsBrief() {
     };
     //does same but backwards
 
+    const isLoading = DataFetching();
+
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex((prevIndex) => (prevIndex + 1) % pets.length);
@@ -37,19 +41,19 @@ export default function PetsBrief() {
         };
     }, [pets.length]); //runs on first render + whenever length changes
 
-    useEffect(() => {
-        dispatch(getPetsAsync());
-    }, [pets.length]); //TODO: need to fix this dispatch
-
     return (
         <Box display="flex" justifyContent="center" alignItems="center">
             <Stack justifyContent="center" alignItems="center" spacing={3}>
                 <h1> </h1>
-                <Carousel sx={{width: 350}}>
-                    {pets.map((pet,index) => (
-                        <PetCard pet={pet}  key={index} sx={{width: 350}}/>
-                    ))}
-                </Carousel>
+                {isLoading ?
+                    <p>Loading...</p> : (
+                        <Carousel sx={{width: 350}}>
+                            {pets.map((pet,index) => (
+                                <PetCard pet={pet}  key={index} sx={{width: 350}}/>
+                            ))}
+                        </Carousel>
+                    )
+                }
             </Stack>
         </Box>
     );

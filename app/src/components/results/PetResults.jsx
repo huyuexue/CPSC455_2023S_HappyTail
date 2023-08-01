@@ -13,20 +13,17 @@ import {PetPropertySelections} from "./FilterSelection";
 import * as React from "react";
 import {updateSpecies} from "../../redux/pets/reducer";
 import {useLocation} from "react-router-dom";
+import {getFavoriteAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
+import {DataFetching} from "../DataFetching";
 export default function PetResults() {
     const dispatch = useDispatch();
     const pets = useSelector(state => state.pets.list);
     const petsResult = useSelector(state => state.pets.searchList)
-    const isLoading = useSelector(state => state.pets.isLoading);
-
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const initialSpecies = queryParams.get('type') || '';
     const [species, setSpecies] = React.useState(initialSpecies);
-
-    useEffect(() => {
-        dispatch(getPetsAsync());
-    }, []);
+    const isLoading = DataFetching();
 
     useEffect(() => {
         dispatch(updateSpecies(species));

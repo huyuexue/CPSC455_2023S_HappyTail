@@ -24,7 +24,7 @@ export default function NavBar() {
             const token = localStorage.getItem('tokenId');
             dispatch(TurnLogin(token));
         } else {
-            dispatch(TurnLogout())
+            dispatch(TurnLogout());
         }
     });
     const rightButtonRoutes = {

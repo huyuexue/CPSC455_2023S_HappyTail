@@ -42,6 +42,7 @@ const userPetsReducer = createSlice({
             })
             .addCase(getUserPetsAsync.fulfilled, (state, action) => {
                 state.list = action.payload;
+                console.log(state.list);
             })
             .addCase(getUserPetsAsync.rejected, (state, action) => {
                 console.log("rejected to get list by user");
@@ -80,6 +81,7 @@ const userPetsReducer = createSlice({
             })
             .addCase(getFavoriteAsync.fulfilled, (state, action) => {
                 state.favorite = action.payload.favoriteList;
+                console.log(state.favorite);
             })
             .addCase(getFavoriteAsync.rejected, (state, action) => {
                 console.log("rejected to get favorite");

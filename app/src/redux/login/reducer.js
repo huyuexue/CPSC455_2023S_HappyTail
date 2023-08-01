@@ -10,6 +10,8 @@ export const loginReducer = createSlice({
     TurnLogin: (state, action) => {
       state.value =false;
       state.token = action.payload;
+      //console.log(state.value);
+      //console.log(state.token);
     },
     TurnLogout: (state) => {
       state.value =true;

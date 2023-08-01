@@ -66,7 +66,6 @@ const petsReducer = createSlice({
             })
             .addCase(getFilteredPetsAsync.fulfilled, (state, action) => {
                 state.list = action.payload;
-                console.log(state.list);
             })
             .addCase(getFilteredPetsAsync.rejected, (state, action) => {
                 console.log("rejected to get filtered pets");

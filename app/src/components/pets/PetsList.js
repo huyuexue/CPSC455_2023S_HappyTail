@@ -30,6 +30,7 @@ export default function PetsList() {
 
   useEffect(() => {
     if (token !=""){
+      dispatch(getPetsAsync());
       dispatch(getUserPetsAsync({token}));
       dispatch(getFavoriteAsync({token}));
     }
@@ -96,6 +97,7 @@ export default function PetsList() {
                 ): (
                     <p>No pets to display.</p>
                 )}
+
               </Grid>
             </div>
           </Box>
