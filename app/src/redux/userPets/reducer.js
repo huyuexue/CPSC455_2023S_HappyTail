@@ -4,6 +4,7 @@ import {addPetAsync, deletePetAsync, getUserPetsAsync, updateDetailAsync} from "
 const initialState  = {
     list:[],
     selectItem: {},
+    favorite:[],
 }
 
 const userPetsReducer = createSlice({

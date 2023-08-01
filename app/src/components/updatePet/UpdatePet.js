@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import {capitalizeEachWord} from "../../utils";
-import PetForm from "../forms/addPetForm/PetForm";
+import PetForm from "../forms/petForm/PetForm";
 
 export default function UpdatePet(){
     const  pet = useSelector(state => state.user.selectItem);

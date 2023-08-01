@@ -3,12 +3,21 @@ import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typog
 import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
 import PetDetail from "../petDetail/PetDetail";
-import UpdatePet from "../updatePet/UpdatePet";
-import {getSelectedItem} from "../../redux/userPets/reducer";
 import {capitalizeEachWord} from "../../utils";
+import IconButton from "@mui/material/IconButton";
+import {Favorite, FavoriteBorder} from "@mui/icons-material";
+import {useEffect, useState} from "react";
+
+function AlarmIcon() {
+    return null;
+}
+
+function FavoriteIcon() {
+    return null;
+}
+
 export default function PetCard({pet, token}) {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
-    const updateIsOpen = useSelector(state => state.user.updateOpen);
     const dispatch = useDispatch();
 
     const handleClick = async (selectedPet) => {
@@ -20,10 +29,21 @@ export default function PetCard({pet, token}) {
         }
     };
 
+    const [isFavorite, setIsFavorite] = useState(false);
+    const handleFavoriteToggle = () => {
+        setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+    };
+
+    const [dashboard, setDashboard] = useState(false);
+    useEffect(() => {
+        if (window.location.hash == "#/dashboard") {
+            setDashboard(true)
+        }
+    }, []);
     return (
         <>
-            <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}} onClick={handleClick}>
-                <CardActionArea>
+            <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}} >
+                <CardActionArea onClick={handleClick}>
                     <CardMedia
                         component="img"
                         height="250"
@@ -47,13 +67,15 @@ export default function PetCard({pet, token}) {
                     <Button size="small" color="primary">
                         Share
                     </Button>
-                    <Button size="small" color="primary">
-                        Save
-                    </Button>
+                    {dashboard ? <></> : (
+                        <IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
+                            {isFavorite? <Favorite /> : <FavoriteBorder />}
+                        </IconButton>)
+                    }
                 </CardActions>
+
             </Card>
             {detailViewIsOpen && (<PetDetail token={token}/>)}
-            {updateIsOpen && <UpdatePet/>}
         </>
     )
 }

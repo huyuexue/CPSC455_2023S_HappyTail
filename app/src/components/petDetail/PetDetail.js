@@ -6,37 +6,18 @@ import {clearSelectInUserPets, getSelectedItem, openUpdateView} from "../../redu
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {deletePetAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
 import {capitalizeEachWord} from "../../utils";
-import {capitalize} from "@mui/material";
 import Paper from "@mui/material/Paper";
 
 export default function PetDetail({}) {
     const dispatch = useDispatch();
-    const auth = getAuth();
-    const [dashboard, setDashboard] = useState(false);
     const petInfo = useSelector(state => state.petDetail.selectItem);
+    const token = useSelector(state => state.login.token);
 
     const id = petInfo._id;
     const nav = useNavigate();
 
-    const [token, setToken] = useState("");
-
-    const getToken = async (user) => {
-        const token = await user.getIdToken()
-        setToken(token)
-    }
-
+    const [dashboard, setDashboard] = useState(false);
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                getToken(user)
-            } else {
-                // alert("login please")
-            }
-        });
-    }, []);
-
-    useEffect(() => {
-        console.log(window.location.hash)
         if (window.location.hash == "#/dashboard") {
             setDashboard(true)
         }
@@ -76,7 +57,6 @@ export default function PetDetail({}) {
                                     onClick={() => {
                                         dispatch(getSelectedItem(petInfo));
                                         dispatch(closeDetailView());
-                                        //dispatch(openUpdateView());
                                         nav('/updatePet');
                                     }}>
                                     Edit

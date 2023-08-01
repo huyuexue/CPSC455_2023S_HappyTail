@@ -64,7 +64,7 @@ export default function LoginPage({set}){
                             .then((token)=>{
                                 localStorage.setItem('tokenId', token)
                                 window.location.href="/#/dashboard"
-                                dispatch(TurnLogin())
+                                dispatch(TurnLogin(token))
                                 nav("/dashboard");
                             })
                         })
@@ -75,8 +75,6 @@ export default function LoginPage({set}){
                 })
                 .catch((error) => {})
         }
-
-
 
     return (
       <Container component="main" sx={{width:{sm:"100%", md:"100%", lg:"80%"}, marginX:"auto"}}>

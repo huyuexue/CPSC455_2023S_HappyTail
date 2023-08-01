@@ -4,15 +4,16 @@ export const loginReducer = createSlice({
   name: 'login',
   initialState: {
     value: true,
+    token: null,
   },
   reducers: {
-    TurnLogin: (state) => {
-      state.value =false
-      console.log("the value is true")
+    TurnLogin: (state, action) => {
+      state.value =false;
+      action.payload ? state.token = action.payload : state.token = state.token;
     },
     TurnLogout: (state) => {
-        state.value =true
-        console.log("the value is false")
+      state.value =true;
+      state.token = null;
     },
   },
 })

@@ -26,16 +26,14 @@ export default function NavBar() {
     const buttonRoutes = {
         "Home": "/",
         "Browse": "/browse",
+        "Add": "/addNewPet",
         "About": "/about",
-        "Upload": "/addNewPet"
     }
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            console.log("login")
             dispatch(TurnLogin())
         } else {
-            console.log("logout")
             dispatch(TurnLogout())
         }
     });

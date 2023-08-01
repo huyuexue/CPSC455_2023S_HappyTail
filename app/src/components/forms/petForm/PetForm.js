@@ -1,5 +1,5 @@
 import {Fragment, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import BasicInfo from "./BasicInfo";
 import ContactInfo from "./ContactInfo";
 import ExtraInfo from "./ExtraInfo";
@@ -22,31 +22,13 @@ export default function PetForm({originalData, update}) {
     const auth = getAuth();
     const nav = useNavigate();
     onAuthStateChanged(auth, (user) => {
-        if (user) {
-
-        } else {
+        if (!user) {
             nav('/login')
         }
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [token, setToken] = useState("");
-
-    const getToken = async (user) => {
-        const token = await user.getIdToken()
-        setToken(token)
-    }
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                getToken(user)
-            } else {
-                // alert("login please")
-            }
-        });
-    }, []);
-
+    const token = useSelector(state => state.login.token);
 
     const [formData, setFormData] = useState({
         ... originalData
@@ -80,20 +62,13 @@ export default function PetForm({originalData, update}) {
             addInfo: formData.addInfo,
         };
     };
-
     const addPet = async () => {
         const input = generatePetInput(formData);
         dispatch(addPetAsync({ input, token }));
     };
-
     const updatePet = async () => {
         const input = generatePetInput(formData);
         await dispatch(updateDetailAsync({ pet: input, token }));
-    };
-
-    const handleNext = () => {
-        checkFill();
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
     const checkFill = () => {
@@ -123,7 +98,10 @@ export default function PetForm({originalData, update}) {
         checkFill();
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-
+    const handleNext = () => {
+        checkFill();
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
     const handleStep = (step) => () => {
         checkFill();
         setActiveStep(step);
@@ -134,7 +112,6 @@ export default function PetForm({originalData, update}) {
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
     };
-
     const handleNotComplete = () => {
         const newCompleted = completed;
         newCompleted[activeStep] = false;
@@ -174,7 +151,7 @@ export default function PetForm({originalData, update}) {
         const values = Object.values(completed);
         const trueValues = values.filter((value) => value === true);
         if (trueValues.length === 3) {
-            update? updatePet() : await addPet();
+            update? await updatePet() : await addPet();
             navigate('/dashboard');
         } else {
             alert('Please complete all required fields before submitting.');
@@ -186,7 +163,6 @@ export default function PetForm({originalData, update}) {
             ...prevData,
             ["postcode"]: '',
         }));
-
     };
 
     const subForms = [
@@ -243,6 +219,5 @@ export default function PetForm({originalData, update}) {
                 </Box>
             </Box>
         </Container>
-
     );
 }

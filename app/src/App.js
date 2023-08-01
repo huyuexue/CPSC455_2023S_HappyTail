@@ -7,7 +7,7 @@ import Layout from "./components/Layout";
 import BrowsePage from "./pages/Browse";
 import AccountDetailsPage from "./pages/AccountDetails";
 import LoginPage from './pages/Login';
-import AddNewPet from "./components/forms/addPetForm/AddNewPet";
+import AddNewPet from "./components/forms/petForm/AddNewPet";
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
 import UpdatePet from "./components/updatePet/UpdatePet";
