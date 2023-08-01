@@ -14,7 +14,6 @@ export default function PetsBrief() {
 
     const pets = useSelector(state => state.pets.list);
     const dispatch = useDispatch();
-    const[refresh, setRefresh]=useState(false);
 
     const [activeIndex, setActiveIndex] = useState(0);
     //keep track of index in the list of pets, and function to change it
@@ -33,7 +32,6 @@ export default function PetsBrief() {
         const interval = setInterval(() => {
             setActiveIndex((prevIndex) => (prevIndex + 1) % pets.length);
         }, 6000);
-
         return () => {
             clearInterval(interval); //if any changes in dependency, stops the callback function from executing. //clean resources before next render
         };
@@ -49,7 +47,7 @@ export default function PetsBrief() {
                 <h1> </h1>
                 <Carousel sx={{width: 350}}>
                     {pets.map((pet,index) => (
-                        <PetCard pet={pet}  key={index} setRefresh={setRefresh} sx={{width: 350}}/>
+                        <PetCard pet={pet}  key={index} sx={{width: 350}}/>
                     ))}
                 </Carousel>
             </Stack>

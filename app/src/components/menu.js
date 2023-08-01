@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {TurnLogout} from "../redux/login/reducer";
 import {useSelector, useDispatch} from 'react-redux'
-
+import {clearAll} from "../redux/userPets/reducer";
 export default function UserMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -27,10 +27,11 @@ export default function UserMenu() {
 
 
     const signout = async () => {
-        await auth.signOut()
-        console.log("logout")
-        dispatch(TurnLogout())
-        nav("/")
+        await auth.signOut();
+        console.log("logout");
+        dispatch(TurnLogout());
+        dispatch(clearAll());
+        nav("/");
         setAnchorEl(null);
     };
 

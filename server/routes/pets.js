@@ -70,6 +70,7 @@ router.get('/all', function(req, res, next) {
 
 router.get('/byuser',middleware, async (req, res, next) => {
   try {
+    //console.log(req.uid);
     const pet = await Pet.find({uid:req.uid}); // Find the pet by ID
     if (!pet) {
       // If the pet is not found, return an appropriate response

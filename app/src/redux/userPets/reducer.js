@@ -1,5 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addPetAsync, deletePetAsync, getUserPetsAsync, updateDetailAsync} from "./thunks";
+import {
+    addPetAsync,
+    deletePetAsync,
+    getFavoriteAsync,
+    getUserPetsAsync,
+    updateDetailAsync,
+    updateFavoriteAsync
+} from "./thunks";
 
 const initialState  = {
     list:[],
@@ -16,21 +23,17 @@ const userPetsReducer = createSlice({
                 state.selectItem = action.payload;
             }
         },
-        openUpdateView: {
-            reducer: (state, action) => {
-                state.updateOpen = true;
-            }
-        },
-        closeUpdateView: {
-            reducer: (state, action) => {
-                state.updateOpen = false;
-            }
-        },
         clearSelectInUserPets: {
             reducer: (state, action) => {
                 state.selectItem = {};
             }
         },
+        clearAll: {
+            reducer: (state, action) => {
+                state.list = [];
+                state.favorite = [];
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -71,9 +74,28 @@ const userPetsReducer = createSlice({
             })
             .addCase(updateDetailAsync.rejected, (state, action) => {
                 console.log("update detail rejected");
+            })
+            .addCase(getFavoriteAsync.pending, (state, action) => {
+                console.log("waiting to get favorite");
+            })
+            .addCase(getFavoriteAsync.fulfilled, (state, action) => {
+                state.favorite = action.payload.favoriteList;
+            })
+            .addCase(getFavoriteAsync.rejected, (state, action) => {
+                console.log("rejected to get favorite");
+            })
+            .addCase(updateFavoriteAsync.pending, (state, action) => {
+                console.log("waiting to update favorite");
+            })
+            .addCase(updateFavoriteAsync.fulfilled, (state, action) => {
+                state.favorite = action.payload.favoriteList;
+                console.log(state.favorite);
+            })
+            .addCase(updateFavoriteAsync.rejected, (state, action) => {
+                console.log("rejected to update favorite");
             });
     }
 });
 
-export const {getSelectedItem, openUpdateView, closeUpdateView, clearSelectInUserPets} = userPetsReducer.actions;
+export const {getSelectedItem, openUpdateView, clearSelectInUserPets, clearAll} = userPetsReducer.actions;
 export default userPetsReducer.reducer

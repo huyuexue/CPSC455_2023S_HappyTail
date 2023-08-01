@@ -7,19 +7,12 @@ import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
 import {Favorite, FavoriteBorder} from "@mui/icons-material";
 import {useEffect, useState} from "react";
+import {updateFavoriteAsync} from "../../redux/userPets/thunks";
+import {useNavigate} from "react-router-dom";
 
-function AlarmIcon() {
-    return null;
-}
-
-function FavoriteIcon() {
-    return null;
-}
-
-export default function PetCard({pet, token}) {
+export default function PetCard({pet}) {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const dispatch = useDispatch();
-
     const handleClick = async (selectedPet) => {
         try {
             await dispatch(getDetailAsync(pet._id));
@@ -29,14 +22,27 @@ export default function PetCard({pet, token}) {
         }
     };
 
-    const [isFavorite, setIsFavorite] = useState(false);
+    const token = useSelector(state => state.login.token);
+    const favoritePets = useSelector(state => state.user.favorite);
+    const myPets = useSelector(state => state.user.list);
+    const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
+    const nav = useNavigate();
+    const petId = pet._id;
+    const isFavorite = favoritePets.includes(petId);
+    const isOwner= idList.includes(petId);
+
     const handleFavoriteToggle = () => {
-        setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+        if (token) {
+            dispatch(updateFavoriteAsync({token, petId}))
+        } else{
+            nav('/login')
+        }
+
     };
 
     const [dashboard, setDashboard] = useState(false);
     useEffect(() => {
-        if (window.location.hash == "#/dashboard") {
+        if (window.location.hash === "#/dashboard") {
             setDashboard(true)
         }
     }, []);
@@ -67,15 +73,16 @@ export default function PetCard({pet, token}) {
                     <Button size="small" color="primary">
                         Share
                     </Button>
-                    {dashboard ? <></> : (
-                        <IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
+                    {isOwner ?
+                        (<></>) :
+                        (<IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
                             {isFavorite? <Favorite /> : <FavoriteBorder />}
                         </IconButton>)
                     }
                 </CardActions>
 
             </Card>
-            {detailViewIsOpen && (<PetDetail token={token}/>)}
+            {detailViewIsOpen && (<PetDetail/>)}
         </>
     )
 }

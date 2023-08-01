@@ -11,12 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 import {getPetsAsync} from "../../redux/pets/thunks";
-import {getUserPetsAsync} from "../../redux/userPets/thunks";
+import {getFavoriteAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
 import { TurnLogin, TurnLogout } from "../../redux/login/reducer";
 
 export default function PetsList() {
   const[token, setToken]=useState("");
   const pets = useSelector(state => state.user.list);
+  const favoritePetsIdList = useSelector(state => state.user.favorite);
+  const allPets = useSelector(state => state.pets.list);
+  const favoritePets = allPets.filter(pet => favoritePetsIdList.includes(pet._id.toString()));
   const dispatch = useDispatch();
  
   const auth = getAuth();
@@ -28,6 +31,7 @@ export default function PetsList() {
   useEffect(() => {
     if (token !=""){
       dispatch(getUserPetsAsync({token}));
+      dispatch(getFavoriteAsync({token}));
     }
   }, [token]);
 
@@ -47,10 +51,8 @@ export default function PetsList() {
       });
   }, []);   
 
-
-
       return (
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
           <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
             <h2>My Listing</h2>
             <div className="slideshow-container">
@@ -68,16 +70,32 @@ export default function PetsList() {
                       <p>No pets to display.</p>
                   )}
 
-                  <Grid item xs={4} 
-
+                  <Grid item xs={4}
                       display="flex" justifyContent="center" alignItems="center"
                     >
-              
                     <AddCircleOutlineRoundedIcon fontSize="large" color="primary" onClick={()=>navigate('/addNewPet')}/>
-    
-                    
+
                   </Grid>
 
+              </Grid>
+            </div>
+          </Box>
+          <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
+            <h2>My Favorite</h2>
+            <div className="slideshow-container">
+              <Grid container spacing={1} alignItems="center" sx={{width:'100%', rowGap:'50px' }}>
+                {Array.isArray(favoritePets) && favoritePets.length > 0 ?  (
+                    favoritePets.map((pet, index) => (
+                        <Grid item xs={4}
+                              key={index}
+                              display="flex" justifyContent="center" alignItems="center"
+                        >
+                          { <PetCard pet={pet} token={token} />}
+                        </Grid>
+                    ))
+                ): (
+                    <p>No pets to display.</p>
+                )}
               </Grid>
             </div>
           </Box>

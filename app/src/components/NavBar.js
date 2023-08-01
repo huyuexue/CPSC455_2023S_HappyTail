@@ -7,37 +7,26 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import UserMenu from "./menu";
 import { useSelector, useDispatch } from 'react-redux'
 import { TurnLogin, TurnLogout } from "../redux/login/reducer";
-import {useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+
 
 export default function NavBar() {
-    const [isLogin, setIsLogin] = useState(false);
-    const dispatch = useDispatch()
-    const[token, setToken]=useState("");
-    const isLoginR = useSelector((state) => state.login.value)
-    const navigate = useNavigate();
-
-    const getToken=async (user)=>{
-        const token= await user.getIdToken()
-        localStorage.setItem("token", token)
-      }
-
-
+    const dispatch = useDispatch();
+    const isLoginR = useSelector((state) => state.login.value);
     const buttonRoutes = {
         "Home": "/",
         "Browse": "/browse",
         "Add": "/addNewPet",
         "About": "/about",
-    }
+    };
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            dispatch(TurnLogin())
+            const token = localStorage.getItem('tokenId');
+            dispatch(TurnLogin(token));
         } else {
             dispatch(TurnLogout())
         }
     });
-
     const rightButtonRoutes = {
         "Login": "/login",
     }

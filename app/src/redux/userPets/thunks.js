@@ -28,3 +28,16 @@ export const updateDetailAsync = createAsyncThunk(
         return await UserService.updatePet({pet, token});
     }
 );
+
+export const getFavoriteAsync = createAsyncThunk(
+    'getFavoriteList',
+    async ({token}) => {
+        return await UserService.getFavorite({token});
+    }
+);
+export const updateFavoriteAsync = createAsyncThunk(
+    'updateFavoriteList',
+    async ({token, petId}) => {
+        return await UserService.updateFavorite({token, petId});
+    }
+);

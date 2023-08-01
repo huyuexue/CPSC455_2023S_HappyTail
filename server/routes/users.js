@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../schema/user'); 
+const User = require('../schema/user');
+const Pet = require("../schema/pet");
+const {getAuth} = require("firebase-admin/auth");
 
 async function getAllUsers() {
   try {
@@ -12,10 +14,55 @@ async function getAllUsers() {
   }
 }
 
+router.post('/updateFavorites', middleware, async (req, res, next) => {
+  try {
+    const userId =  req.uid;
+    const user = await User.findOne({uid:userId});
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const favoriteList = user.favorite;
+    const petId = req.body.petId;
+
+    const index = favoriteList.indexOf(petId);
+    if (index === -1) {
+      favoriteList.push(petId);
+    } else {
+      favoriteList.splice(index, 1);
+    }
+    console.log(favoriteList);
+    user.favorite = favoriteList;
+
+    await user.save();
+    return res.json({ favoriteList });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return [];
+  }
+});
+router.get('/favorites', middleware, async (req, res, next) => {
+  try {
+    const userId = req.uid;
+    const user = await User.findOne({uid:userId});
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const favoriteList = user.favorite;
+    return res.json({ favoriteList });
+
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return [];
+  }
+});
+
+
 /* GET pets listing. */
 router.get('/', function(req, res, next) {
   getAllUsers().then((p) => res.send(p));
 });
+
+
 
 // GET a single pet by ID
 router.get('/:id', async (req, res, next) => {
@@ -81,6 +128,22 @@ router.patch('/:id', async (req, res, next) => {
     res.status(500).json({ error: 'Failed to update a user' });
   }
 });
+
+async function middleware(req, res, next)  {
+  if (!req.headers.authorization) {
+    return res.status(403).json({ error: 'invaid token' });
+  }
+
+  const idToken=req.headers.authorization;
+  getAuth().verifyIdToken(idToken)
+      .then((decodedToken) => {
+        req.uid = decodedToken.uid;
+        next()
+      })
+      .catch((error) => {
+        return res.status(403).json({ error: 'invaid token' });
+      });
+}
 
 
 
