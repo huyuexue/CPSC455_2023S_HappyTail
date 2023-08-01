@@ -30,6 +30,7 @@ export default function UserMenu() {
         await auth.signOut();
         console.log("logout");
         dispatch(TurnLogout());
+        localStorage.setItem('tokenId', '');
         dispatch(clearAll());
         nav("/");
         setAnchorEl(null);

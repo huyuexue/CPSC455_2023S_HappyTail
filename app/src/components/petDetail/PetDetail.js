@@ -38,16 +38,24 @@ export default function PetDetail({}) {
                     <p>Size: {capitalizeEachWord(petInfo.size)}</p>
                     <p>Spayed: {capitalizeEachWord(petInfo.spayed)}</p>
                     <p>House Trained: {petInfo.houseTrained ? "Yes" : "No"}</p>
-                    <div className="horizontalLine"></div>
                     <p>Location: {petInfo.postCode}</p>
                     <p>Fur Type: {capitalizeEachWord(petInfo.furType)}</p>
                     <p>Pet Personality: {petInfo.petPersonality ?
                         petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
                     <p>Description:{petInfo.description}</p>
-                    <div className="horizontalLine"></div>
-                    <p>Name: {capitalizeEachWord(petInfo.contactName)}</p>
-                    <p>Email: {capitalizeEachWord(petInfo.contactEmail)}</p>
-                    <p>Phone Number: {capitalizeEachWord(petInfo.contactNumber)}</p>
+                    <>
+                        {dashboard ?
+                            <>
+                                <div className="horizontalLine"></div>
+                                <p>Name: {capitalizeEachWord(petInfo.contactName)}</p>
+                                <p>Email: {capitalizeEachWord(petInfo.contactEmail)}</p>
+                                <p>Phone Number: {capitalizeEachWord(petInfo.contactNumber)}</p>
+                            </>
+                            :
+                            <></>
+                        }
+                    </>
+
 
                     <div className='btn-container'>
                         {dashboard ? (

@@ -6,12 +6,14 @@ import {getPetsAsync} from "../redux/pets/thunks";
 
 export const DataFetching = () => {
     const dispatch = useDispatch();
-    const isLogin = useSelector((state) => !state.login.value);
-    const token = useSelector((state) => state.login.token);
+    const token = localStorage.getItem('tokenId');
+    const isLogin = (token === '') ? false : true;
     const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         const fetchData = async () => {
             if (isLogin) {
+                console.log("isLogin is " + isLogin)
                 try {
                     await Promise.all([
                         dispatch(getUserPetsAsync({ token })),
@@ -28,13 +30,8 @@ export const DataFetching = () => {
             }
             setIsLoading(false);
         };
-
-        if (isLogin) {
-            fetchData();
-        } else {
-            setIsLoading(false);
-        }
-    }, [dispatch, isLogin]);
+        fetchData();
+    }, [dispatch, isLogin, token]);
     return isLoading;
 };
 
