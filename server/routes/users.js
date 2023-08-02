@@ -56,6 +56,20 @@ router.get('/favorites', middleware, async (req, res, next) => {
   }
 });
 
+router.get('/byId', middleware, async (req, res, next) => {
+  try {
+    const userId = req.uid;
+    const user = await User.findOne({uid:userId});
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json(user);
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return [];
+  }
+});
+
 
 /* GET pets listing. */
 router.get('/', function(req, res, next) {

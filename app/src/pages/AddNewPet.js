@@ -1,7 +1,6 @@
-import PetForm from "./PetForm";
+import PetForm from "../components/petForm/PetForm";
 
 export default function AddNewPet({}) {
-
     const formData= {
         // page 0
         species: '',

@@ -1,4 +1,4 @@
-import {capitalizeEachWord} from "../../../utils";
+import {capitalizeEachWord} from "../../utils";
 
 export default function Preview({formData, jumpToPage, update}){
     const species_d = formData.extra? formData.otherSpecies:(formData.species === "Please specify"? "" : formData.species);

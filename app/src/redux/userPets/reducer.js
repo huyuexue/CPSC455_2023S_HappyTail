@@ -12,6 +12,7 @@ const initialState  = {
     list:[],
     selectItem: {},
     favorite:[],
+    isLoading: false
 }
 
 const userPetsReducer = createSlice({
@@ -38,14 +39,15 @@ const userPetsReducer = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getUserPetsAsync.pending, (state, action) => {
-                console.log("waiting to get list by user");
+                state.isLoading = true;
             })
             .addCase(getUserPetsAsync.fulfilled, (state, action) => {
                 state.list = action.payload;
-                console.log(state.list);
+                state.isLoading = false;
             })
             .addCase(getUserPetsAsync.rejected, (state, action) => {
                 console.log("rejected to get list by user");
+                state.isLoading = false;
             })
             .addCase(addPetAsync.pending, (state, action) => {
                 console.log("waiting to add");
@@ -77,14 +79,15 @@ const userPetsReducer = createSlice({
                 console.log("update detail rejected");
             })
             .addCase(getFavoriteAsync.pending, (state, action) => {
-                console.log("waiting to get favorite");
+                state.isLoading = true;
             })
             .addCase(getFavoriteAsync.fulfilled, (state, action) => {
                 state.favorite = action.payload.favoriteList;
-                console.log(state.favorite);
+                state.isLoading = false;
             })
             .addCase(getFavoriteAsync.rejected, (state, action) => {
                 console.log("rejected to get favorite");
+                state.isLoading = false;
             })
             .addCase(updateFavoriteAsync.pending, (state, action) => {
                 console.log("waiting to update favorite");

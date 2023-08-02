@@ -4,13 +4,13 @@ import Home from "./pages/Home";
 import Dashboard from './pages/Dashboard';
 import About from "./pages/About";
 import Layout from "./components/Layout";
-import BrowsePage from "./pages/Browse";
+import BrowsePage from "./pages/BrowsePage";
 import AccountDetailsPage from "./pages/AccountDetails";
-import LoginPage from './pages/Login';
-import AddNewPet from "./components/forms/petForm/AddNewPet";
+import LoginPage from './pages/LoginPage';
+import AddNewPet from "./pages/AddNewPet";
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
-import UpdatePet from "./components/updatePet/UpdatePet";
+import UpdatePet from "./pages/UpdatePet";
 
 
 function App() {

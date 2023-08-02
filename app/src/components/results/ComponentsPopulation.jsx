@@ -2,7 +2,7 @@ import { PetPropertySelections } from "./FilterSelection";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import {ageItems, breedItems, furTypeItems, genderItems, sizeItems} from "../forms/options";
+import {ageItems, breedItems, furTypeItems, genderItems, sizeItems} from "./options";
 import {useDispatch, useSelector} from "react-redux";
 import {getSearchResultsAsync} from "../../redux/pets/thunks";
 

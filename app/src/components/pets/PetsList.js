@@ -13,44 +13,28 @@ import {useEffect} from "react";
 import {getPetsAsync} from "../../redux/pets/thunks";
 import {getFavoriteAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
 import { TurnLogin, TurnLogout } from "../../redux/login/reducer";
+import {getUserAsync} from "../../redux/login/thunks";
 
 export default function PetsList() {
-  const[token, setToken]=useState("");
+  const token = localStorage.getItem('tokenId');
   const pets = useSelector(state => state.user.list);
   const favoritePetsIdList = useSelector(state => state.user.favorite);
   const allPets = useSelector(state => state.pets.list);
   const favoritePets = allPets.filter(pet => favoritePetsIdList.includes(pet._id.toString()));
   const dispatch = useDispatch();
- 
-  const auth = getAuth();
-  const navigate = useNavigate();
-    //keep track of index in the list of pets, and function to change it
 
-    //does same but backwards
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (token !=""){
-      dispatch(getPetsAsync());
-      dispatch(getUserPetsAsync({token}));
-      dispatch(getFavoriteAsync({token}));
+    if (token !== null){
+        console.log("in pets lists");
+        dispatch(getPetsAsync());
+        dispatch(getUserPetsAsync({token}));
+        dispatch(getFavoriteAsync({token}));
+        dispatch(getUserAsync({token}));
     }
   }, [token]);
 
-
-  const getToken=async (user)=>{
-    const token= await user.getIdToken()
-    setToken(token)
-  }
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        getToken(user)
-
-      } else {
-            navigate("/")
-      }
-      });
-  }, []);   
 
       return (
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">

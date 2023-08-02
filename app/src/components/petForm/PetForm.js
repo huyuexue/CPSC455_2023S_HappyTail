@@ -10,7 +10,7 @@ import StepButton from "@mui/material/StepButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
-import {addPetAsync, updateDetailAsync} from "../../../redux/userPets/thunks";
+import {addPetAsync, updateDetailAsync} from "../../redux/userPets/thunks";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 import {Container} from "@mui/material";
@@ -19,16 +19,17 @@ const steps = ['Pet Info', 'Extra Info', 'Contact Info', 'Preview'];
 
 
 export default function PetForm({originalData, update}) {
-    const auth = getAuth();
+    const token = localStorage.getItem('tokenId');
+    const isLogin = (token === null) ? false : true;
     const nav = useNavigate();
-    onAuthStateChanged(auth, (user) => {
-        if (!user) {
-            nav('/login')
+    useEffect(() => {
+        if (!isLogin) {
+            localStorage.setItem('action', 'add');
+            nav('/login');
         }
-    });
+    }, [])
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const token = useSelector(state => state.login.token);
 
     const [formData, setFormData] = useState({
         ... originalData

@@ -1,8 +1,8 @@
 import ImageUpload from "../imageUpload/upload";
 import React, {useState} from "react";
 import {Grid} from "@mui/material";
-import {PetPropertySelections} from "../../results/FilterSelection";
-import {ageItems, furTypeItems, genderItems, sizeItems} from "../options";
+import {PetPropertySelections} from "../results/FilterSelection";
+import {ageItems, furTypeItems, genderItems, sizeItems} from "../results/options";
 
 export default function BasicInfo({formData, handleChange, update}) {
 

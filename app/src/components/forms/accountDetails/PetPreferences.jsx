@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import {ageItems, breedItems, furTypeItems, genderItems, sizeItems, personalityItems} from "../options";
+import {ageItems, breedItems, furTypeItems, genderItems, sizeItems, personalityItems} from "../../results/options";
 import MultipleSelect from "../../elements/MultipleSelect";
 
 export default function PetPreferencesForm() {

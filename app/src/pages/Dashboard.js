@@ -1,4 +1,4 @@
-import PetDetail from "../components/petDetail/PetDetail";
+import PetDetail from "../components/pets/PetDetail";
 import {useSelector} from "react-redux";
 import PetsList from "../components/pets/PetsList";
 

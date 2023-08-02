@@ -1,20 +1,15 @@
 import {useSelector, useDispatch} from "react-redux";
 import PetCard from "../pets/PetCard";
-import {Grid, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
-import {useState} from "react";
-import PetsIcon from "@mui/icons-material/Pets";
-import {LocationOn, PriorityHigh, Restore, Schedule, Sort, Update} from "@mui/icons-material";
+import {Grid} from "@mui/material";
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
 import {useEffect} from "react";
-import {getPetsAsync} from "../../redux/pets/thunks";
-import {speciesItems} from "../forms/options";
+import {speciesItems} from "./options";
 import {PetPropertySelections} from "./FilterSelection";
 import * as React from "react";
 import {updateSpecies} from "../../redux/pets/reducer";
 import {useLocation} from "react-router-dom";
-import {getFavoriteAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
-import {DataFetching} from "../DataFetching";
+import DataFetching from "../DataFetching";
+
 export default function PetResults() {
     const dispatch = useDispatch();
     const pets = useSelector(state => state.pets.list);
@@ -23,11 +18,11 @@ export default function PetResults() {
     const queryParams = new URLSearchParams(location.search);
     const initialSpecies = queryParams.get('type') || '';
     const [species, setSpecies] = React.useState(initialSpecies);
-    const isLoading = DataFetching();
+    const { isLoading } = DataFetching();
 
     useEffect(() => {
         dispatch(updateSpecies(species));
-    }, [pets]);
+    }, [species,pets.length]);
 
     const handleSpeciesChange = (event) => {
         setSpecies(event);

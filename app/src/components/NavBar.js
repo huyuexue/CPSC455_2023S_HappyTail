@@ -3,30 +3,24 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import UserMenu from "./menu";
-import { useSelector, useDispatch } from 'react-redux'
-import { TurnLogin, TurnLogout } from "../redux/login/reducer";
+import {useSelector} from "react-redux";
+
 
 
 export default function NavBar() {
-    const dispatch = useDispatch();
-    const isLoginR = useSelector((state) => state.login.value);
     const buttonRoutes = {
         "Home": "/",
         "Browse": "/browse",
         "Add": "/addNewPet",
         "About": "/about",
     };
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const token = localStorage.getItem('tokenId');
-            dispatch(TurnLogin(token));
-        } else {
-            dispatch(TurnLogout());
-        }
-    });
+
+    const localStorageToken = localStorage.getItem('tokenId');
+    const globalToken = useSelector(state => state.login.token);
+    const token = localStorageToken || globalToken;
+    const isLogin = (token === null) ? false : true;
+
     const rightButtonRoutes = {
         "Login": "/login",
     }
@@ -134,7 +128,7 @@ export default function NavBar() {
                     ))}
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
-                    {!isLoginR ? (
+                    {isLogin? (
                         <>
                             <UserMenu />
                         </>

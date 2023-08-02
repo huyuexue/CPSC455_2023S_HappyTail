@@ -2,11 +2,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
-import PetDetail from "../petDetail/PetDetail";
+import PetDetail from "./PetDetail";
 import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
 import {Favorite, FavoriteBorder} from "@mui/icons-material";
-import {useEffect, useState} from "react";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
 
@@ -35,17 +34,13 @@ export default function PetCard({pet}) {
         if (token) {
             dispatch(updateFavoriteAsync({token, petId}))
         } else{
+            const petId = pet._id;
+            dispatch(getDetailAsync(petId));
+            localStorage.setItem('prevURL', window.location.href);
             nav('/login')
         }
-
     };
 
-    const [dashboard, setDashboard] = useState(false);
-    useEffect(() => {
-        if (window.location.hash === "#/dashboard") {
-            setDashboard(true)
-        }
-    }, []);
     return (
         <>
             <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}} >
@@ -70,7 +65,7 @@ export default function PetCard({pet}) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" color="primary">
+                    <Button>
                         Share
                     </Button>
                     {isOwner ?
@@ -80,9 +75,7 @@ export default function PetCard({pet}) {
                         </IconButton>)
                     }
                 </CardActions>
-
             </Card>
-            {detailViewIsOpen && (<PetDetail/>)}
         </>
     )
 }

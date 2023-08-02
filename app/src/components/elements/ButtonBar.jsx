@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid,} from "@mui/material";
-import InterestButton from "../InterestButton";
+import InterestButton from "./InterestButton";
 import {faCat, faDog,} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 
