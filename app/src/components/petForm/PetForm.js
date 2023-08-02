@@ -21,13 +21,18 @@ const steps = ['Pet Info', 'Extra Info', 'Contact Info', 'Preview'];
 export default function PetForm({originalData, update}) {
     const token = localStorage.getItem('tokenId');
     const isLogin = (token === null) ? false : true;
+    const [isLoading, setIsLoading] = useState(true);
     const nav = useNavigate();
     useEffect(() => {
         if (!isLogin) {
             localStorage.setItem('action', 'add');
             nav('/login');
+        } else {
+            setIsLoading(false); // Mark the login check as complete
         }
-    }, [])
+    }, [isLogin, nav])
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -174,6 +179,8 @@ export default function PetForm({originalData, update}) {
     ]
 
     return (
+        isLoading ?
+            <></> :
         <Container>
             <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
                 <Box sx={{width: '100%'}}>

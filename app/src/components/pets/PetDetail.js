@@ -70,15 +70,11 @@ export default function PetDetail() {
     const [customMessage, setCustomMessage] = useState(defaultMessage);
     const emailJsKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
     const handleSubmit = () => {
-
-        console.log("click contact");
         const form = {
             from_name: capitalizeEachWord(userInfo.firstName),
             from_contact: userInfo.email,
             message: customMessage,
         }
-        console.log(form);
-        console.log(petInfo.contactEmail);
         emailJs.send('service_w4ptg2k', petInfo.contactEmail, form, emailJsKey)
         .then(res => {
             return res;
@@ -88,7 +84,6 @@ export default function PetDetail() {
         });
         setCustomMessage(defaultMessage);
         setShowMessageInput(false);
-
     }
 
     return (
