@@ -102,148 +102,135 @@ export default function Dashboard({itemsList}){
     return (
         <div className="Dashboard">
             <div>
-            <Box sx={{maxWidth:"1200px", marginX:"auto", marginY:"50px"}}>
-            <h2>Profile</h2>
-            {
-              loading?(<>
-                <Formik
-                    onSubmit={handleFormSubmit}
-                    initialValues={userInfo}
-                    validationSchema={checkoutSchema}
-                >
-                    {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleSubmit,
-                    }) => (
-                    <form onSubmit={handleSubmit}>
-                        <Box
-                        display="grid"
-                        gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-
-                        >
-                        <TextField
-                            fullWidth
-                            id="outlined-read-only-input"
-                            type="text"
-                            label="First Name"
-                            onChange={handleChange}
-                            value={values.firstName}
-                            InputLabelProps={{ shrink: true }}
-                            name="firstName"
-                            error={!!touched.firstName && !!errors.firstName}
-                            sx={{ gridColumn: "span 2" }}
-                            InputProps={{
-                                readOnly: inputOnly,
-                              }}
-                        />
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            type="text"
-                            label="Last Name"
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleChange}
-                            value={values.lastName}
-                            name="lastName"
-                            error={!!touched.lastName && !!errors.lastName}
-                            sx={{ gridColumn: "span 2" }}
-                            InputProps={{
-                                readOnly: inputOnly,
-                              }}
-                        />
-
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            type="text"
-                            label="Contact Number"
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleChange}
-                            value={values.number}
-                            name="number"
-                            error={!!touched.number && !!errors.number}
-                            sx={{ gridColumn: "span 4" }}
-                            InputProps={{
-                                readOnly: inputOnly,
-                              }}
-                        />
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            type="text"
-                            label="Address"
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleChange}
-                            value={ values.address}
-                            name="address"
-                            error={!!touched.address && !!errors.address}
-                            sx={{ gridColumn: "span 4" }}
-                            InputProps={{
-                                readOnly: inputOnly,
-                              }}
-                        />
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            type="text"
-                            label="City"
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleChange}
-                            value={ values.city}
-                            name="city"
-                            error={!!touched.city && !!errors.city}
-                            sx={{ gridColumn: "span 2" }}
-                            InputProps={{
-                                readOnly: inputOnly,
-                              }}
-                        />
-
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            type="text"
-                            label="postCode"
-                            onChange={handleChange}
-                            InputLabelProps={{ shrink: true }}
-                            value={ values.postCode}
-                            name="postCode"
-                            error={!!touched.postCode && !!errors.postCode}
-                            sx={{ gridColumn: "span 2" }}
-                            InputProps={{
-                                readOnly: inputOnly,
-                              }}
-                        />
-                        </Box>
-                        <Box display="flex" justifyContent="end" mt="20px">
-                        {inputOnly?(<>
-                          <Button onClick={()=>setInputOnly(false)} color="primary" variant="contained">
-                            Edit Profile
-                        </Button> 
-                        </>):(
-                          <Box  sx={{width:"100%", display:"flex", justifyContent:"space-around"}}>
-                            <Button type="submit" color="primary" variant="contained">
-                              Update Profile
-                            </Button> 
-                            <Button onClick={()=>{setInputOnly(true); setLoading(false) }} color="secondary" variant="contained">
-                              Cancel Change
-                            </Button> 
-                          </Box>
-                        )}
- 
-                        </Box>
-                    </form>
-                    )}
-                </Formik>
-              </>):(<Box
-              sx={{width:"100%", display:"flex", justifyContent:"center"}}
-              ><CircularProgress /></Box>)
-            }
-
-            </Box>
+                <Box sx={{maxWidth:"1200px", marginX:"auto", marginY:"50px"}}>
+                    <h2>Profile</h2>
+                    {
+                        loading?(<>
+                            <Formik
+                                onSubmit={handleFormSubmit}
+                                initialValues={userInfo}
+                                validationSchema={checkoutSchema}
+                            >
+                                {({values, errors, touched, handleChange, handleSubmit,}) => (
+                                    <form onSubmit={handleSubmit}>
+                                        <Box
+                                            display="grid"
+                                            gap="30px"
+                                            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                                        >
+                                            <TextField
+                                                fullWidth
+                                                id="outlined-read-only-input"
+                                                type="text"
+                                                label="First Name"
+                                                onChange={handleChange}
+                                                value={values.firstName}
+                                                InputLabelProps={{ shrink: true }}
+                                                name="firstName"
+                                                error={!!touched.firstName && !!errors.firstName}
+                                                sx={{ gridColumn: "span 2" }}
+                                                InputProps={{readOnly: inputOnly,}}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                variant="outlined"
+                                                type="text"
+                                                label="Last Name"
+                                                InputLabelProps={{ shrink: true }}
+                                                onChange={handleChange}
+                                                value={values.lastName}
+                                                name="lastName"
+                                                error={!!touched.lastName && !!errors.lastName}
+                                                sx={{ gridColumn: "span 2" }}
+                                                InputProps={{
+                                                    readOnly: inputOnly,
+                                                  }}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                variant="outlined"
+                                                type="text"
+                                                label="Contact Number"
+                                                InputLabelProps={{ shrink: true }}
+                                                onChange={handleChange}
+                                                value={values.number}
+                                                name="number"
+                                                error={!!touched.number && !!errors.number}
+                                                sx={{ gridColumn: "span 4" }}
+                                                InputProps={{
+                                                    readOnly: inputOnly,
+                                                  }}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                variant="outlined"
+                                                type="text"
+                                                label="Address"
+                                                InputLabelProps={{ shrink: true }}
+                                                onChange={handleChange}
+                                                value={ values.address}
+                                                name="address"
+                                                error={!!touched.address && !!errors.address}
+                                                sx={{ gridColumn: "span 4" }}
+                                                InputProps={{
+                                                    readOnly: inputOnly,
+                                                  }}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                variant="outlined"
+                                                type="text"
+                                                label="City"
+                                                InputLabelProps={{ shrink: true }}
+                                                onChange={handleChange}
+                                                value={ values.city}
+                                                name="city"
+                                                error={!!touched.city && !!errors.city}
+                                                sx={{ gridColumn: "span 2" }}
+                                                InputProps={{
+                                                    readOnly: inputOnly,
+                                                  }}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                variant="outlined"
+                                                type="text"
+                                                label="postCode"
+                                                onChange={handleChange}
+                                                InputLabelProps={{ shrink: true }}
+                                                value={ values.postCode}
+                                                name="postCode"
+                                                error={!!touched.postCode && !!errors.postCode}
+                                                sx={{ gridColumn: "span 2" }}
+                                                InputProps={{
+                                                    readOnly: inputOnly,
+                                                  }}
+                                            />
+                                        </Box>
+                                        <Box display="flex" justifyContent="end" mt="20px">
+                                            {inputOnly?(<>
+                                                <Button onClick={()=>setInputOnly(false)} color="primary" variant="contained">
+                                                    Edit Profile
+                                                </Button>
+                                            </>):(
+                                                <Box  sx={{width:"100%", display:"flex", justifyContent:"space-around"}}>
+                                                    <Button type="submit" color="primary" variant="contained">
+                                                        Update Profile
+                                                    </Button>
+                                                    <Button onClick={()=>{setInputOnly(true); setLoading(false) }} color="secondary" variant="contained">
+                                                        Cancel Change
+                                                    </Button>
+                                                </Box>
+                                            )}
+                                        </Box>
+                                    </form>
+                                )}
+                            </Formik>
+                        </>):(<Box
+                            sx={{width:"100%", display:"flex", justifyContent:"center"}}
+                        ><CircularProgress /></Box>)
+                    }
+                </Box>
             </div>
             <PetsList />
             {detailViewIsOpen && <PetDetail />}

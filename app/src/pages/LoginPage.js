@@ -152,8 +152,8 @@ export default function LoginPage({}){
                             </Button>
                             <Grid container justifyContent="center"  sx={{width:"100%"}}>
                                 <Grid item xs={6} textAlign="center">
-                                    <Link href="/#/about" variant="body2" >
-                                        Don't have an account? <br/> please contact us
+                                    <Link href="#/signup" variant="body2" >
+                                        Don't have an account? <br/> Sign Up
                                     </Link>
                                 </Grid>
                             </Grid>

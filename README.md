@@ -6,44 +6,72 @@ Happy Tails is a project focused on creating a pet adoption platform. The websit
 # Project Requirements:
 
 ## Minimal Requirements
-1. Pet adoption database (Creating database, linking to backend)
-  - Name
-  - Species
-  - Description
-  - Date of Birth
-  - Sex
-  - Medical Information
-  - Location
-  - Contact email?
-  - Images of pets
-  - [Contingent on users table] poster userid
-  - For now, data will be immutable once uploaded and can only be edited / deleted by an administrator. If logins are introduced we can adjust this. Only creation of new records for now
+1. Each pet has its own information card, which includes:
+   -  Photo
+   -  Name
+   -  Breed
+   -  Gender
+   -  Age
+   -  Size
+   -  Altered
+   -  House trained
+   -  Location
+   -  Fur type
+   -  Pet personality
+   -  Description
 
-2. Search form
-  - Allow users to search the pet database for pets that match what they’re looking for
-3. Uploading Form
-  - Allow users to upload the information / create new entries within the pet adoption database
-4. “Results” page
-  - Display search results and all the pets that come up in cards
-  - Adoption for internal pets
-      - An adopt button sends an email to the contact of the pet, maybe it just introduces the person clicking the button and the person who posted the entry?
+2. Search panel
+   - user can search for pets that meets his/her need based on given parameters, parameters includes:
+     - Age
+     - Breed
+     - Size
+     - Gender
+     - Fur type
+
+3. Result page
+   - Display all the pet cards with brief information based on customer search parameters
+   - Users are able to click on a card to see details regarding any pets
+
+4. Add new pet panel
+   - Include all information mentioned in minimum requirement 1, plus contact information such as:
+     - Contact name
+     - Contact email
+     - Contact phone
+     - Additional information
+   - Specific users(should be the pet information poster after we implement log in) will also be able to edit pet information, and delete the information card as a whole
+
 ## Standard
-1. Users Table
-  - Userid
-  - Email
-  - [Shortlist]
-2. My Pets
-  - Users should be able to view a sub-page where they can see pets they have uploaded, and adjust their listings 
-3. Shortlists
-  - Allow users to favourite / shortlist pets to view later
-4. Pet Crawling
-  - Automated webscraping to find pets from certain adoption sites
-5. Adopt Button
-  - Direct users to instructions on adopting a certain pet they find
-  - May direct users to the external adoption form
+1. Sign up, log in, and log out
+   - User will be able to sign up an account
+   - User with existing account will be able to log into hie/her account, and safely log out
+   - User will be able to edit his/her profile
+
+2. 2 types of users:
+   - Pet owner: has a pet/pets looking for adoption
+   - Pet adopter: looking to adopt a pet/pets
+   - Different users will different dashboard after they log in
+   
+3. My listing
+   - User will be able to add new pets looking for adoption, update and deleter his/her existing lists
+   - Users need to have an account as a pet owner and log in if they want to do the above operation.
+
+4. My Favorite
+   - User will be able to add pets to his/her favorite list, and delete if they want
+   - Users need to have an account as a pet adopter and log in if they want to favorite/un-favorite a pet.
+
+5. Share pet with friend
+   - TODO: add some explanation
+
+
 ## Stretch
-1. Recommender algorithm to show users pets 
-2. Automate the sending of “My Profile” to adoption clinics to allow users to adopt pets without ever leaving the site
+1. Contact pet owner
+   - User will be able to send email to pet owner if he/she is interested in a pet 
+   - User will see the contact button on the pet detail card
+   - User need to have an account as a pet adopter and log in to do the operation
+   - Use external API: emailJS
+   
+2. Recommender algorithm to show users pets based on his/her search history
+
 ## Sketches
 ![home_page](docs/resources/home_page.png)
 ![result_page](docs/resources/result_page.png)

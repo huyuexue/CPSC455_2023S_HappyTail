@@ -98,7 +98,7 @@ export default function SignUpPage(){
                   }}
                 >
                   <Typography component="h1" variant="h5" sx={{fontSize:30, fontWeight:"600"}}>
-                    please enter your information
+                    Please enter your information
                   </Typography>
                   <Box
                     sx={{ mt: 1, width:"100%"}}
