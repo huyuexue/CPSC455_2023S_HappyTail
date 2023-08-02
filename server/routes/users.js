@@ -133,6 +133,57 @@ router.get('/info', middleware , async (req, res) => {
   }
 });
 
+router.post('/update/info', middleware , async (req, res) => {
+  try {
+    if (!req.body) {
+      res.status(400).send({
+        status:false,
+        message: "Content can not be empty!"
+      });
+      return;
+    } // Create a new Pet instance with the request body data
+    const data=req.body
+
+    if (data.address==undefined || data.city==undefined || data.firstName==undefined || data.lastName==undefined||data.number==undefined||data.postCode==undefined) {
+      res.status(409).send({
+        success:false,
+        message: "invaild body"
+      });
+      return;
+    }
+    const userinfo = await User.findOne({uid: req.uid})
+
+    if (userinfo == null) {
+      res.status(204).send({
+        success:false,
+        message: "the item does not exist"
+      });
+      return
+    }
+
+
+        userinfo.address=data.address
+        userinfo.city=data.city
+        userinfo.firstName=data.firstName
+        userinfo.lastName=data.lastName
+        userinfo.number=data.number
+        userinfo.postCode=data.postCode
+    
+    await userinfo.save(); // Save the new pet to the database
+
+    res.status(200).send({
+      success:true,
+    }); // Respond with the saved pet as JSON
+    return;
+  } catch (error) {
+    console.error('Error adding a pet:', error);
+    res.status(500).send({
+      success:false,
+      message: error
+    }); // Respond with the saved pet as JSON
+    return;
+  }
+});
 
 
 
@@ -200,21 +251,6 @@ router.patch('/:id', async (req, res, next) => {
   }
 });
 
-async function middleware(req, res, next)  {
-  if (!req.headers.authorization) {
-    return res.status(403).json({ error: 'invaid token' });
-  }
-
-  const idToken=req.headers.authorization;
-  getAuth().verifyIdToken(idToken)
-      .then((decodedToken) => {
-        req.uid = decodedToken.uid;
-        next()
-      })
-      .catch((error) => {
-        return res.status(403).json({ error: 'invaid token' });
-      });
-}
 
 
 

@@ -39,7 +39,7 @@ export default function Dashboard({itemsList}){
             setRefresh(false)
       }, [token,refresh,loading]); 
 
-    const getuserInfo=async ()=>{
+    const getuserInfo=async (values)=>{
         if(token!=""){
         const res = await fetch("http://localhost:3001/users/info", {
           method: 'GET',
@@ -58,11 +58,33 @@ export default function Dashboard({itemsList}){
         }
        }
 
+    const userupdate=async (values)=>{
+        console.log( "input is ", values)
+
+        const res = await fetch("http://localhost:3001/users/update/info", {
+          method: 'POST',
+          headers: { 
+                      'Content-Type': 'application/json',
+                      authorization: token},
+          body: JSON.stringify(values)
+        });
+        const data=await res.json();
+        console.log(data)
+
+        if(res.status!=200){
+            console.log("update failed")
+          
+        }else{
+          setInputOnly(true);
+          setLoading(false);
+        }
+       }
+
 
 
     const handleFormSubmit = (values) => {
         console.log(values)
-        alert(11)
+        userupdate(values)
       };
     const checkoutSchema = yup.object().shape({
         firstName: yup.string().required("required"),
