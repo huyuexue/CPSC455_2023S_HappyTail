@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Layout from "./components/Layout";
 import BrowsePage from "./pages/BrowsePage";
 import AccountDetailsPage from "./pages/AccountDetails";
+import SignUpPage from './pages/SignUp';
 import LoginPage from './pages/LoginPage';
 import AddNewPet from "./pages/AddNewPet";
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
@@ -26,6 +27,7 @@ function App() {
                         <Route path="addNewPet" element={<AddNewPet/>}/>
                         <Route path="account/details" element={<AccountDetailsPage/>}/>
                         <Route path="login" element={<LoginPage/>}/>
+                        <Route path="signup" element={<SignUpPage/>}/>
                         <Route path="dashboard" element={<Dashboard/>}/>
                         <Route path="updatePet" element={<UpdatePet/>}/>
                     </Route>

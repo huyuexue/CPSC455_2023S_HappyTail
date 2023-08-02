@@ -177,8 +177,6 @@ input[type="number"],input[type="number"], select {
   border: 1px solid black;
   padding: 5px;
   border-radius: 2px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 input[type="number"] {
