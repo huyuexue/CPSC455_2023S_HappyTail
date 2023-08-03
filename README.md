@@ -6,71 +6,42 @@ Happy Tails is a project focused on creating a pet adoption platform. The websit
 # Project Requirements:
 
 ## Minimal Requirements
-1. Each pet has its own information card, which includes:
-   -  Photo
-   -  Name
-   -  Breed
-   -  Gender
-   -  Age
-   -  Size
-   -  Altered
-   -  House trained
-   -  Location
-   -  Fur type
-   -  Pet personality
-   -  Description
+1. - [x] Each pet has its own information card, which includes: photo, name, breed, etc.
 
-2. Search panel
-   - user can search for pets that meets his/her need based on given parameters, parameters includes:
-     - Age
-     - Breed
-     - Size
-     - Gender
-     - Fur type
+2. - [x]  Search panel: user can search for pets based on parameters like age, breed, size, etc.
 
-3. Result page
-   - Display all the pet cards with brief information based on customer search parameters
-   - Users are able to click on a card to see details regarding any pets
+3. - [x] Result page(on browse page): display all the pet cards with brief information based on customer search parameters, and users are able to click on a card to see details regarding any pets
 
-4. Add new pet panel
-   - Include all information mentioned in minimum requirement 1, plus contact information such as:
-     - Contact name
-     - Contact email
-     - Contact phone
-     - Additional information
-   - Specific users(should be the pet information poster after we implement log in) will also be able to edit pet information, and delete the information card as a whole
+4. - [x] Add new pet panel: include all information mentioned in minimum requirement 1, plus contact information. 
+
+5. - [x] Pet card can only be edited/deleted by its owner.
 
 ## Standard
-1. Sign up, log in, and log out
+1. - [x] Sign up/log in/log out
    - User will be able to sign up an account
-   - User with existing account will be able to log into hie/her account, and safely log out
-   - User will be able to edit his/her profile
-
-2. 2 types of users:
-   - Pet owner: has a pet/pets looking for adoption
-   - Pet adopter: looking to adopt a pet/pets
-   - Different users will different dashboard after they log in
+   - User with existing account will be able to log into his/her account, and safely log out
    
-3. My listing
+2. - [x] User will be able to edit his/her profile
+
+3. - [ ] 2 types of users: pet owner and pet adopter
+   - Different users will see different dashboard after they log in
+   
+4. - [x] My listing (Dashboard)
    - User will be able to add new pets looking for adoption, update and deleter his/her existing lists
-   - Users need to have an account as a pet owner and log in if they want to do the above operation.
+   - Users need to have an account and log in if they want to do the above operation.
 
-4. My Favorite
+5. - [x] My Favorite (Dashboard)
    - User will be able to add pets to his/her favorite list, and delete if they want
-   - Users need to have an account as a pet adopter and log in if they want to favorite/un-favorite a pet.
+   - Users need to have an account and log in if they want to favorite/un-favorite a pet.
 
-5. Share pet with friend
+6. - [ ] Share pet with friend
    - TODO: add some explanation
 
 
 ## Stretch
-1. Contact pet owner
-   - User will be able to send email to pet owner if he/she is interested in a pet 
-   - User will see the contact button on the pet detail card
-   - User need to have an account as a pet adopter and log in to do the operation
-   - Use external API: emailJS
+1. Integrate website with external API: EmailJS, where user will be able to send email to pet owner once open the preview of pet information card.
    
-2. Recommender algorithm to show users pets based on his/her search history
+2. Recommendation algorithm to show users pets based on his/her search history
 
 ## Sketches
 ![home_page](docs/resources/home_page.png)
