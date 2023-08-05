@@ -47,7 +47,6 @@ export default function PetDetail({}) {
             <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center" justifyContent="center">
                 <Grid item xs={12} sm={4}>
                     <Card sx={{
-                        maxWidth: "35vw",
                         borderRadius: 5,
                         padding: 5,
                         paddingBottom: 0,
