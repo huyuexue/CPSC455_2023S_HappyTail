@@ -12,6 +12,7 @@ import AddNewPet from "./pages/AddNewPet";
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
 import UpdatePet from "./pages/UpdatePet";
+import SharedPetDetails from "./pages/SharedPetDetails";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                         <Route path="signup" element={<SignUpPage/>}/>
                         <Route path="dashboard" element={<Dashboard/>}/>
                         <Route path="updatePet" element={<UpdatePet/>}/>
+                        <Route path="pets/:id" element={<SharedPetDetails />} />
                     </Route>
                 </Routes>
             </ThemeProvider>
