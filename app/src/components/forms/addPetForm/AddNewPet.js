@@ -208,6 +208,7 @@ export default function AddNewPet({}) {
     ]
 
     return (
+
         <Container>
             <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
                 <Box sx={{width: '100%'}}>

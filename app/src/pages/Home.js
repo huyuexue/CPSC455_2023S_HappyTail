@@ -17,7 +17,9 @@ export default function Home() {
     return (
         <div className="Home">
             <Grid container spacing={0} alignItems="center">
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={0} sm={2}>
+                </Grid>
+                <Grid item xs={12} sm={2}>
                     <PetsBrief/>
                 </Grid>
                 <Grid item xs={12} sm={8}>
