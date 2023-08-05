@@ -17,7 +17,6 @@ export default function DataFetching(){
             dispatch(getFavoriteAsync({token}));
             dispatch(getUserAsync({token}));
         }
-        console.log("in Data fetching");
         dispatch(getPetsAsync());
     }, []);
 
