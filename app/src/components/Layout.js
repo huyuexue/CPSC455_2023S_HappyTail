@@ -18,7 +18,6 @@ export default function Layout() {
             } else {
                 localStorage.removeItem('tokenId');
                 dispatch(TurnLogout(token));
-                nav("/login")
             }
         });
     },[])
