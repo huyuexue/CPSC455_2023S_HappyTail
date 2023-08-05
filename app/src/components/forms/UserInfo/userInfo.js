@@ -1,8 +1,9 @@
 import * as React from "react";
-import {Input, Stack, TextField,Button, Typography} from "@mui/material";
+import {Input, Stack, TextField,Button, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio} from "@mui/material";
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
-
+import { TurnLogin,  } from "../../../redux/login/reducer"
+import { useDispatch } from "react-redux";
 export default function UserInfo({setNextStep}) {
 
     const [firstName, setFirstName] = useState('');
@@ -11,9 +12,10 @@ export default function UserInfo({setNextStep}) {
     const [postalCode, setPostalCode] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
+    const [petfinder, setPetfinder] = useState(false);
     const [error, setError]=useState("")
     const nav = useNavigate();
-
+    const dispatch = useDispatch()
     const userSignup=async ()=>{
 
         let input={
@@ -23,6 +25,7 @@ export default function UserInfo({setNextStep}) {
             postCode:postalCode,
             city:city,
             address:address,
+            petFinder:petfinder
         }
 
         console.log( "input is ", input)
@@ -41,6 +44,7 @@ export default function UserInfo({setNextStep}) {
             setError(data?.message)
           
         }else{
+            dispatch(TurnLogin(localStorage.getItem("token")))
             nav("/dashboard")
         }
        }
@@ -52,6 +56,10 @@ export default function UserInfo({setNextStep}) {
     return (
 
         <Stack spacing={4}>
+            
+
+
+
             <TextField
                 label="First Name"
                 value={firstName}
@@ -84,6 +92,19 @@ export default function UserInfo({setNextStep}) {
                 value={city}
                 onChange={e =>setCity(e.target.value)}
             />
+
+            <FormControl sx={{ display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <FormLabel  sx={{fontSize:22, fontWeight:"500"}} >Are you a pet finder or your pet looking for home?</FormLabel>
+                <RadioGroup
+                    row
+                    value={petfinder}
+                    onChange={(e)=>{setPetfinder(e.target.value); console.log(petfinder)}}
+                >
+                    <FormControlLabel value={false} control={<Radio />} label="my pet looking for a home"  />
+                    <FormControlLabel value={true} control={<Radio />} label="I want to adopt a pet" />
+                </RadioGroup>
+            </FormControl>
+
                                 <Button
                       fullWidth
                       variant="contained"

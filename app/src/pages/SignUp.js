@@ -20,7 +20,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import UserInfo from '../components/forms/UserInfo/userInfo';
-
+import { useDispatch } from "react-redux";
 
 
 import {
@@ -31,9 +31,14 @@ import {
 import{auth} from "../firebase/firebaseConfig"
 import { useState } from 'react';
 import { width } from '@mui/system';
+import { TurnLogin,  } from '../redux/login/reducer';
+
 const provider = new GoogleAuthProvider();
 
 export default function SignUpPage(){
+
+  const dispatch = useDispatch()
+
     const handleSubmit = (event) => {
       setEmailErr('')
       setPsErr('')
@@ -49,7 +54,6 @@ export default function SignUpPage(){
     const [emailErr, setEmailErr] = useState("");
     const [passwordErr, setPsErr] = useState("");
     const [confirmPSErr, setConfirPsErr] = useState("");
-    
     const[step, setStep]=useState(0)
 
 
@@ -104,7 +108,7 @@ export default function SignUpPage(){
                     sx={{ mt: 1, width:"100%"}}
                   >
                     
-                    <UserInfo setNextStep={setStep}/>
+                    <UserInfo setNextStep={setStep} />
 
                     
                   </Box>
@@ -201,10 +205,10 @@ export default function SignUpPage(){
                     >
                       Sign Up
                     </Button>
-                    <Grid container justifyContent="space-between" >
+                    <Grid  sx={{width:"100%", display:'flex', justifyContent:'center'}} >
                       <Grid item xs={6} textAlign="center">
                         <Link href="app/src/pages#" variant="body2" >
-                          already have a account? <br/> Login
+                          Already have a account? <br/> Login
                         </Link>
                       </Grid>
                     </Grid>

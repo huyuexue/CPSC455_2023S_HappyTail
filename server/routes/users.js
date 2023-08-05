@@ -158,7 +158,7 @@ router.post('/update/info', middleware , async (req, res) => {
     } // Create a new Pet instance with the request body data
     const data=req.body
 
-    if (data.address==undefined || data.city==undefined || data.firstName==undefined || data.lastName==undefined||data.number==undefined||data.postCode==undefined) {
+    if (data.address==undefined || data.city==undefined || data.firstName==undefined || data.lastName==undefined||data.number==undefined||data.postCode==undefined || data.petFinder==undefined) {
       res.status(409).send({
         success:false,
         message: "invaild body"
@@ -182,6 +182,7 @@ router.post('/update/info', middleware , async (req, res) => {
         userinfo.lastName=data.lastName
         userinfo.number=data.number
         userinfo.postCode=data.postCode
+        userinfo.petFinder=data.petFinder
     
     await userinfo.save(); // Save the new pet to the database
 
