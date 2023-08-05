@@ -19,6 +19,8 @@ export default function Dashboard({itemsList}){
     const auth = getAuth();
     const nav = useNavigate();
     const dispatch = useDispatch()
+    const token1 = useSelector(state => state.login.token);
+    const isLogin = useSelector(state => state.login.value);
 
     const getToken=async (user)=>{
         const token= await user.getIdToken()
@@ -53,7 +55,6 @@ export default function Dashboard({itemsList}){
         if(res.status!=200){
           console.log("fetch data failed") 
         }else{
-
           setUser(data.data)
           setLoading(true)
         }

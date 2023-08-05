@@ -6,13 +6,14 @@ import {getUserAsync} from "../redux/login/thunks";
 
 export default function DataFetching(){
     const dispatch = useDispatch();
-    const token = localStorage.getItem('tokenId');
-    const isLogin = (token === null) ? false : true;
+    const token = useSelector(state => state.login.token);
+    const isLogin = useSelector(state => state.login.value);
     const isLoadingAllPets = useSelector(state => state.pets.isLoading);
     const isLoadingUserPets = useSelector(state => state.pets.isLoading);
     const isLoading = isLoadingAllPets || (isLogin? isLoadingUserPets : false);
     useEffect(() => {
-        if (isLogin) {
+        console.log(isLogin)
+        if (!isLogin) {
             dispatch(getUserPetsAsync({token}));
             dispatch(getFavoriteAsync({token}));
             dispatch(getUserAsync({token}));

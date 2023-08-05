@@ -9,6 +9,7 @@ import * as React from "react";
 import {updateSpecies} from "../../redux/pets/reducer";
 import {useLocation} from "react-router-dom";
 import DataFetching from "../DataFetching";
+import { getPetsAsync } from '../../redux/pets/thunks';
 
 export default function PetResults() {
     const dispatch = useDispatch();
@@ -18,7 +19,13 @@ export default function PetResults() {
     const queryParams = new URLSearchParams(location.search);
     const initialSpecies = queryParams.get('type') || '';
     const [species, setSpecies] = React.useState(initialSpecies);
-    const { isLoading } = DataFetching();
+
+
+    const { isLoading } = useSelector(state => state.pets.isLoading);
+
+    useEffect(()=>{
+        dispatch(getPetsAsync());
+    },[])
 
     useEffect(() => {
         dispatch(updateSpecies(species));
