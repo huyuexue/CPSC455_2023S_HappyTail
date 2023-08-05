@@ -7,6 +7,7 @@ import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typ
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useState, useEffect} from "react";
+import { useDispatch } from "react-redux";
 export default function Dashboard({itemsList}){
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     // const updateIsOpen = useSelector(updateStatus)
@@ -17,6 +18,7 @@ export default function Dashboard({itemsList}){
     const[token, setToken]=useState("");
     const auth = getAuth();
     const nav = useNavigate();
+    const dispatch = useDispatch()
 
     const getToken=async (user)=>{
         const token= await user.getIdToken()
