@@ -41,7 +41,7 @@ export default function PetsList() {
     return (
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
-                <h2>My Listing</h2>
+                <h2>My Pet Listing</h2>
                 <div className="slideshow-container">
                     <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"}>
                         {Array.isArray(pets) && pets.length > 0 ?
@@ -64,7 +64,7 @@ export default function PetsList() {
                 </div>
             </Box>
             <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
-                <h2>My Listing</h2>
+                <h2>Favorite Listing</h2>
                 <div className="slideshow-container">
                     <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"}>
                         {Array.isArray(favoritePets) && favoritePets.length > 0 ?

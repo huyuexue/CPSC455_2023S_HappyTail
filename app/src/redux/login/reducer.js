@@ -7,6 +7,7 @@ const loginReducer = createSlice({
         user: {},
         value: true,
         token: null,
+        isLoading: false
     },
     reducers: {
         TurnLogin: (state, action) => {
@@ -23,13 +24,16 @@ const loginReducer = createSlice({
         builder
             .addCase(getUserAsync.pending, (state, action) => {
               console.log("waiting to get list by user");
+              state.isLoading = true;
             })
             .addCase(getUserAsync.fulfilled, (state, action) => {
               state.user = action.payload;
+              state.isLoading = false;
               console.log(state.user);
             })
             .addCase(getUserAsync.rejected, (state, action) => {
               console.log("rejected to get list by user");
+              state.isLoading = false;
             });
     }
 })

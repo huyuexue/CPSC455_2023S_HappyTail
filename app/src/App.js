@@ -12,6 +12,7 @@ import AddNewPet from "./pages/AddNewPet";
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
 import UpdatePet from "./pages/UpdatePet";
+import Profile from './pages/Profile';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                         <Route path="login" element={<LoginPage/>}/>
                         <Route path="signup" element={<SignUpPage/>}/>
                         <Route path="dashboard" element={<Dashboard/>}/>
+                        <Route path="profile" element={<Profile/>}/>
                         <Route path="updatePet" element={<UpdatePet/>}/>
                     </Route>
                 </Routes>

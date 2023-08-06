@@ -60,6 +60,10 @@ export default function UserMenu() {
                     setAnchorEl(null);
                 }}>Dashboard</MenuItem>
                 <MenuItem onClick={() => {
+                    nav("/profile");
+                    setAnchorEl(null);
+                }}>Profile</MenuItem>
+                <MenuItem onClick={() => {
                     nav("/account/details");
                     setAnchorEl(null);
                 }}>Account</MenuItem>
