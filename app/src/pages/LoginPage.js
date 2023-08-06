@@ -50,23 +50,23 @@ export default function LoginPage({}){
                             //window.location.href="/#/dashboard"
                             dispatch(TurnLogin(token));
                             dispatch(getUserAsync({token}));
-                            const action = localStorage.getItem('action');
-                            if (action === 'add') {
-                                localStorage.removeItem('action');
-                                nav('/addNewPet');
-                            } else {
-                                const prevUrl = localStorage.getItem('prevURL');
-                                if (prevUrl) {
-                                    localStorage.removeItem('prevURL');
+                            const prevUrl = localStorage.getItem('prevURL');
+                            if (prevUrl) {
+                                //console.log(prevUrl);
+                                localStorage.removeItem('prevURL');
+                                if (prevUrl.indexOf('login') >=0 ){
+                                    nav('/addNewPet');
+                                } else {
                                     dispatch(openDetailView());
                                     const index = prevUrl.indexOf('#');
                                     const url = prevUrl.slice(index+1);
-                                    console.log(url);
+                                    //console.log(url);
                                     nav(url);
-                                } else {
-                                    nav("/");
                                 }
+                            } else {
+                                nav("/dashboard");
                             }
+
 
                         })
                     })

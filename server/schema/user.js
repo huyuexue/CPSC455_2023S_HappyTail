@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
   favorite: {
     type: Array,
     required: false
+  },
+  petFinder: {
+    type: Boolean,
+    required: false
   }
 });
 

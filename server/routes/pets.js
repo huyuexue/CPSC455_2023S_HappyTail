@@ -31,7 +31,7 @@ router.get('/search', async(req, res) => {
 
 async function middleware(req, res, next)  {
   if (!req.headers.authorization) {
-    return res.status(403).json({ error: 'invaid token' });
+    return res.status(403).json([]);
   }
 
   const idToken=req.headers.authorization;
@@ -44,7 +44,7 @@ async function middleware(req, res, next)  {
   })
   .catch((error) => {
     console.log(error)
-    return res.status(403).json({ error: 'invaid token' });
+    return res.status(403).json([]);
   });
 }
 
