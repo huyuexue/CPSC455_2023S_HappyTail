@@ -9,6 +9,7 @@ import {Favorite, FavoriteBorder} from "@mui/icons-material";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
 
+
 export default function PetCard({pet}) {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const dispatch = useDispatch();
@@ -42,6 +43,12 @@ export default function PetCard({pet}) {
         }
     ;
 
+    const handleShareButtonClick = () => {
+        console.log('click')
+        nav(`/pets/${pet._id}`);
+      };
+    
+
     return (
         <>
             <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}}>
@@ -66,7 +73,7 @@ export default function PetCard({pet}) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button>
+                    <Button onClick={handleShareButtonClick}>
                         Share
                     </Button>
                     {isOwner ?
