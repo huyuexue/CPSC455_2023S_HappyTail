@@ -35,10 +35,6 @@ async function connectDB(){
     //console.log(db);
     return db;
 }
-
-
-
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -49,7 +45,5 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/pets', petsRouter);
 connectDB();
-
-
 
 module.exports = app;

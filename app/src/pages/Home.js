@@ -1,7 +1,7 @@
 import PetsBrief from "../components/pets/PetsBrief";
-import PetDetail from "../components/petDetail/PetDetail";
+import PetDetail from "../components/pets/PetDetail";
 import {useSelector} from "react-redux";
-import ButtonBar from "../components/elements/buttons/ButtonBar";
+import ButtonBar from "../components/elements/ButtonBar";
 import {Grid, Stack, useMediaQuery, Box} from "@mui/material";
 import React from "react";
 import {faHouseChimney} from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,7 @@ import {LargeIconButton} from "../components/elements/LargeIconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
+
 
 export default function Home() {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);

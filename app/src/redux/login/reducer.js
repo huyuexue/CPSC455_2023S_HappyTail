@@ -1,20 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {getUserAsync} from "./thunks";
 
-export const loginReducer = createSlice({
-  name: 'login',
-  initialState: {
-    value: true,
-  },
-  reducers: {
-    TurnLogin: (state) => {
-      state.value =false
-      console.log("the value is true")
+const loginReducer = createSlice({
+    name: 'login',
+    initialState: {
+        user: {},
+        value: true,
+        token: null,
     },
-    TurnLogout: (state) => {
-        state.value =true
-        console.log("the value is false")
+    reducers: {
+        TurnLogin: (state, action) => {
+          state.value =false;
+          state.token = action.payload
+        },
+        TurnLogout: (state) => {
+          state.value =true;
+          state.token = null;
+          state.user = {};
+          },
     },
-  },
+    extraReducers: (builder) => {
+        builder
+            .addCase(getUserAsync.pending, (state, action) => {
+              console.log("waiting to get list by user");
+            })
+            .addCase(getUserAsync.fulfilled, (state, action) => {
+              state.user = action.payload;
+              console.log(state.user);
+            })
+            .addCase(getUserAsync.rejected, (state, action) => {
+              console.log("rejected to get list by user");
+            });
+    }
 })
 
 // Action creators are generated for each case reducer function

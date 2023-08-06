@@ -1,14 +1,13 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Avatar} from '@mui/material';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {getAuth, } from "firebase/auth";
 import {TurnLogout} from "../redux/login/reducer";
-import {useSelector, useDispatch} from 'react-redux'
-
+import { useDispatch} from 'react-redux'
+import {clearAll} from "../redux/userPets/reducer";
 export default function UserMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -27,10 +26,12 @@ export default function UserMenu() {
 
 
     const signout = async () => {
-        await auth.signOut()
-        console.log("logout")
-        dispatch(TurnLogout())
-        nav("/")
+        await auth.signOut();
+        console.log("logout");
+        dispatch(TurnLogout());
+        localStorage.removeItem('tokenId');
+        dispatch(clearAll());
+        nav("/");
         setAnchorEl(null);
     };
 

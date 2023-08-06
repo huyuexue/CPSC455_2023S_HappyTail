@@ -124,7 +124,7 @@ textarea {
 
 .detail{
   margin-left: 20px;
-
+  position: relative;
 }
 
 .popupWindow{
@@ -177,8 +177,6 @@ input[type="number"],input[type="number"], select {
   border: 1px solid black;
   padding: 5px;
   border-radius: 2px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 input[type="number"] {
@@ -247,4 +245,45 @@ input[type="number"] {
 
 .custom-file-input span {
   margin-left: 8px;
+}
+
+.required-field::before {
+  content: '*';
+  color: red;
+  margin-right: 2px;
+}
+.horizontalLine {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0;
+}
+.closeButtonContainer {
+  position: absolute;
+  top: 1px;
+  right: 3px;
+}
+
+.messagePopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
+
+.messagePopup textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  margin-bottom: 10px;
+}
+
+.messagePopup button {
+  margin-right: 10px;
 }

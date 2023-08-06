@@ -38,9 +38,12 @@ async function middleware(req, res, next)  {
   getAuth().verifyIdToken(idToken)
   .then((decodedToken) => {
     req.uid = decodedToken.uid;
+    req.email = decodedToken.email;
+    console.log("email is", decodedToken.email, "uid is ", decodedToken.uid)
     next()
   })
   .catch((error) => {
+    console.log(error)
     return res.status(403).json({ error: 'invaid token' });
   });
 }
@@ -70,6 +73,7 @@ router.get('/all', function(req, res, next) {
 
 router.get('/byuser',middleware, async (req, res, next) => {
   try {
+    //console.log(req.uid);
     const pet = await Pet.find({uid:req.uid}); // Find the pet by ID
     if (!pet) {
       // If the pet is not found, return an appropriate response
@@ -81,6 +85,7 @@ router.get('/byuser',middleware, async (req, res, next) => {
     res.status(500).json({ error: 'Failed to retrieve a pet' });
   }
 });
+
 // GET a single pet by ID
 router.get('/:id', async (req, res, next) => {
   try {
@@ -139,9 +144,11 @@ router.delete('/:id', middleware, AuthCheck, async (req, res, next) => {
 
 
 // POST request to add a new pet
+
 router.post('/', middleware, async (req, res) => {
   try {
     const newPet = new Pet(req.body); // Create a new Pet instance with the request body data
+    newPet.uid= req.uid;
     newPet.uid= req.uid;
     const savedPet = await newPet.save(); // Save the new pet to the database
     res.status(201).json(savedPet); // Respond with the saved pet as JSON

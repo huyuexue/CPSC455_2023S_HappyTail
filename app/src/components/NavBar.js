@@ -3,42 +3,23 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import UserMenu from "./menu";
-import { useSelector, useDispatch } from 'react-redux'
-import { TurnLogin, TurnLogout } from "../redux/login/reducer";
-import {useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux";
+
+
 
 export default function NavBar() {
-    const [isLogin, setIsLogin] = useState(false);
-    const dispatch = useDispatch()
-    const[token, setToken]=useState("");
-    const isLoginR = useSelector((state) => state.login.value)
-    const navigate = useNavigate();
-
-    const getToken=async (user)=>{
-        const token= await user.getIdToken()
-        localStorage.setItem("token", token)
-      }
-
-
     const buttonRoutes = {
         "Home": "/",
         "Browse": "/browse",
+        "Add": "/addNewPet",
         "About": "/about",
-        "Upload": "/addNewPet"
-    }
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log("login")
-            dispatch(TurnLogin())
-        } else {
-            console.log("logout")
-            dispatch(TurnLogout())
-        }
-    });
+    };
+
+    const localStorageToken = localStorage.getItem('tokenId');
+    const globalToken = useSelector(state => state.login.token);
+    const token = localStorageToken || globalToken;
+    const isLogin = (token === null) ? false : true;
 
     const rightButtonRoutes = {
         "Login": "/login",
@@ -147,7 +128,7 @@ export default function NavBar() {
                     ))}
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
-                    {!isLoginR ? (
+                    {isLogin? (
                         <>
                             <UserMenu />
                         </>

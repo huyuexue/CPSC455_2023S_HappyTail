@@ -1,5 +1,5 @@
 import {Fragment, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import BasicInfo from "./BasicInfo";
 import ContactInfo from "./ContactInfo";
 import ExtraInfo from "./ExtraInfo";
@@ -10,76 +10,43 @@ import StepButton from "@mui/material/StepButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
-import {addPetAsync} from "../../../redux/userPets/thunks";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {addPetAsync, updateDetailAsync} from "../../redux/userPets/thunks";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 import {Container} from "@mui/material";
 
 const steps = ['Pet Info', 'Extra Info', 'Contact Info', 'Preview'];
 
 
-export default function AddNewPet({}) {
-    const auth = getAuth();
+export default function PetForm({originalData, update}) {
+    const token = localStorage.getItem('tokenId');
+    const isLogin = (token === null) ? false : true;
+    const [isLoading, setIsLoading] = useState(true);
     const nav = useNavigate();
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-
+    useEffect(() => {
+        if (!isLogin) {
+            localStorage.setItem('action', 'add');
+            nav('/login');
         } else {
-            nav('/login')
+            setIsLoading(false); // Mark the login check as complete
         }
-    });
+    }, [isLogin, nav])
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [token, setToken] = useState("");
-
-    const getToken = async (user) => {
-        const token = await user.getIdToken()
-        setToken(token)
-    }
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                getToken(user)
-            } else {
-                // alert("login please")
-            }
-        });
-    }, []);
-
 
     const [formData, setFormData] = useState({
-        // page 0
-        species: '',
-        picture: '',
-        petName: '',
-        breed: '',
-        gender: '',
-        ageYear: '',
-        ageMonth: '',
-        size: '',
-        spayed: '',
-        houseTrained: '',
-        // page 1
-        postCode: '',
-        furType: '',
-        petPersonality: [],
-        description: '',
-        reason: '', //TODO: delete or add to schema?
-        length: '', //TODO: delete or add to schema?
-        // page 2
-        contactEmail: '',
-        contactName: '',
-        contactNumber: '',
+        ... originalData
     });
 
+    const [activeStep, setActiveStep] = useState(update? 3 : 0);
+    const [completed, setCompleted] = useState(update? {0:true, 1:true, 2:true} : {});
 
-    const [activeStep, setActiveStep] = useState(0);
-    const [completed, setCompleted] = useState({});
-
-    const addPet = async () => {
+    const generatePetInput = (formData) => {
         const petage = parseInt(formData.ageYear, 10) * 12 + parseInt(formData.ageMonth, 10);
-        let input = {
+        return {
+            _id: formData._id, // Used only in the updatePet function
             petName: formData.petName,
             species: formData.species,
             breed: formData.breed,
@@ -87,7 +54,7 @@ export default function AddNewPet({}) {
             age: petage,
             picture: formData.picture,
             description: formData.description,
-            houseTrained: true,
+            houseTrained: formData.houseTrained === 'yes' ? true : false,
             furType: formData.furType,
             size: formData.size,
             petPersonality: formData.petPersonality,
@@ -98,14 +65,16 @@ export default function AddNewPet({}) {
             contactEmail: formData.contactEmail,
             contactName: formData.contactName,
             contactNumber: formData.contactNumber,
-        }
-        dispatch(addPetAsync({input, token}));
+            addInfo: formData.addInfo,
+        };
     };
-
-
-    const handleNext = () => {
-        checkFill();
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const addPet = async () => {
+        const input = generatePetInput(formData);
+        dispatch(addPetAsync({ input, token }));
+    };
+    const updatePet = async () => {
+        const input = generatePetInput(formData);
+        await dispatch(updateDetailAsync({ pet: input, token }));
     };
 
     const checkFill = () => {
@@ -116,8 +85,7 @@ export default function AddNewPet({}) {
                 return;
             }
         } else if (activeStep === 1) {
-            if (!formData.furType || !formData.reason || !formData.length || !formData.postCode ||
-                !formData.description || formData.petPersonality.length === 0) {
+            if (!formData.furType || !formData.postCode) {
                 handleNotComplete();
                 return;
             }
@@ -136,7 +104,10 @@ export default function AddNewPet({}) {
         checkFill();
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-
+    const handleNext = () => {
+        checkFill();
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
     const handleStep = (step) => () => {
         checkFill();
         setActiveStep(step);
@@ -147,7 +118,6 @@ export default function AddNewPet({}) {
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
     };
-
     const handleNotComplete = () => {
         const newCompleted = completed;
         newCompleted[activeStep] = false;
@@ -187,8 +157,10 @@ export default function AddNewPet({}) {
         const values = Object.values(completed);
         const trueValues = values.filter((value) => value === true);
         if (trueValues.length === 3) {
-            addPet();
+            update? await updatePet() : await addPet();
             navigate('/dashboard');
+        } else {
+            alert('Please complete all required fields before submitting.');
         }
     };
 
@@ -197,18 +169,18 @@ export default function AddNewPet({}) {
             ...prevData,
             ["postcode"]: '',
         }));
-
     };
 
     const subForms = [
-        <BasicInfo formData={formData} handleChange={handleChange}/>,
-        <ExtraInfo formData={formData} handleChange={handleChange} onPostcodeFocus={onPostcodeFocus}/>,
-        <ContactInfo formData={formData} handleChange={handleChange}/>,
-        <Preview formData={formData} jumpToPage={jumpToPage}/>,
+        <BasicInfo formData={formData} handleChange={handleChange} update={update}/>,
+        <ExtraInfo formData={formData} handleChange={handleChange} onPostcodeFocus={onPostcodeFocus} update={update}/>,
+        <ContactInfo formData={formData} handleChange={handleChange} update={update}/>,
+        <Preview formData={formData} jumpToPage={jumpToPage} update={update}/>,
     ]
 
     return (
-
+        isLoading ?
+            <></> :
         <Container>
             <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
                 <Box sx={{width: '100%'}}>
@@ -241,7 +213,12 @@ export default function AddNewPet({}) {
                             <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                                 <Button onClick={() => handleSubmit()} sx={{mr: 1}}>
                                     {activeStep === 3
-                                        ? 'Submit'
+                                        ? update? 'Update' : 'Submit'
+                                        : ''}
+                                </Button>
+                                <Button onClick={() => nav('/dashboard')} sx={{mr: 1}}>
+                                    {activeStep === 3 && update
+                                        ?  'Cancel'
                                         : ''}
                                 </Button>
                             </Box>
@@ -250,6 +227,5 @@ export default function AddNewPet({}) {
                 </Box>
             </Box>
         </Container>
-
     );
 }
