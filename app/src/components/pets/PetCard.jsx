@@ -57,7 +57,7 @@ export default function PetCard({pet}) {
                         component="img"
                         height="250"
                         image={pet.picture}
-                        alt={pet.petName}
+                        alt={pet.petName}t
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
