@@ -1,19 +1,28 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
+import {Tooltip , Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
 import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
-import {Favorite, FavoriteBorder} from "@mui/icons-material";
+import {Favorite, FavoriteBorder, Share} from "@mui/icons-material";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
 
 export default function PetCard({pet}) {
     const dispatch = useDispatch();
-    const handleClick = async (selectedPet) => {
+    const dashboard = (window.location.hash === "#/dashboard");
+    const myPets = useSelector(state => state.user.list);
+    const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
+    const petId = pet._id;
+    const isOwner= idList.includes(petId);
+    const handleClick = async () => {
         try {
             await dispatch(getDetailAsync(pet._id));
-            dispatch(openDetailView());
+            if (dashboard && isOwner) {
+                dispatch(openDetailView());
+            } else {
+                nav(`/pets/${pet._id}`);
+            }
         } catch (error) {
             console.error("Error fetching pet details:", error);
         }
@@ -21,12 +30,9 @@ export default function PetCard({pet}) {
 
     const token = useSelector(state => state.login.token);
     const favoritePets = useSelector(state => state.user.favorite);
-    const myPets = useSelector(state => state.user.list);
-    const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
     const nav = useNavigate();
-    const petId = pet._id;
     const isFavorite = favoritePets.includes(petId);
-    const isOwner= idList.includes(petId);
+
 
     const handleFavoriteToggle = () => {
         if (token) {
@@ -37,6 +43,19 @@ export default function PetCard({pet}) {
             localStorage.setItem('prevURL', window.location.href);
             nav('/login');
         }
+    };
+
+    const handleShareClicked = () => {
+        //TODO: add deployed FE base URL
+        const baseURL = `http://localhost:3000/#`;
+        const url = `${baseURL}/pets/${petId}`;
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                console.log("URL copied to clipboard:", url);
+            })
+            .catch((error) => {
+                console.error("Error copying URL to clipboard:", error);
+            });
     };
 
     return (
@@ -62,17 +81,24 @@ export default function PetCard({pet}) {
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-                <CardActions>
-                    <Button>
-                        Share
-                    </Button>
-                    {isOwner ?
-                        (<></>) :
-                        (<IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
-                            {isFavorite? <Favorite /> : <FavoriteBorder />}
-                        </IconButton>)
-                    }
-                </CardActions>
+                <div className='btn-container'>
+                    <CardActions>
+                        <Tooltip title="Share" placement="top">
+                            <IconButton onClick={handleShareClicked}>
+                                <Share />
+                            </IconButton>
+                            </Tooltip>
+                        {isOwner ?
+                            (<></>) :
+                            (<Tooltip title="Favorite" placement="top">
+                                <IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
+                                    {isFavorite? <Favorite /> : <FavoriteBorder />}
+                                </IconButton>
+                            </Tooltip>)
+                        }
+
+                    </CardActions>
+                </div>
             </Card>
         </>
     )

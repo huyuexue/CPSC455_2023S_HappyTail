@@ -15,11 +15,11 @@ export default function PetsBrief() {
                 <h1> </h1>
                 {isLoading ?
                     <p>Loading...</p> :
-                    (<Carousel sx={{width: 350}}>
+                    <Carousel sx={{width: 350}}>
                         {pets.map((pet,index) => (
                             <PetCard pet={pet}  key={index} sx={{width: 350}}/>
                         ))}
-                    </Carousel>)
+                    </Carousel>
                 }
             </Stack>
         </Box>

@@ -13,6 +13,7 @@ import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
 import UpdatePet from "./pages/UpdatePet";
 import Profile from './pages/Profile';
+import PetInfo from "./components/pets/PetInfo";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                         <Route path="dashboard" element={<Dashboard />}/>
                         <Route path="profile" element={<Profile />}/>
                         <Route path="updatePet" element={<UpdatePet />}/>
+                        <Route path="pets/:id" element={<PetInfo />} />
                     </Route>
                 </Routes>
             </ThemeProvider>
