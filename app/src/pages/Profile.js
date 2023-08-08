@@ -12,6 +12,7 @@ export default function Profile(){
     const loading = useSelector(state => state.login.isLoading);
     const user = useSelector(state => state.login.user);
     const[refresh, setRefresh]=useState(false);
+    const[update, setUpdate]=useState(false);
     const isLogin = useSelector(state => state.login.value);
     const dispatch = useDispatch();
 
@@ -33,22 +34,26 @@ export default function Profile(){
           
         }else{
           setInputOnly(true);
-        //   setLoading(false);
         }
        }
 
        useEffect(() => {
         if (!isLogin) {
             dispatch(getUserAsync({token}));
-            setRefresh(false)
         }
-            
+        console.log(user)
       }, [refresh]); 
+
+
 
     const handleFormSubmit = (values) => {
         console.log(values)
         userupdate(values)
+        setTimeout(function(){
+            console.log("Executed after 1 second");
+        }, 1000);
         setRefresh(true)
+        window.location.reload();
       };
 
     const checkoutSchema = yup.object().shape({
@@ -71,7 +76,7 @@ export default function Profile(){
                 <Box sx={{maxWidth:"1200px", marginX:"auto", marginY:"50px"}}>
                     <h2>Profile</h2>
                     {
-                        !loading?(<>
+                        (!loading&&!update)?(<>
                             <Formik
                                 onSubmit={handleFormSubmit}
                                 initialValues={user}
