@@ -96,7 +96,7 @@ export default function PetDetail() {
                     </div>
                     <CardMedia
                         component="img"
-                        height="250"
+                        height="350"
                         image={petInfo.picture}
                         alt={petInfo.petName}
                     />
