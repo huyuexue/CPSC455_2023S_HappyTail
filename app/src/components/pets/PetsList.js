@@ -16,31 +16,36 @@ export default function PetsList() {
     const navigate = useNavigate();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const user = useSelector(state => state.login.user);
 
     return (
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
-                <h2>My Pet Listing</h2>
-                <div className="slideshow-container">
-                    <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"}>
-                        {Array.isArray(pets) && pets.length > 0 ?
-                            <>
-                                <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
-                                    {pets.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
-                                        <PetCard key={pet.id} pet={pet} ></PetCard>
-                                    </Grid>))}
+                {user.petOwner ?
+                    <>
+                        <h2>My Pet Listing</h2>
+                        <div className="slideshow-container">
+                            <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"}>
+                                {Array.isArray(pets) && pets.length > 0 ?
+                                    <>
+                                        <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
+                                            {pets.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
+                                                <PetCard key={pet.id} pet={pet} ></PetCard>
+                                            </Grid>))}
+                                        </Grid>
+                                    </>
+                                    : (
+                                        <p>No pets to display.</p>
+                                    )}
+                                <Grid item xs={4}
+                                      display="flex" justifyContent="center" alignItems="center"
+                                >
+                                    <AddCircleOutlineRoundedIcon fontSize="large" color="primary" onClick={()=>navigate('/addNewPet')}/>
                                 </Grid>
-                            </>
-                            : (
-                                <p>No pets to display.</p>
-                            )}
-                        <Grid item xs={4}
-                              display="flex" justifyContent="center" alignItems="center"
-                        >
-                            <AddCircleOutlineRoundedIcon fontSize="large" color="primary" onClick={()=>navigate('/addNewPet')}/>
-                        </Grid>
-                    </Grid>
-                </div>
+                            </Grid>
+                        </div>
+                    </> : <></>
+                }
             </Box>
             <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
                 <h2>Favorite Listing</h2>
