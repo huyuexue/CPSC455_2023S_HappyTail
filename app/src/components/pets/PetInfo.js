@@ -9,6 +9,7 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import emailJs from "@emailjs/browser";
 import {getDetailAsync} from "../../redux/detail/thunks";
+import ShareButton from "../ShareButton";
 
 export default function PetInfo() {
     const { id } = useParams();
@@ -30,18 +31,6 @@ export default function PetInfo() {
     const favoritePets = useSelector(state => state.user.favorite);
     const isFavorite = favoritePets.includes(petId);
 
-    const handleShareClicked = () => {
-        //TODO: add deployed FE base URL
-        const baseURL = `http://localhost:3000/#`;
-        const url = `${baseURL}/pets/${petId}`;
-        navigator.clipboard.writeText(url)
-            .then(() => {
-                console.log("URL copied to clipboard:", url);
-            })
-            .catch((error) => {
-                console.error("Error copying URL to clipboard:", error);
-            });
-    };
     const handleContactClicked = () => {
         if (isLogIn) {
             setShowMessageInput(true)
@@ -119,11 +108,7 @@ export default function PetInfo() {
                         {isOwner ?
                             <></> :
                             <>
-                                <Tooltip title="Share" placement="top">
-                                    <IconButton onClick={handleShareClicked}>
-                                        <Share />
-                                    </IconButton>
-                                </Tooltip>
+                                <ShareButton petId={petInfo._id} petName={petInfo.petName} />
                                 <Tooltip title="Contact" placement="top">
                                     <IconButton onClick={handleContactClicked}>
                                         <MailOutline />

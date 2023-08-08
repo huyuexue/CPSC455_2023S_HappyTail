@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import {Favorite, FavoriteBorder, Share} from "@mui/icons-material";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
+import ShareButton from "../ShareButton";
 
 export default function PetCard({pet}) {
     const dispatch = useDispatch();
@@ -48,18 +49,6 @@ export default function PetCard({pet}) {
         }
     };
 
-    const handleShareClicked = () => {
-        //TODO: add deployed FE base URL
-        const baseURL = `http://localhost:3000/#`;
-        const url = `${baseURL}/pets/${petId}`;
-        navigator.clipboard.writeText(url)
-            .then(() => {
-                console.log("URL copied to clipboard:", url);
-            })
-            .catch((error) => {
-                console.error("Error copying URL to clipboard:", error);
-            });
-    };
 
     return (
         <>
@@ -86,11 +75,7 @@ export default function PetCard({pet}) {
                 </CardActionArea>
                 <div className='btn-container'>
                     <CardActions>
-                        <Tooltip title="Share" placement="top">
-                            <IconButton onClick={handleShareClicked}>
-                                <Share />
-                            </IconButton>
-                            </Tooltip>
+                        <ShareButton petId={pet._id} petName={pet.petName} />
                         {isOwner ?
                             (<></>) :
                             (<Tooltip title="Favorite" placement="top">
