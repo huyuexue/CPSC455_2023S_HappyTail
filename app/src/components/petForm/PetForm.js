@@ -22,14 +22,20 @@ export default function PetForm({originalData, update}) {
     const isLogin = useSelector(state => !state.login.value);
     const [isLoading, setIsLoading] = useState(true);
     const nav = useNavigate();
+
+    const finishStatusLoading = useSelector(state => state.login.finishStatusLoading);
+    const user = useSelector(state => state.login.user);
+
     useEffect(() => {
-        if (!isLogin) {
-            localStorage.setItem('prevURL', window.location.href);
-            nav('/login');
-        } else {
-            setIsLoading(false); // Mark the login check as complete
+        if (finishStatusLoading) {
+            if (!isLogin) {
+                localStorage.setItem('prevURL', window.location.href);
+                nav('/login');
+            } else {
+                setIsLoading(false);
+            }
         }
-    }, []);
+    }, [isLogin, finishStatusLoading]);
 
 
     const dispatch = useDispatch();
@@ -179,52 +185,53 @@ export default function PetForm({originalData, update}) {
 
     return (
         isLoading ?
-            <></> :
-        <Container>
-            <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
-                <Box sx={{width: '100%'}}>
-                    <Stepper nonLinear activeStep={activeStep}>
-                        {steps.map((label, index) => (
-                            <Step key={label} completed={completed[index]}>
-                                <StepButton color="inherit" onClick={handleStep(index)}>
-                                    {label}
-                                </StepButton>
-                            </Step>
-                        ))}
-                    </Stepper>
-                    <div>
-                        <Fragment>
-                            {subForms[activeStep]}
-                            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                <Button
-                                    color="inherit"
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    sx={{mr: 1}}>
-                                    Back
-                                </Button>
-                                <Box sx={{flex: '1 1 auto'}}/>
-                                <Button disabled={activeStep === 3} onClick={handleNext} sx={{mr: 1}}>
-                                    Next
-                                </Button>
+            <></> : (user.petOwner ?
+                <Container>
+                    <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
+                        <Box sx={{width: '100%'}}>
+                            <Stepper nonLinear activeStep={activeStep}>
+                                {steps.map((label, index) => (
+                                    <Step key={label} completed={completed[index]}>
+                                        <StepButton color="inherit" onClick={handleStep(index)}>
+                                            {label}
+                                        </StepButton>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                            <div>
+                                <Fragment>
+                                    {subForms[activeStep]}
+                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                        <Button
+                                            color="inherit"
+                                            disabled={activeStep === 0}
+                                            onClick={handleBack}
+                                            sx={{mr: 1}}>
+                                            Back
+                                        </Button>
+                                        <Box sx={{flex: '1 1 auto'}}/>
+                                        <Button disabled={activeStep === 3} onClick={handleNext} sx={{mr: 1}}>
+                                            Next
+                                        </Button>
 
-                            </Box>
-                            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                <Button onClick={() => handleSubmit()} sx={{mr: 1}}>
-                                    {activeStep === 3
-                                        ? update? 'Update' : 'Submit'
-                                        : ''}
-                                </Button>
-                                <Button onClick={() => nav('/dashboard')} sx={{mr: 1}}>
-                                    {activeStep === 3 && update
-                                        ?  'Cancel'
-                                        : ''}
-                                </Button>
-                            </Box>
-                        </Fragment>
-                    </div>
-                </Box>
-            </Box>
-        </Container>
+                                    </Box>
+                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                        <Button onClick={() => handleSubmit()} sx={{mr: 1}}>
+                                            {activeStep === 3
+                                                ? update? 'Update' : 'Submit'
+                                                : ''}
+                                        </Button>
+                                        <Button onClick={() => nav('/dashboard')} sx={{mr: 1}}>
+                                            {activeStep === 3 && update
+                                                ?  'Cancel'
+                                                : ''}
+                                        </Button>
+                                    </Box>
+                                </Fragment>
+                            </div>
+                        </Box>
+                    </Box>
+                </Container> :
+                <h2>Please upgrade your account to access pet owner features!</h2>)
     );
 }

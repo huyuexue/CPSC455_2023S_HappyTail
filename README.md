@@ -23,7 +23,7 @@ Happy Tails is a project focused on creating a pet adoption platform. The websit
    
 2. - [x] User will be able to edit his/her profile
 
-3. - [ ] 2 types of users: pet owner and pet adopter
+3. - [x] 2 types of users: pet owner and pet adopter
    - Different users will see different dashboard after they log in
    
 4. - [x] My listing (Dashboard)
@@ -34,8 +34,7 @@ Happy Tails is a project focused on creating a pet adoption platform. The websit
    - User will be able to add pets to his/her favorite list, and delete if they want
    - Users need to have an account and log in if they want to favorite/un-favorite a pet.
 
-6. - [ ] Share pet with friend
-   - TODO: add some explanation
+6. - [x] Share pet with friend: user will be able to share the link of a pet by clicking a share button.
 
 
 ## Stretch
