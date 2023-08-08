@@ -1,5 +1,5 @@
 import IconButton from "@mui/material/IconButton";
-import {getFavoriteAsync, getUserPetsAsync, updateFavoriteAsync} from "../../redux/userPets/thunks";
+import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {closeDetailView, } from "../../redux/detail/reducer";
 import {Favorite, FavoriteBorder, MailOutline, Share} from "@mui/icons-material";
 import {CardMedia, Tooltip} from "@mui/material";
@@ -8,8 +8,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import emailJs from "@emailjs/browser";
-import {getPetsAsync} from "../../redux/pets/thunks";
-import {getUserAsync} from "../../redux/login/thunks";
 import {getDetailAsync} from "../../redux/detail/thunks";
 
 export default function PetInfo() {
@@ -72,6 +70,7 @@ export default function PetInfo() {
     const emailJsKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
     const handleSubmit = () => {
         const form = {
+            pet_name: petInfo.petName,
             to_name: petInfo.contactName,
             from_name: capitalizeEachWord(userInfo.firstName),
             from_contact: userInfo.email,
@@ -90,28 +89,31 @@ export default function PetInfo() {
 
     return (
             <>
-                <div className="detail">
+                <div className="detailPage">
                     <CardMedia
                         component="img"
-                        height="350"
+                        height="350px"
                         image={petInfo.picture}
                         alt={petInfo.petName}
                     />
-                    <h3>{petInfo.petName}</h3>
-                    <p>Breed: {capitalizeEachWord(petInfo.breed)}</p>
-                    <p>Gender: {capitalizeEachWord(petInfo.gender)}</p>
-                    <p>Age: {petInfo.age >= 12
-                        ? `${Math.floor(petInfo.age / 12)} Year ${petInfo.age % 12} Month`
-                        : `${petInfo.age} Month`
-                    }</p>
-                    <p>Size: {capitalizeEachWord(petInfo.size)}</p>
-                    <p>Spayed: {capitalizeEachWord(petInfo.spayed)}</p>
-                    <p>House Trained: {petInfo.houseTrained ? "Yes" : "No"}</p>
-                    <p>Location: {petInfo.postCode}</p>
-                    <p>Fur Type: {capitalizeEachWord(petInfo.furType)}</p>
-                    <p>Pet Personality: {petInfo.petPersonality ?
-                        petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
-                    <p>Description:{petInfo.description}</p>
+                    <div className= "textContainer">
+                        <h3>{petInfo.petName}</h3>
+                        <p>Breed: {capitalizeEachWord(petInfo.breed)}</p>
+                        <p>Gender: {capitalizeEachWord(petInfo.gender)}</p>
+                        <p>Age: {petInfo.age >= 12
+                            ? `${Math.floor(petInfo.age / 12)} Year ${petInfo.age % 12} Month`
+                            : `${petInfo.age} Month`
+                        }</p>
+                        <p>Size: {capitalizeEachWord(petInfo.size)}</p>
+                        <p>Spayed: {capitalizeEachWord(petInfo.spayed)}</p>
+                        <p>House Trained: {petInfo.houseTrained ? "Yes" : "No"}</p>
+                        <p>Location: {petInfo.postCode}</p>
+                        <p>Fur Type: {capitalizeEachWord(petInfo.furType)}</p>
+                        <p>Pet Personality: {petInfo.petPersonality ?
+                            petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
+                        <p>Description:{petInfo.description}</p>
+                    </div >
+
 
                     <div className='btn-container'>
                         {isOwner ?

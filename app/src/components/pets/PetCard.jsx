@@ -11,6 +11,7 @@ import {useNavigate} from "react-router-dom";
 export default function PetCard({pet}) {
     const dispatch = useDispatch();
     const dashboard = (window.location.hash === "#/dashboard");
+    const browse = (window.location.hash === "#/browse");
     const myPets = useSelector(state => state.user.list);
     const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
     const petId = pet._id;
@@ -20,8 +21,10 @@ export default function PetCard({pet}) {
             await dispatch(getDetailAsync(pet._id));
             if (dashboard && isOwner) {
                 dispatch(openDetailView());
-            } else {
+            } else if (browse) {
                 window.open(`#/pets/${pet._id}`);
+            } else {
+                nav(`/pets/${pet._id}`);
             }
         } catch (error) {
             console.error("Error fetching pet details:", error);
