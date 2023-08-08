@@ -21,7 +21,7 @@ export default function PetCard({pet}) {
             if (dashboard && isOwner) {
                 dispatch(openDetailView());
             } else {
-                nav(`/pets/${pet._id}`);
+                window.open(`#/pets/${pet._id}`);
             }
         } catch (error) {
             console.error("Error fetching pet details:", error);
