@@ -139,7 +139,7 @@ export default function SignUpPage(){
                           Password
                       </InputLabel>
                       <OutlinedInput
-                          id="outlined-adornment-password"
+                          id="outlined-adornment-password1"
                           type={showPassword ? "text" : "password"}
                           endAdornment={
                           <InputAdornment position="end">

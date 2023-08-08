@@ -1,16 +1,19 @@
 
-import {useSelector} from "react-redux";
-import { Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,TextField, CircularProgress} from "@mui/material";
+import {useSelector,  useDispatch} from "react-redux";
+import { Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,TextField, CircularProgress,Checkbox} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useState, } from "react";
-
+import { useState,  useEffect} from "react";
+import { getUserAsync } from "../redux/login/thunks";
 
 export default function Profile(){
     const[inputOnly, setInputOnly]=useState(true);
     const token = useSelector(state => state.login.token);
     const loading = useSelector(state => state.login.isLoading);
     const user = useSelector(state => state.login.user);
+    const[refresh, setRefresh]=useState(false);
+    const isLogin = useSelector(state => state.login.value);
+    const dispatch = useDispatch();
 
     const userupdate=async (values)=>{
         console.log( "input is ", values)
@@ -34,12 +37,20 @@ export default function Profile(){
         }
        }
 
-
+       useEffect(() => {
+        if (!isLogin) {
+            dispatch(getUserAsync({token}));
+            setRefresh(false)
+        }
+            
+      }, [refresh]); 
 
     const handleFormSubmit = (values) => {
         console.log(values)
         userupdate(values)
+        setRefresh(true)
       };
+
     const checkoutSchema = yup.object().shape({
         firstName: yup.string().required("required"),
         lastName: yup.string().required("required"),
@@ -49,7 +60,7 @@ export default function Profile(){
         address: yup.string().required("required"),
         city: yup.string().required("required"),
         postCode: yup.string().required("required"),
-        petfinder: yup.boolean()
+        petOwner: yup.boolean()
       });
 
 
@@ -170,25 +181,20 @@ export default function Profile(){
                                                 </Button>
                                             </>):(
                                                 <Box  sx={{width:"100%", display:"flex", justifyContent:"space-around", flexDirection:"column"}}>
-                                                <FormControl sx={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginY:3}}>
-                                                <FormLabel  sx={{fontSize:22, fontWeight:"500", marginY:3}} >Are you a pet finder or your pet looking for home?</FormLabel>
-                                                    <RadioGroup
-                                                        row
-                                                        name="petFinder"
-                                                        value={values.petFinder}
-                                                        onChange={handleChange}
-                                                        sx={{ display:"flex", justifyContent:"space-around", alignItems:"center",  width:"100%"}}
-                                                    >
-                                                        <FormControlLabel value={false} control={<Radio />} label="my pet looking for a home"  />
-                                                        <FormControlLabel value={true} control={<Radio />} label="I want to adopt a pet" />
-                                                    </RadioGroup>
-                                                </FormControl>                                                  
 
+                                                {user.petOwner?(<></>):(<>
+                                                    <FormControl sx={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginY:3}}>
+                                                    <FormLabel  sx={{fontSize:22, fontWeight:"500", marginY:3}} >Are you a pet finder or your pet looking for home?</FormLabel>
+                                                    
+                                                        <FormControlLabel control={<Checkbox />}  onChange={handleChange}  value={values.petOwner}  name="petOwner" label="Enhance my account to access pet owner features" />
+
+                                                    </FormControl>  
+                                                </>)}                                                
                                                 <Box  sx={{width:"100%", display:"flex", justifyContent:"space-around"}}>
                                                     <Button type="submit" color="primary" variant="contained">
                                                         Update Profile
                                                     </Button>
-                                                    <Button onClick={()=>{setInputOnly(true)}} color="secondary" variant="contained">
+                                                    <Button onClick={()=>{setInputOnly(true); setRefresh(true)}} color="secondary" variant="contained">
                                                         Cancel Change
                                                     </Button>
                                                 </Box>
