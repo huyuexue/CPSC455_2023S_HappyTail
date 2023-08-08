@@ -88,7 +88,6 @@ const userPetsReducer = createSlice({
             .addCase(getFavoriteAsync.rejected, (state, action) => {
                 console.log("rejected to get favorite");
                 state.isLoading = false;
-                console.log(state.list);
             })
             .addCase(updateFavoriteAsync.pending, (state, action) => {
                 console.log("waiting to update favorite");

@@ -16,5 +16,4 @@ const getUser = async ({token}) => {
 
 export default {
     getUser,
-
 };

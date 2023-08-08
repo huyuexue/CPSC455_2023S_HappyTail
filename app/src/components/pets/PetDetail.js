@@ -1,21 +1,21 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {closeDetailView, closeDetailViewFull} from "../../redux/detail/reducer";
 import {clearSelectInUserPets, getSelectedItem, } from "../../redux/userPets/reducer";
-import {deletePetAsync, getFavoriteAsync, getUserPetsAsync, updateFavoriteAsync} from "../../redux/userPets/thunks";
+import {deletePetAsync, getUserPetsAsync, updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
 import {Close, DeleteOutline, Edit, Favorite, FavoriteBorder, MailOutline} from "@mui/icons-material";
 import emailJs from "@emailjs/browser";
-import {getPetsAsync} from "../../redux/pets/thunks";
+import {CardMedia} from "@mui/material";
 
 
 export default function PetDetail() {
     const dispatch = useDispatch();
     const petInfo = useSelector(state => state.petDetail.selectItem);
-    const token = localStorage.getItem('tokenId');
-    const isLogin = (token !== null);
+    const token = useSelector(state => state.login.token);
+    const isLogIn = useSelector(state => !state.login.value);
 
     const id = petInfo._id;
     const nav = useNavigate();
@@ -31,7 +31,7 @@ export default function PetDetail() {
     const userInfo = useSelector(state => state.login.user);
 
     const handleContactClicked = () => {
-        if (isLogin) {
+        if (isLogIn) {
             setShowMessageInput(true)
         } else {
             dispatch(closeDetailView());
@@ -41,7 +41,8 @@ export default function PetDetail() {
     };
 
     const handleFavoriteToggle = () => {
-        if (isLogin) {
+        if (isLogIn) {
+            console.log("in PetDetail and is log in, token: " + token);
             dispatch(updateFavoriteAsync({token, petId}))
         } else {
             dispatch(closeDetailView());
@@ -50,19 +51,7 @@ export default function PetDetail() {
         }
     };
 
-    const [dashboard, setDashboard] = useState(false);
-
-    useEffect(() => {
-        if (window.location.hash === "#/dashboard") {
-            setDashboard(true);
-        };
-        if (isLogin) {
-            dispatch(getUserPetsAsync({token}));
-            dispatch(getFavoriteAsync({token}));
-        }
-        dispatch(getPetsAsync());
-    }, []);
-
+    const dashboard = (window.location.hash === "#/dashboard");
 
 
     const [showMessageInput, setShowMessageInput] = useState(false);
@@ -71,6 +60,7 @@ export default function PetDetail() {
     const emailJsKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
     const handleSubmit = () => {
         const form = {
+            to_name: petInfo.contactName,
             from_name: capitalizeEachWord(userInfo.firstName),
             from_contact: userInfo.email,
             message: customMessage,
@@ -93,7 +83,7 @@ export default function PetDetail() {
                     <div className="closeButtonContainer">
                         <IconButton
                             onClick={() => {
-                                if (isLogin) {
+                                if (isLogIn) {
                                     dispatch(getUserPetsAsync({token}));
                                     dispatch(clearSelectInUserPets());
                                 }
@@ -104,7 +94,12 @@ export default function PetDetail() {
                             <Close />
                         </IconButton>
                     </div>
-                    <img src={petInfo.picture} alt="Not available"/>
+                    <CardMedia
+                        component="img"
+                        height="250"
+                        image={petInfo.picture}
+                        alt={petInfo.petName}
+                    />
                     <h3>{petInfo.petName}</h3>
                     <p>Breed: {capitalizeEachWord(petInfo.breed)}</p>
                     <p>Gender: {capitalizeEachWord(petInfo.gender)}</p>
@@ -121,7 +116,7 @@ export default function PetDetail() {
                         petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
                     <p>Description:{petInfo.description}</p>
                     <>
-                        {dashboard ?
+                        {dashboard && isOwner ?
                             <>
                                 <div className="horizontalLine"></div>
                                 <p>Name: {capitalizeEachWord(petInfo.contactName)}</p>
@@ -134,7 +129,7 @@ export default function PetDetail() {
                     </>
 
                     <div className='btn-container'>
-                        {dashboard ? (
+                        {dashboard && isOwner ? (
                             <>
                                 <IconButton
                                     onClick={() => {

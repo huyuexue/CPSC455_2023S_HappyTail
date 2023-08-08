@@ -7,18 +7,21 @@ const loginReducer = createSlice({
         user: {},
         value: true,
         token: null,
-        isLoading: false
+        isLoading: false,
+        finishStatusLoading: false,
     },
     reducers: {
         TurnLogin: (state, action) => {
-          state.value =false;
-          state.token = action.payload
-        },
+            state.value =false;
+            state.token = action.payload;
+            state.finishStatusLoading = true;
+            },
         TurnLogout: (state) => {
-          state.value =true;
-          state.token = null;
-          state.user = {};
-          },
+            state.value =true;
+            state.token = null;
+            state.user = {};
+            state.finishStatusLoading = true;
+            },
     },
     extraReducers: (builder) => {
         builder
@@ -29,7 +32,6 @@ const loginReducer = createSlice({
             .addCase(getUserAsync.fulfilled, (state, action) => {
               state.user = action.payload;
               state.isLoading = false;
-              console.log(state.user);
             })
             .addCase(getUserAsync.rejected, (state, action) => {
               console.log("rejected to get list by user");

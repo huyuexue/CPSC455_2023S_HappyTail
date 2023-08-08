@@ -1,74 +1,16 @@
-import PetDetail from "../components/pets/PetDetail";
+
 import {useSelector} from "react-redux";
-import PetsList from "../components/pets/PetsList";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import {AppBar, Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,TextField, CircularProgress} from "@mui/material";
+import { Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,TextField, CircularProgress} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useState, useEffect} from "react";
-import { useDispatch } from "react-redux";
-import { getUserAsync } from "../redux/login/thunks";
+import { useState, } from "react";
 
-export default function Profile({itemsList}){
-    const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
-    // const updateIsOpen = useSelector(updateStatus)
-    const [userInfo, setUser]=useState("")
-    const[refresh, setRefresh]=useState(false);
-    // const[loading, setLoading]=useState(false);
+
+export default function Profile(){
     const[inputOnly, setInputOnly]=useState(true);
-    // const[token, setToken]=useState("");
-    const auth = getAuth();
-    const nav = useNavigate();
-    const dispatch = useDispatch()
     const token = useSelector(state => state.login.token);
-    const isLogin = useSelector(state => state.login.value);
     const loading = useSelector(state => state.login.isLoading);
     const user = useSelector(state => state.login.user);
-
-    // const getToken=async (user)=>{
-    //     const token= await user.getIdToken()
-    //     console.log(token)
-    //     setToken(token)
-    //   }
-    // useEffect(() => {
-    //     onAuthStateChanged(auth, (user) => {
-    //       if (user) {
-    //         getToken(user)
-    //       } else {
-    //             nav("/")
-    //       }
-    //       });
-    //   }, []);   
-    
-
-    useEffect(() => {
-        if (!isLogin) {
-            dispatch(getUserAsync({token}));
-            setRefresh(false)
-        }else{
-            nav("/login")
-        }
-            
-      }, [token, refresh, isLogin ]); 
-
-    // const getuserInfo=async (values)=>{
-    //     if(token!=""){
-    //     const res = await fetch("http://localhost:3001/users/info", {
-    //       method: 'GET',
-    //       headers: { 
-    //                   'Content-Type': 'application/json',
-    //                   authorization: token},
-    //     });
-    //     const data=await res.json();
-    //     if(res.status!=200){
-    //       console.log("fetch data failed") 
-    //     }else{
-    //       setUser(data.data)
-    //       setLoading(true)
-    //     }
-    //     }
-    //    }
 
     const userupdate=async (values)=>{
         console.log( "input is ", values)
@@ -83,7 +25,7 @@ export default function Profile({itemsList}){
         const data=await res.json();
         console.log(data)
 
-        if(res.status!=200){
+        if(res.status !== 200){
             console.log("update failed")
           
         }else{
@@ -246,7 +188,7 @@ export default function Profile({itemsList}){
                                                     <Button type="submit" color="primary" variant="contained">
                                                         Update Profile
                                                     </Button>
-                                                    <Button onClick={()=>{setInputOnly(true);  setRefresh(true) }} color="secondary" variant="contained">
+                                                    <Button onClick={()=>{setInputOnly(true)}} color="secondary" variant="contained">
                                                         Cancel Change
                                                     </Button>
                                                 </Box>

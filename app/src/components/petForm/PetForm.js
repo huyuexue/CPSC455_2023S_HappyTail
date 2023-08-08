@@ -11,7 +11,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {addPetAsync, updateDetailAsync} from "../../redux/userPets/thunks";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useEffect} from "react";
 import {Container} from "@mui/material";
 
@@ -19,11 +18,8 @@ const steps = ['Pet Info', 'Extra Info', 'Contact Info', 'Preview'];
 
 
 export default function PetForm({originalData, update}) {
-    const localStorageToken = localStorage.getItem('tokenId');
-    const globalToken = useSelector(state => state.login.token);
-    const token = localStorageToken || globalToken;
-    const isLogin = (token === null) ? false : true;
-
+    const token = useSelector(state => state.login.token);
+    const isLogin = useSelector(state => !state.login.value);
     const [isLoading, setIsLoading] = useState(true);
     const nav = useNavigate();
     useEffect(() => {

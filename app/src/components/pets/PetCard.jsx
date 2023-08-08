@@ -2,7 +2,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
-import PetDetail from "./PetDetail";
 import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
 import {Favorite, FavoriteBorder} from "@mui/icons-material";
@@ -10,7 +9,6 @@ import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
 
 export default function PetCard({pet}) {
-    const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const dispatch = useDispatch();
     const handleClick = async (selectedPet) => {
         try {
@@ -37,7 +35,7 @@ export default function PetCard({pet}) {
             const petId = pet._id;
             dispatch(getDetailAsync(petId));
             localStorage.setItem('prevURL', window.location.href);
-            nav('/login')
+            nav('/login');
         }
     };
 

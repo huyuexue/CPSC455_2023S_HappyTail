@@ -39,9 +39,9 @@ Happy Tails is a project focused on creating a pet adoption platform. The websit
 
 
 ## Stretch
-1. Integrate website with external API: EmailJS, where user will be able to send email to pet owner once open the preview of pet information card.
+1. - [x] Integrate website with external API: EmailJS, where user will be able to send email to pet owner once open the preview of pet information card.
    
-2. Recommendation algorithm to show users pets based on his/her search history
+2. - [ ] Recommendation algorithm to show users pets based on his/her search history
 
 ## Sketches
 ![home_page](docs/resources/home_page.png)

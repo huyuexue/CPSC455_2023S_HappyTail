@@ -21,17 +21,17 @@ function App() {
             <ThemeProvider theme={GlobalTheme}>
                 <CssBaseline/>
                 <Routes>
-                    <Route path="/" element={<Layout/>}>
-                        <Route index element={<Home/>}/>
-                        <Route path="about" element={<About/>}/>
-                        <Route path="browse" element={<BrowsePage/>}/>
-                        <Route path="addNewPet" element={<AddNewPet/>}/>
-                        <Route path="account/details" element={<AccountDetailsPage/>}/>
-                        <Route path="login" element={<LoginPage/>}/>
-                        <Route path="signup" element={<SignUpPage/>}/>
-                        <Route path="dashboard" element={<Dashboard/>}/>
-                        <Route path="profile" element={<Profile/>}/>
-                        <Route path="updatePet" element={<UpdatePet/>}/>
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<Home />}/>
+                        <Route path="about" element={<About />}/>
+                        <Route path="browse" element={<BrowsePage />}/>
+                        <Route path="addNewPet" element={<AddNewPet />}/>
+                        <Route path="account/details" element={<AccountDetailsPage />}/>
+                        <Route path="login" element={<LoginPage />}/>
+                        <Route path="signup" element={<SignUpPage />}/>
+                        <Route path="dashboard" element={<Dashboard />}/>
+                        <Route path="profile" element={<Profile />}/>
+                        <Route path="updatePet" element={<UpdatePet />}/>
                     </Route>
                 </Routes>
             </ThemeProvider>

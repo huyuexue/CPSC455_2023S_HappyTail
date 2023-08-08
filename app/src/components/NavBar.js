@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
 import { useState } from "react";
@@ -16,10 +16,7 @@ export default function NavBar() {
         "About": "/about",
     };
 
-    const localStorageToken = localStorage.getItem('tokenId');
-    const globalToken = useSelector(state => state.login.token);
-    const token = localStorageToken || globalToken;
-    const isLogin = (token === null) ? false : true;
+    const isLogin = useSelector(state => !state.login.value);
 
     const rightButtonRoutes = {
         "Login": "/login",

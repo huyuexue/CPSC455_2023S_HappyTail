@@ -1,33 +1,46 @@
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import NavBar from "./NavBar";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
-import {useEffect, useState} from "react";
+import {useEffect, } from "react";
 import {TurnLogin, TurnLogout} from "../redux/login/reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getPetsAsync} from "../redux/pets/thunks";
+import {getFavoriteAsync, getUserPetsAsync} from "../redux/userPets/thunks";
+import {getUserAsync} from "../redux/login/thunks";
 export default function Layout() {
     const auth = getAuth();
-    const nav = useNavigate();
     const dispatch = useDispatch();
+    const finishStatusLoading = useSelector(state => state.login.finishStatusLoading);
 
-    const[token, setToken] = useState('');
     useEffect(()=>{
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                getToken(user).then(r => dispatch(TurnLogin(token))
-                );
+                getToken(user);
             } else {
                 localStorage.removeItem('tokenId');
-                dispatch(TurnLogout(token));
+                localStorage.removeItem('prevURL');
+                dispatch(TurnLogout());
             }
         });
-    },[])
+    },[finishStatusLoading])
 
     const getToken=async (user)=>{
         const token= await user.getIdToken();
-        console.log(token);
-        setToken(token);
+        dispatch(TurnLogin(token));
     }
 
+    const isLogIn = useSelector(state => !state.login.value);
+    const token = useSelector(state => state.login.token);
+    useEffect(()=>{
+        if (finishStatusLoading) {
+            dispatch(getPetsAsync());
+            if (isLogIn) {
+                dispatch(getUserAsync({token}));
+                dispatch(getUserPetsAsync({token}));
+                dispatch(getFavoriteAsync({token}));
+            }
+        }
+    },[finishStatusLoading]);
 
     return (
         <div className="App">
