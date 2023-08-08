@@ -232,6 +232,6 @@ export default function PetForm({originalData, update}) {
                         </Box>
                     </Box>
                 </Container> :
-                <h2>Please upgrade your account to access pet owner features!</h2>)
+                <h2 className="account_warning">Please upgrade your account to access pet owner features!</h2>)
     );
 }
