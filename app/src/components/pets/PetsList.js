@@ -23,9 +23,10 @@ export default function PetsList() {
             <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
                 {user.petOwner ?
                     <>
-                        <h2>My Pet Listing</h2>
-                        <div className="slideshow-container">
-                            <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"}>
+                        <h2 style={{color: '#597133', fontSize: '28px', fontWeight: 'bold'}}>My Pet Listing</h2>
+                        <div className="slideshow-container" >
+                            <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"} sx={{border: "2.5px solid #597133",
+        padding: 2, marginTop: 3, marginBottom: 5, borderRadius: '20px'}}>
                                 {Array.isArray(pets) && pets.length > 0 ?
                                     <>
                                         <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
@@ -38,7 +39,7 @@ export default function PetsList() {
                                         <p>No pets to display.</p>
                                     )}
                                 <Grid item xs={4}
-                                      display="flex" justifyContent="center" alignItems="center"
+                                    display="flex" justifyContent="center" alignItems="center"
                                 >
                                     <AddCircleOutlineRoundedIcon fontSize="large" color="primary" onClick={()=>navigate('/addNewPet')}/>
                                 </Grid>
@@ -48,9 +49,10 @@ export default function PetsList() {
                 }
             </Box>
             <Box sx={{height:'100%', marginX:"auto", width:'80%' , maxWidth:"1200px"}}>
-                <h2>Favorite Listing</h2>
+                <h2 style={{color: '#597133', fontSize: '28px', fontWeight: 'bold'}}>Favorite Listing</h2>
                 <div className="slideshow-container">
-                    <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"}>
+                    <Grid container spacing={1} justifyContent={isSmallScreen ? "center" : "flex-start"} sx={{border: "2.5px solid #597133",
+        padding: 2, marginTop: 3, marginBottom: 5, borderRadius: '20px'}}>
                         {Array.isArray(favoritePets) && favoritePets.length > 0 ?
                             <>
                                 <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
@@ -60,13 +62,12 @@ export default function PetsList() {
                                 </Grid>
                             </>
                             : (
-                                <p>No pets to display.</p>
+                                <p style={{color: '#597133', fontSize: '18px', paddingLeft: 30}}>No pets to display.</p>
                             )
                         }
                     </Grid>
                 </div>
             </Box>
         </Box>
-      );
-      
+    );  
 }

@@ -78,9 +78,11 @@ export default function LoginPage(){
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         display:{sm:"none", md:"block"},
-                        width:"50%"
+                        width:"50%",
+                        borderRadius: "30px",
+                        boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.5)",
                 }}/>
-                    <Grid item sx={{width:"50%"}}>
+                    <Grid item sx={{width:"50%", alignContent: 'center'}}>
                         <Box
                             sx={{
                             my: 8,
@@ -91,9 +93,11 @@ export default function LoginPage(){
 
                             }}
                         >
-                        <Typography component="h1" variant="h5" sx={{fontSize:30, fontWeight:"600"}}>
+
+                        <Typography component="h1" variant="h5" sx={{fontSize:30, fontWeight:"600", color: '#597133'}}>
                             Sign in
                         </Typography>
+
                         <Box sx={{ mt: 1, width:"100%"}}>
                             <TextField
                                 margin="normal"
@@ -133,9 +137,11 @@ export default function LoginPage(){
                             <Typography sx={{color:"red", fontSize: "12px", marginBottom:"12px"}}>
                                 {passwordErr}
                             </Typography>
-                            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2}} onClick={()=>handleSubmit()}>
-                                Sign In
-                            </Button>
+                            <Grid container justifyContent="center">
+                                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px', width: '200px'}} onClick={()=>handleSubmit()}>
+                                    Sign In
+                                </Button>
+                            </Grid>
                             <Grid container justifyContent="center"  sx={{width:"100%"}}>
                                 <Grid item xs={6} textAlign="center">
                                     <Link href="#/signup" variant="body2" >

@@ -5,7 +5,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 export default function InterestButton(props) {
     return (
         <LargeIconButton sx={{
-            boxShadow: 3
+            boxShadow: 3,
+            borderRadius: 8,
         }}>
             <Stack spacing={1}>
                 <FontAwesomeIcon icon={props.icon} size="5x"/>

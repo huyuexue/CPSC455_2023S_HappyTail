@@ -9,25 +9,37 @@ import {Link, useNavigate} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import BlogPosts from "../components/blog/BlogPosts";
 import {SectionButtons, Sections} from "../components/Sections";
+import {useState} from "react";
 
 
 export default function Home() {
     const nav = useNavigate();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
     return (
         <div className="Home">
             <Grid container spacing={0} alignItems="center">
                 <Grid item xs={0} sm={2}>
                 </Grid>
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={2} sx={{paddingTop: 5}}>
                     <PetsBrief/>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                    <Box display="flex" flexDirection="column" alignItems="center" sx={{paddingTop: 5}}>
+                    <Box display="flex" flexDirection="column" alignItems="center" sx={{marginTop: 5}}>
                         <Stack spacing={isSmallScreen ? 1 : 2} alignItems={isSmallScreen ? "center" : "flex-start"}
-                               justifyContent={isSmallScreen ? "center" : "flex-start"}
-                               direction={isSmallScreen ? "row" : "column"}>
+                            justifyContent={isSmallScreen ? "center" : "flex-start"}
+                            direction={isSmallScreen ? "row" : "column"}>
                             <ButtonBar/>
                             <Link to="/addNewPet" style={{textDecoration: 'none'}}>
                                 <LargeIconButton sx={{
@@ -35,7 +47,18 @@ export default function Home() {
                                     width: isSmallScreen ? "100%" : 446,
                                     flexGrow: isSmallScreen ? 1 : 0,
                                     textAlign: isSmallScreen ? "center" : "left",
-                                }}>
+                                    backgroundColor: "#bc6c25",
+                                    borderRadius: 8,
+                                    transition: 'transform 0.2s ease-in-out, opacity 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                                    transform: isHovered ? 'translateY(-10px)' : 'translateY(0)',
+                                    opacity: isHovered ? 0.8 : 1,
+                                    boxShadow: isHovered ? '0px 10px 20px rgba(0, 0, 0, 0.3)' : 'none',
+                                    '&:hover': {
+                                        opacity: 0.7,
+                                        transform: 'translateY(-10px)',
+                                        boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.3)'
+                                    }
+                                }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                                     <Stack spacing={1}>
                                         <FontAwesomeIcon icon={faHouseChimney} size={isSmallScreen ? "2x" : "5x"}/>
                                         <h3>Find a Home</h3>

@@ -1,6 +1,6 @@
 
 import {useSelector,  useDispatch} from "react-redux";
-import { Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,TextField, CircularProgress,Checkbox} from "@mui/material";
+import { Box, Button, FormControl, FormLabel, FormControlLabel, TextField, CircularProgress,Checkbox} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useState,  useEffect} from "react";
@@ -12,32 +12,31 @@ export default function Profile(){
     const loading = useSelector(state => state.login.isLoading);
     const user = useSelector(state => state.login.user);
     const[refresh, setRefresh]=useState(false);
-    const[update, setUpdate]=useState(false);
+    const[update]=useState(false);
     const isLogin = useSelector(state => state.login.value);
     const dispatch = useDispatch();
 
     const userupdate=async (values)=>{
         const res = await fetch("https://happytails-be-alpha.onrender.com/users/update/info", {
-          method: 'POST',
-          headers: { 
-                      'Content-Type': 'application/json',
-                      authorization: token},
-          body: JSON.stringify(values)
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            authorization: token},
+        body: JSON.stringify(values)
         });
-        const data=await res.json();
 
         if(res.status !== 200){
             console.log("update failed")
         }else{
-          setInputOnly(true);
+        setInputOnly(true);
         }
-       }
+    }
 
-       useEffect(() => {
+    useEffect(() => {
         if (!isLogin) {
             dispatch(getUserAsync({token}));
         }
-      }, [refresh]); 
+    }, [dispatch, isLogin, token, refresh]); 
 
 
 
@@ -48,19 +47,19 @@ export default function Profile(){
         }, 1000);
         setRefresh(true)
         window.location.reload();
-      };
+    };
 
     const checkoutSchema = yup.object().shape({
         firstName: yup.string().required("required"),
         lastName: yup.string().required("required"),
         number: yup
-          .string()
-          .required("required"),
+        .string()
+        .required("required"),
         address: yup.string().required("required"),
         city: yup.string().required("required"),
         postCode: yup.string().required("required"),
         petOwner: yup.boolean()
-      });
+    });
 
 
 
@@ -93,7 +92,7 @@ export default function Profile(){
                                                 InputLabelProps={{ shrink: true }}
                                                 name="firstName"
                                                 error={!!touched.firstName && !!errors.firstName}
-                                                sx={{ gridColumn: "span 2" }}
+                                                sx={{ gridColumn: "span 2"}}
                                                 InputProps={{readOnly: inputOnly,}}
                                             />
                                             <TextField
@@ -109,7 +108,7 @@ export default function Profile(){
                                                 sx={{ gridColumn: "span 2" }}
                                                 InputProps={{
                                                     readOnly: inputOnly,
-                                                  }}
+                                                }}
                                             />
                                             <TextField
                                                 fullWidth
@@ -124,7 +123,7 @@ export default function Profile(){
                                                 sx={{ gridColumn: "span 4" }}
                                                 InputProps={{
                                                     readOnly: inputOnly,
-                                                  }}
+                                                }}
                                             />
                                             <TextField
                                                 fullWidth
@@ -139,7 +138,7 @@ export default function Profile(){
                                                 sx={{ gridColumn: "span 4" }}
                                                 InputProps={{
                                                     readOnly: inputOnly,
-                                                  }}
+                                                }}
                                             />
                                             <TextField
                                                 fullWidth
@@ -154,7 +153,7 @@ export default function Profile(){
                                                 sx={{ gridColumn: "span 2" }}
                                                 InputProps={{
                                                     readOnly: inputOnly,
-                                                  }}
+                                                }}
                                             />
                                             <TextField
                                                 fullWidth
@@ -169,13 +168,13 @@ export default function Profile(){
                                                 sx={{ gridColumn: "span 2" }}
                                                 InputProps={{
                                                     readOnly: inputOnly,
-                                                  }}
+                                                }}
                                             />
                                         </Box>
 
                                         <Box display="flex" justifyContent="end" mt="20px">
                                             {inputOnly?(<>
-                                                <Button onClick={()=>setInputOnly(false)} color="primary" variant="contained">
+                                                <Button style={{borderRadius: '20px'}} onClick={()=>setInputOnly(false)} color="primary" variant="contained">
                                                     Edit Profile
                                                 </Button>
                                             </>):(
@@ -190,10 +189,10 @@ export default function Profile(){
                                                     </FormControl>  
                                                 </>)}                                                
                                                 <Box  sx={{width:"100%", display:"flex", justifyContent:"space-around"}}>
-                                                    <Button type="submit" color="primary" variant="contained">
+                                                    <Button style={{borderRadius: '20px'}} type="submit" color="primary" variant="contained">
                                                         Update Profile
                                                     </Button>
-                                                    <Button onClick={()=>{setInputOnly(true); setRefresh(true)}} color="secondary" variant="contained">
+                                                    <Button style={{borderRadius: '20px'}} onClick={()=>{setInputOnly(true); setRefresh(true)}} color="secondary" variant="contained">
                                                         Cancel Change
                                                     </Button>
                                                 </Box>

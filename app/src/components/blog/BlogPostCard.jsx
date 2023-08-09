@@ -10,7 +10,7 @@ export default function BlogPostCard({name, image, link, desc}) {
 
     return (
         <>
-            <Card className="blog-card" sx={{maxWidth: 345}}>
+            <Card className="blog-card" sx={{maxWidth: 345, borderRadius: "20px"}}>
                 <CardActionArea onClick={() => window.open(link)}>
                     <CardMedia
                         component="img"

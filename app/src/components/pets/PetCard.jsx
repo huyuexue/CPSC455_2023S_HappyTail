@@ -4,10 +4,11 @@ import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
 import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
-import {Favorite, FavoriteBorder, Share} from "@mui/icons-material";
+import {Favorite, FavoriteBorder} from "@mui/icons-material";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
 import ShareButton from "../ShareButton";
+import {useState} from "react";
 
 export default function PetCard({pet}) {
     const dispatch = useDispatch();
@@ -48,10 +49,34 @@ export default function PetCard({pet}) {
         }
     };
 
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
 
     return (
-        <>
-            <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}} >
+        <>  
+            {/* add hover effect to card */}
+            <Card className="pet-card" key={pet._id} sx={{
+                maxWidth: 345,
+                borderRadius: '20px',
+                transition: 'transform 0.2s ease-in-out, opacity 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                transform: isHovered ? 'translateY(-10px)' : 'translateY(0)',
+                opacity: isHovered ? 0.8 : 1,
+                boxShadow: isHovered ? '0px 10px 20px rgba(0, 0, 0, 0.3)' : 'none',
+                backgroundColor: '#f0f7e6',
+                '&:hover': {
+                    opacity: 0.7,
+                    transform: 'translateY(-10px)',
+                    boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.3)'
+                }
+            }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <CardActionArea onClick={handleClick}>
                     <CardMedia
                         component="img"
@@ -60,11 +85,11 @@ export default function PetCard({pet}) {
                         alt={pet.petName}
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" color="primary" sx={{ fontWeight: 'bold' }}>
                             {pet.petName}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {capitalizeEachWord(pet.breed)},
+                        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 'bold', fontSize: '14px' }}>
+                            {capitalizeEachWord(pet.breed)} • &nbsp;
                             {pet.age >= 12
                                 ? `${Math.floor(pet.age/12)} Year ${pet.age % 12} Month`
                                 : `${pet.age} Month`
