@@ -82,8 +82,6 @@ const getFavorite = async ({token}) => {
 };
 
 const updateFavorite = async ({token, petId}) => {
-    console.log(`${baseURL}/users/updateFavorites`);
-    console.log(petId);
     const res = await fetch(`${baseURL}/users/updateFavorites`, {
         method: 'POST',
         headers: {

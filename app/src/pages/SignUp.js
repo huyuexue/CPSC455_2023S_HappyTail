@@ -58,7 +58,6 @@ export default function SignUpPage(){
             
           createUserWithEmailAndPassword(auth, email,password)
           .then((userCredential) => {
-              console.log('firebase signUp sucess')
               const user = userCredential.user;
               user.getIdToken(true)
               .then((token)=>{

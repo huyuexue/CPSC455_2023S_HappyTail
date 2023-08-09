@@ -24,7 +24,6 @@ async function middleware(req, res, next)  {
   .then((decodedToken) => {
     req.uid = decodedToken.uid;
     req.email = decodedToken.email;
-   console.log("email is", decodedToken.email, "uid is ", decodedToken.uid)
     next()
   })
   .catch((error) => {
@@ -66,7 +65,6 @@ router.post('/updateFavorites', middleware, async (req, res, next) => {
     } else {
       favoriteList.splice(index, 1);
     }
-    console.log(favoriteList);
     user.favorite = favoriteList;
 
     await user.save();
@@ -133,12 +131,11 @@ router.delete('/:id', async (req, res, next) => {
 /* GET pets listing. */
 router.get('/info', middleware , async (req, res) => {
   try {
-    console.log(req.uid, req.email)
-  const userinfo = await User.findOne({uid: req.uid})
-  res.status(200).send({
-    success:true,
-    data:  userinfo
-  });
+    const userinfo = await User.findOne({uid: req.uid})
+    res.status(200).send({
+      success:true,
+      data:  userinfo
+    });
 }
   catch (error) {
     console.error('Error get  user:', error);
@@ -219,7 +216,7 @@ router.post('/signup', middleware, async (req, res) => {
       });
       return;
     }
-    console.log("the req email is",req.email)
+
     const newUser= new User({
         address:data.address,
         city:data.city,

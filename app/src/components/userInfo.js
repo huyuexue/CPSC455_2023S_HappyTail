@@ -28,7 +28,6 @@ export default function UserInfo({setNextStep}) {
             petOwner:petfinder
         }
 
-        console.log( "input is ", input)
         const res = await fetch("https://happytails-be-alpha.onrender.com/users/signup", {
             method: 'POST',
             headers: {
@@ -56,7 +55,7 @@ export default function UserInfo({setNextStep}) {
                 <RadioGroup
                     row
                     value={petfinder}
-                    onChange={(e)=>{setPetfinder(e.target.value); console.log(petfinder)}}>
+                    onChange={(e)=>{setPetfinder(e.target.value);}}>
                     <FormControlLabel value={false} control={<Radio />} label="I'm currently seeking a new home for a pet."  />
                     <FormControlLabel value={true} control={<Radio />} label="I'm interested in adopting a pet." />
                 </RadioGroup>

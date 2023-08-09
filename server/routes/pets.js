@@ -17,9 +17,7 @@ async function getAllPets() {
 
 router.get('/search', async(req, res) => {
   try {
-    console.log("in BE");
     const matchingPets = await petMatch(req.query);
-
     res.json({ matchingPets });
   } catch (error) {
     console.error(error);
@@ -37,7 +35,6 @@ async function middleware(req, res, next)  {
   .then((decodedToken) => {
     req.uid = decodedToken.uid;
     req.email = decodedToken.email;
-    console.log("email is", decodedToken.email, "uid is ", decodedToken.uid)
     next()
   })
   .catch((error) => {
@@ -97,7 +94,6 @@ router.get('/:id', async (req, res, next) => {
 router.get('/filter', async (req, res, next) => {
   try {
     const {age, breed, size, gender, coatLength } = req.query;
-    console.log("pass query");
     const query = {};
     if (age !== '') query.age = age;
     if (breed !== '') query.breed = breed;
