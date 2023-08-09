@@ -3,6 +3,7 @@ import {Grid,} from "@mui/material";
 import InterestButton from "./InterestButton";
 import {faCat, faDog,} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
+import { useState } from 'react';
 
 export default function ButtonBar() {
     const buttons = [
@@ -10,10 +11,20 @@ export default function ButtonBar() {
         {icon: faDog, label: "Dogs", link: "/browse?type=dog"},
     ]
 
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
     return (
         <Grid container spacing={2} sx={{
             padding: 2,
-            height: 1
+            height: 1,
         }}>
             {buttons.map((button) =>
                 <Grid item key={button.label}>

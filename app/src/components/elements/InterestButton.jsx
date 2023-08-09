@@ -6,7 +6,7 @@ export default function InterestButton(props) {
     return (
         <LargeIconButton sx={{
             boxShadow: 3,
-            backgroundColor: "#bc6c25"
+            borderRadius: 8,
         }}>
             <Stack spacing={1}>
                 <FontAwesomeIcon icon={props.icon} size="5x"/>

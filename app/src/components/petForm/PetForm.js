@@ -192,32 +192,45 @@ export default function PetForm({originalData, update}) {
                 <Container>
                     <Box sx={{width: '100%', paddingLeft: 10, paddingRight: 10, paddingTop: 5}}>
                         <Box sx={{width: '100%'}}>
-                            <Stepper nonLinear activeStep={activeStep}>
+
+                            <Stepper nonLinear activeStep={activeStep} sx={{border: "1.5px solid #597133", borderRadius: '25px', backgroundColor: '#dfedca'}}>
                                 {steps.map((label, index) => (
                                     <Step key={label} completed={completed[index]}>
-                                        <StepButton color="inherit" onClick={handleStep(index)}>
+                                        <StepButton color="inherit" onClick={handleStep(index)} sx={{height: '80px', paddingLeft: 2, paddingRight: 12}}>
                                             {label}
                                         </StepButton>
                                     </Step>
                                 ))}
                             </Stepper>
+
                             <div>
                                 <Fragment>
                                     {subForms[activeStep]}
+                                    
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                                         <Button
                                             color="inherit"
                                             disabled={activeStep === 0}
                                             onClick={handleBack}
-                                            sx={{mr: 1}}>
+                                            sx={{
+                                                mr: 1,
+                                                backgroundColor: '#bc6c25',
+                                                borderRadius: '15px',
+                                                padding: '10px',
+                                                color: 'white'
+                                            }}
+                                        >
                                             Back
                                         </Button>
                                         <Box sx={{flex: '1 1 auto'}}/>
-                                        <Button disabled={activeStep === 3} onClick={handleNext} sx={{mr: 1}}>
+                                        <Button disabled={activeStep === 3} onClick={handleNext} sx={{mr: 1, backgroundColor: '#bc6c25',
+                                        borderRadius: '15px',
+                                        padding: '10px',
+                                        color: 'white'}}>
                                             Next
                                         </Button>
-
                                     </Box>
+                                    
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                                         <Button onClick={() => handleSubmit()} sx={{mr: 1}}>
                                             {activeStep === 3
