@@ -1,7 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
-    Alert,
-    Snackbar,
     Tooltip,
     Card,
     CardActionArea,
@@ -14,11 +12,11 @@ import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
 import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
-import {Favorite, FavoriteBorder, Share} from "@mui/icons-material";
+import {Favorite, FavoriteBorder} from "@mui/icons-material";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
 import ShareButton from "../ShareButton";
-import {forwardRef, useState} from "react";
+import {useState} from "react";
 import * as PropTypes from "prop-types";
 
 export default function PetCard({pet}) {
@@ -29,7 +27,6 @@ export default function PetCard({pet}) {
     const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
     const petId = pet._id;
     const isOwner = idList.includes(petId);
-    const [shareOpen, setShareOpen] = useState(false);
     const token = useSelector(state => state.login.token);
     const favoritePets = useSelector(state => state.user.favorite);
     const nav = useNavigate();
@@ -52,20 +49,6 @@ export default function PetCard({pet}) {
     };
 
 
-    const handleShareButtonClick = () => {
-        navigator.clipboard.writeText(`happytails.tech/pets/${pet._id}`);
-        setShareOpen(true)
-    };
-
-    const handleShareClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setShareOpen(false);
-    };
-
-
     const handleFavoriteToggle = () => {
             if (token) {
                 dispatch(updateFavoriteAsync({token, petId}))
@@ -77,7 +60,6 @@ export default function PetCard({pet}) {
             }
         }
     ;
-
 
     return (
         <>
@@ -104,12 +86,8 @@ export default function PetCard({pet}) {
                 </CardActionArea>
                 <div className='btn-container'>
                     <CardActions>
-                        <ShareButton onClick={handleShareButtonClick} petId={pet._id} petName={pet.petName}/>
-                        <Snackbar open={shareOpen} onClose={handleShareClose} autoHideDuration={6000}>
-                            <Alert onClose={handleShareClose} severity="success" sx={{width: '100%'}}>
-                                Link copied to clipboard!
-                            </Alert>
-                        </Snackbar>
+                        <ShareButton petId={pet._id} petName={pet.petName}/>
+
                         {isOwner ?
                             (<></>) :
                             (<Tooltip title="Favorite" placement="top">

@@ -11,7 +11,6 @@ export default function BrowsePage() {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const paperHeight = isSmallScreen ? '40vh' : '100vh';
-    const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     return (
         <>
             <Grid container spacing={0} justifyContent={isSmallScreen ? "center" : "flex-start"}>
@@ -32,7 +31,6 @@ export default function BrowsePage() {
                     <PetResults></PetResults>
                 </Grid>
             </Grid>
-            {detailViewIsOpen && <PetDetail/>}
         </>
     )
 }

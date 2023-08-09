@@ -1,8 +1,6 @@
 import PetsBrief from "../components/pets/PetsBrief";
-import PetDetail from "../components/pets/PetDetail";
-import {useSelector} from "react-redux";
 import ButtonBar from "../components/elements/ButtonBar";
-import {Grid, Stack, useMediaQuery, Box, styled, ButtonBase} from "@mui/material";
+import {Grid, Stack, useMediaQuery, Box} from "@mui/material";
 import React from "react";
 import {faHouseChimney} from "@fortawesome/free-solid-svg-icons";
 import {LargeIconButton} from "../components/elements/LargeIconButton";
@@ -11,11 +9,9 @@ import {Link, useNavigate} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import BlogPosts from "../components/blog/BlogPosts";
 import {SectionButtons, Sections} from "../components/Sections";
-import Button from "@mui/material/Button";
 
 
 export default function Home() {
-    const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const nav = useNavigate();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -70,7 +66,6 @@ export default function Home() {
                     <BlogPosts></BlogPosts>
                 </Grid>
             </Grid>
-            {detailViewIsOpen && <PetDetail/>}
         </div>
     );
 }
