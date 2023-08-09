@@ -1,21 +1,32 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
+import {Tooltip , Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
-import PetDetail from "./PetDetail";
 import {capitalizeEachWord} from "../../utils";
 import IconButton from "@mui/material/IconButton";
-import {Favorite, FavoriteBorder} from "@mui/icons-material";
+import {Favorite, FavoriteBorder, Share} from "@mui/icons-material";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
+import ShareButton from "../ShareButton";
 
 export default function PetCard({pet}) {
-    const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const dispatch = useDispatch();
-    const handleClick = async (selectedPet) => {
+    const dashboard = (window.location.hash === "#/dashboard");
+    const browse = (window.location.hash === "#/browse");
+    const myPets = useSelector(state => state.user.list);
+    const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
+    const petId = pet._id;
+    const isOwner= idList.includes(petId);
+    const handleClick = async () => {
         try {
             await dispatch(getDetailAsync(pet._id));
-            dispatch(openDetailView());
+            if (dashboard && isOwner) {
+                dispatch(openDetailView());
+            } else if (browse) {
+                window.open(`#/pets/${pet._id}`);
+            } else {
+                nav(`/pets/${pet._id}`);
+            }
         } catch (error) {
             console.error("Error fetching pet details:", error);
         }
@@ -23,12 +34,9 @@ export default function PetCard({pet}) {
 
     const token = useSelector(state => state.login.token);
     const favoritePets = useSelector(state => state.user.favorite);
-    const myPets = useSelector(state => state.user.list);
-    const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
     const nav = useNavigate();
-    const petId = pet._id;
     const isFavorite = favoritePets.includes(petId);
-    const isOwner= idList.includes(petId);
+
 
     const handleFavoriteToggle = () => {
         if (token) {
@@ -37,9 +45,10 @@ export default function PetCard({pet}) {
             const petId = pet._id;
             dispatch(getDetailAsync(petId));
             localStorage.setItem('prevURL', window.location.href);
-            nav('/login')
+            nav('/login');
         }
     };
+
 
     return (
         <>
@@ -64,17 +73,20 @@ export default function PetCard({pet}) {
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-                <CardActions>
-                    <Button>
-                        Share
-                    </Button>
-                    {isOwner ?
-                        (<></>) :
-                        (<IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
-                            {isFavorite? <Favorite /> : <FavoriteBorder />}
-                        </IconButton>)
-                    }
-                </CardActions>
+                <div className='btn-container'>
+                    <CardActions>
+                        <ShareButton petId={pet._id} petName={pet.petName} />
+                        {isOwner ?
+                            (<></>) :
+                            (<Tooltip title="Favorite" placement="top">
+                                <IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
+                                    {isFavorite? <Favorite /> : <FavoriteBorder />}
+                                </IconButton>
+                            </Tooltip>)
+                        }
+
+                    </CardActions>
+                </div>
             </Card>
         </>
     )

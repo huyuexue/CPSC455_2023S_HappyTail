@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     type: Array,
     required: false
   },
-  petFinder: {
+  petOwner: {
     type: Boolean,
     required: false
   }

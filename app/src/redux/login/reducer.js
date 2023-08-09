@@ -7,29 +7,35 @@ const loginReducer = createSlice({
         user: {},
         value: true,
         token: null,
+        isLoading: false,
+        finishStatusLoading: false,
     },
     reducers: {
         TurnLogin: (state, action) => {
-          state.value =false;
-          state.token = action.payload
-        },
+            state.value =false;
+            state.token = action.payload;
+            state.finishStatusLoading = true;
+            },
         TurnLogout: (state) => {
-          state.value =true;
-          state.token = null;
-          state.user = {};
-          },
+            state.value =true;
+            state.token = null;
+            state.user = {};
+            state.finishStatusLoading = true;
+            },
     },
     extraReducers: (builder) => {
         builder
             .addCase(getUserAsync.pending, (state, action) => {
               console.log("waiting to get list by user");
+              state.isLoading = true;
             })
             .addCase(getUserAsync.fulfilled, (state, action) => {
               state.user = action.payload;
-              console.log(state.user);
+              state.isLoading = false;
             })
             .addCase(getUserAsync.rejected, (state, action) => {
               console.log("rejected to get list by user");
+              state.isLoading = false;
             });
     }
 })

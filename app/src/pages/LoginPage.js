@@ -20,10 +20,10 @@ import {signInWithEmailAndPassword, setPersistence, browserSessionPersistence} f
 import{auth} from "../firebase/firebaseConfig"
 import { useState } from 'react';
 import {getUserAsync} from "../redux/login/thunks";
-import {getDetailAsync} from "../redux/detail/thunks";
 import {openDetailView} from "../redux/detail/reducer";
+import {getFavoriteAsync, getUserPetsAsync} from "../redux/userPets/thunks";
 
-export default function LoginPage({}){
+export default function LoginPage(){
 
     const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false);
@@ -45,11 +45,10 @@ export default function LoginPage({}){
                         console.log('firebase signin sucess')
                         auth.currentUser.getIdToken(true)
                         .then((token) => {
-                            console.log("start to set token")
-                            localStorage.setItem('tokenId', token);
-                            //window.location.href="/#/dashboard"
                             dispatch(TurnLogin(token));
                             dispatch(getUserAsync({token}));
+                            dispatch(getUserPetsAsync({token}));
+                            dispatch(getFavoriteAsync({token}));
                             const prevUrl = localStorage.getItem('prevURL');
                             if (prevUrl) {
                                 //console.log(prevUrl);
