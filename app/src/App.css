@@ -258,11 +258,7 @@ input[type="number"] {
   background-color: #ccc;
   margin: 10px 0;
 }
-.closeButtonContainer {
-  position: absolute;
-  top: 1px;
-  right: 3px;
-}
+
 
 .messagePopup {
   position: fixed;

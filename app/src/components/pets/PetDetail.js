@@ -20,33 +20,35 @@ export default function PetDetail() {
     const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
     const isOwner = idList.includes(id);
 
+    const CloseButton = () => (<IconButton
+        onClick={() => {
+            if (isLogIn) {
+                dispatch(getUserPetsAsync({token}));
+                dispatch(clearSelectInUserPets());
+            }
+            dispatch(closeDetailViewFull());
+        }}
+    >
+        <Close/>
+    </IconButton>);
+
     return (
         <aside className="popupWindow">
-            <div className="closeButtonContainer">
-                <IconButton
-                    onClick={() => {
-                        if (isLogIn) {
-                            dispatch(getUserPetsAsync({token}));
-                            dispatch(clearSelectInUserPets());
-                        }
-                        dispatch(closeDetailViewFull());
-                    }}
-                >
-                    <Close/>
-                </IconButton>
-            </div>
             <>
-                <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center"
+                <Grid container spacing={0} direction="column" alignItems="center"
                       justifyContent="center">
                     <Grid item xs={12} sm={8}>
                         <Card sx={{
                             borderRadius: 5,
                             padding: 5,
                             paddingBottom: 0,
+                            paddingTop: 2,
                             maxHeight: "70vh",
-                            overflow: 'auto'
+                            overflow: 'auto',
                         }}>
-
+                            <Stack direction="row" justifyContent="flex-end" sx={{paddingBottom: 1}}>
+                                <CloseButton></CloseButton>
+                            </Stack>
                             <CardMedia
                                 component="img"
                                 height="350"
@@ -86,6 +88,7 @@ export default function PetDetail() {
                                     </>
 
                                     <div className='btn-container'>
+
                                         {isOwner ? (
                                             <>
                                                 <Tooltip title="Edit" placement="top">
