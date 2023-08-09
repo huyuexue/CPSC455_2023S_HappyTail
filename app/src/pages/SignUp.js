@@ -2,23 +2,17 @@ import {Container,} from '@mui/material';
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import TwitterIcon from '@mui/icons-material/Twitter';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import UserInfo from '../components/forms/UserInfo/userInfo';
 import { useDispatch } from "react-redux";
 
@@ -30,14 +24,9 @@ import {
 
 import{auth} from "../firebase/firebaseConfig"
 import { useState } from 'react';
-import { width } from '@mui/system';
-import { TurnLogin,  } from '../redux/login/reducer';
 
-const provider = new GoogleAuthProvider();
 
 export default function SignUpPage(){
-
-  const dispatch = useDispatch()
 
     const handleSubmit = (event) => {
       setEmailErr('')
@@ -47,7 +36,6 @@ export default function SignUpPage(){
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [remember, setRemember] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -74,7 +62,6 @@ export default function SignUpPage(){
               const user = userCredential.user;
               user.getIdToken(true)
               .then((token)=>{
-
                 localStorage.setItem('token', token)
                 setStep(1)
               })
@@ -152,7 +139,7 @@ export default function SignUpPage(){
                           Password
                       </InputLabel>
                       <OutlinedInput
-                          id="outlined-adornment-password"
+                          id="outlined-adornment-password1"
                           type={showPassword ? "text" : "password"}
                           endAdornment={
                           <InputAdornment position="end">
@@ -208,7 +195,7 @@ export default function SignUpPage(){
                     <Grid  sx={{width:"100%", display:'flex', justifyContent:'center'}} >
                       <Grid item xs={6} textAlign="center">
                         <Link href="app/src/pages#" variant="body2" >
-                          Already have a account? <br/> Login
+                          Already have an account? <br/> Login
                         </Link>
                       </Grid>
                     </Grid>

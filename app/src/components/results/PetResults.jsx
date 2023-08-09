@@ -8,7 +8,6 @@ import {PetPropertySelections} from "./FilterSelection";
 import * as React from "react";
 import {updateSpecies} from "../../redux/pets/reducer";
 import {useLocation} from "react-router-dom";
-import DataFetching from "../DataFetching";
 
 export default function PetResults() {
     const dispatch = useDispatch();
@@ -18,11 +17,12 @@ export default function PetResults() {
     const queryParams = new URLSearchParams(location.search);
     const initialSpecies = queryParams.get('type') || '';
     const [species, setSpecies] = React.useState(initialSpecies);
-    const {isLoading} = DataFetching();
+
+    const { isLoading } = useSelector(state => state.pets.isLoading);
 
     useEffect(() => {
         dispatch(updateSpecies(species));
-    }, [species, pets.length]);
+    }, [dispatch, species,pets.length]);
 
     const handleSpeciesChange = (event) => {
         setSpecies(event);

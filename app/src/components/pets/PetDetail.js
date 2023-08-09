@@ -1,52 +1,27 @@
-import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {closeDetailView, closeDetailViewFull} from "../../redux/detail/reducer";
-import {clearSelectInUserPets, getSelectedItem, openUpdateView} from "../../redux/userPets/reducer";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {clearSelectInUserPets, getSelectedItem} from "../../redux/userPets/reducer";
 import {deletePetAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
 import {capitalizeEachWord} from "../../utils";
-import {Button, Card, CardContent, CardMedia, Fab, Grid, SpeedDial, SpeedDialAction, Stack} from "@mui/material";
-import {FavoriteBorder, Share, Sort} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import {Close, DeleteOutline, Edit} from "@mui/icons-material";
+import {Card, CardContent, CardMedia, Grid,  Stack, Tooltip} from "@mui/material";
 
-export default function PetDetail({}) {
+
+export default function PetDetail() {
     const dispatch = useDispatch();
-    const auth = getAuth();
-    const [dashboard, setDashboard] = useState(false);
     const petInfo = useSelector(state => state.petDetail.selectItem);
-
+    const token = useSelector(state => state.login.token);
+    const isLogIn = useSelector(state => !state.login.value);
     const id = petInfo._id;
     const nav = useNavigate();
-
-
-
-    const [token, setToken] = useState("");
-
-    const getToken = async (user) => {
-        const token = await user.getIdToken()
-        setToken(token)
-    }
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                getToken(user)
-            } else {
-                // alert("login please")
-            }
-        });
-    }, []);
-
-    useEffect(() => {
-        console.log(window.location.hash)
-        if (window.location.hash == "#/dashboard") {
-            setDashboard(true)
-        }
-    }, []);
+    const myPets = useSelector(state => state.user.list);
+    const idList = (myPets.length !== 0) ? myPets.map(pet => pet._id) : [];
+    const isOwner = idList.includes(id);
 
     return (
         <>
-
             <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center" justifyContent="center">
                 <Grid item xs={12} sm={4}>
                     <Card sx={{
@@ -56,11 +31,24 @@ export default function PetDetail({}) {
                         maxHeight: "70vh",
                         overflow: 'auto'
                     }}>
+                        <div className="closeButtonContainer">
+                            <IconButton
+                                onClick={() => {
+                                    if (isLogIn) {
+                                        dispatch(getUserPetsAsync({token}));
+                                        dispatch(clearSelectInUserPets());
+                                    }
+                                    dispatch(closeDetailViewFull());
+                                }}
+                            >
+                                <Close/>
+                            </IconButton>
+                        </div>
                         <CardMedia
                             component="img"
-                            height="250"
+                            height="350"
                             image={petInfo.picture}
-                            alt="Not Available"
+                            alt={petInfo.petName}
                             sx={{borderRadius: 3}}
                         />
                         <CardContent>
@@ -81,45 +69,46 @@ export default function PetDetail({}) {
                                 <p>Pet Personality: {petInfo.petPersonality ?
                                     petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
                                 <p>Description:{petInfo.description}</p>
-                                <div className="horizontalLine"></div>
-                                <p>Name: {capitalizeEachWord(petInfo.contactName)}</p>
-                                <p>Email: {capitalizeEachWord(petInfo.contactEmail)}</p>
-                                <p>Phone Number: {capitalizeEachWord(petInfo.contactNumber)}</p>
+                                <>
+                                    {isOwner ?
+                                        <>
+                                            <div className="horizontalLine"></div>
+                                            <p>Name: {capitalizeEachWord(petInfo.contactName)}</p>
+                                            <p>Email: {capitalizeEachWord(petInfo.contactEmail)}</p>
+                                            <p>Phone Number: {capitalizeEachWord(petInfo.contactNumber)}</p>
+                                        </>
+                                        :
+                                        <></>
+                                    }
+                                </>
 
                                 <div className='btn-container'>
-                                    {dashboard ? (
+                                    {isOwner ? (
                                         <>
-                                            <button
-                                                className="updateItemButton"
-                                                onClick={() => {
-                                                    dispatch(getSelectedItem(petInfo));
-                                                    dispatch(closeDetailView());
-                                                    dispatch(openUpdateView());
-                                                }}>
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="deleteItemButton"
-                                                onClick={() => {
-                                                    dispatch(deletePetAsync({id, token}));
-                                                    dispatch(closeDetailViewFull());
-                                                    dispatch(clearSelectInUserPets());
-                                                }}>
-                                                Delete
-                                            </button>
+                                            <Tooltip title="Edit" placement="top">
+                                                <IconButton
+                                                    onClick={() => {
+                                                        dispatch(getSelectedItem(petInfo));
+                                                        dispatch(closeDetailView());
+                                                        nav('/updatePet');
+                                                    }}>
+                                                    <Edit/>
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Delete" placement="top">
+                                                <IconButton
+                                                    onClick={() => {
+                                                        dispatch(deletePetAsync({id, token}));
+                                                        dispatch(closeDetailViewFull());
+                                                        dispatch(clearSelectInUserPets());
+                                                    }}>
+                                                    <DeleteOutline/>
+                                                </IconButton>
+                                            </Tooltip>
                                         </>
                                     ) : (
                                         <></>
                                     )}
-                                    <Button
-                                        className="close"
-                                        onClick={() => {
-                                            dispatch(getUserPetsAsync({token}));
-                                            dispatch(closeDetailViewFull());
-                                            dispatch(clearSelectInUserPets());
-                                        }}>
-                                        Close
-                                    </Button>
                                 </div>
                             </Stack>
                         </CardContent>
