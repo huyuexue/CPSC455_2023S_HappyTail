@@ -117,7 +117,7 @@ export default function Dashboard({itemsList}){
                                     <form onSubmit={handleSubmit}>
                                         <Box
                                             display="grid"
-                                            gap="30px"
+                                            ga p="30px"
                                             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                                         >
                                             <TextField

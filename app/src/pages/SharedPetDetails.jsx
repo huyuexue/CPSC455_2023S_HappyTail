@@ -4,8 +4,8 @@ import {
     CardActionArea,
     CardActions,
     CardContent,
-    CardMedia,
-    Grid,
+    CardMedia, Fab,
+    Grid, SpeedDial, SpeedDialAction,
     Stack,
     Typography
 } from "@mui/material";
@@ -15,6 +15,7 @@ import {capitalizeEachWord} from "../utils";
 import {clearSelectInUserPets, getSelectedItem, openUpdateView} from "../redux/userPets/reducer";
 import {closeDetailView, closeDetailViewFull} from "../redux/detail/reducer";
 import {deletePetAsync, getUserPetsAsync} from "../redux/userPets/thunks";
+import {FavoriteBorder, Share, Sort} from "@mui/icons-material";
 
 async function fetchPet(id) {
     try {
@@ -32,6 +33,15 @@ async function fetchPet(id) {
 const SharedPetDetails = () => {
     const {id} = useParams();
     const [petInfo, setPetInfo] = useState(null);
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const petActions = [
+        {label: "Share", value: "Share", icon: <Share/>},
+        {label: "Shortlist", value: "Shortlist", icon: <FavoriteBorder/>},
+    ]
 
     useEffect(() => {
         async function getPetDetails() {
@@ -59,8 +69,33 @@ const SharedPetDetails = () => {
 
 
     return (
-        <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center" justifyContent="center">
-            <Grid item xs={12} sm={8}>
+        <>
+            <SpeedDial
+                ariaLabel="Sorting Options"
+                sx={{position: 'fixed', bottom: 45, right: 70}}
+                icon={
+                    <Fab variant="extended" color="primary" aria-label="add"
+                         sx={{minWidth: '130px', minHeight: '65px'}}>
+                        <Sort sx={{mr: 1}}/>
+                        Sort by
+                    </Fab>
+                }
+                onClose={handleClose}
+                onOpen={handleOpen}
+                open={open}
+            >
+                {petActions.map((action) => (
+                    <SpeedDialAction
+                        key={action.value}
+                        icon={action.icon}
+                        tooltipTitle={action.label}
+                        tooltipOpen
+                        onClick={handleClose}
+                    />
+                ))}
+            </SpeedDial>
+            <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center" justifyContent="center">
+                <Grid item xs={12} sm={8}>
                     <h1>{petInfo.petName}</h1>
 
                     <CardMedia
@@ -120,8 +155,11 @@ const SharedPetDetails = () => {
                             {/*</div>*/}
                         </Stack>
                     </CardContent>
+                </Grid>
             </Grid>
-        </Grid>
+
+        </>
+
         // <div className="shared-pet-details">
         //     <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}}>
         //         <Typography gutterBottom variant="h4" component="div">

@@ -1,5 +1,15 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
+import {
+    Alert,
+    Button,
+    Card,
+    CardActionArea,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Snackbar,
+    Typography
+} from "@mui/material";
 import {openDetailView} from "../../redux/detail/reducer";
 import {getDetailAsync} from "../../redux/detail/thunks";
 import PetDetail from "./PetDetail";
@@ -8,19 +18,12 @@ import IconButton from "@mui/material/IconButton";
 import {Favorite, FavoriteBorder} from "@mui/icons-material";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {useNavigate} from "react-router-dom";
-
+import {forwardRef, useState} from "react";
+import * as PropTypes from "prop-types";
 
 export default function PetCard({pet}) {
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const dispatch = useDispatch();
-    const handleClick = async (selectedPet) => {
-        try {
-            await dispatch(getDetailAsync(pet._id));
-            dispatch(openDetailView());
-        } catch (error) {
-            console.error("Error fetching pet details:", error);
-        }
-    };
 
     const token = useSelector(state => state.login.token);
     const favoritePets = useSelector(state => state.user.favorite);
@@ -30,10 +33,30 @@ export default function PetCard({pet}) {
     const petId = pet._id;
     const isFavorite = favoritePets.includes(petId);
     const isOwner = idList.includes(petId);
+    const [shareOpen, setShareOpen] = useState(false);
+
+
+    const handleShareClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setShareOpen(false);
+    };
+
+
+    const handleClick = async (selectedPet) => {
+        try {
+            nav(`/pets/${pet._id}`);
+        } catch (error) {
+            console.error("Error fetching pet details:", error);
+        }
+    };
+
 
     const handleFavoriteToggle = () => {
             if (token) {
-                dispatch(updateFavoriteAsync({token, petId}))
+                dispatch(updateFavoriteAsync({token, petId}));
             } else {
                 const petId = pet._id;
                 dispatch(getDetailAsync(petId));
@@ -44,20 +67,20 @@ export default function PetCard({pet}) {
     ;
 
     const handleShareButtonClick = () => {
-        console.log('click')
-        nav(`/pets/${pet._id}`);
-      };
-    
+        navigator.clipboard.writeText(`happytails.tech/pets/${pet._id}`);
+        setShareOpen(true)
+    };
+
 
     return (
         <>
-            <Card className="pet-card" key={pet._id} sx={{maxWidth: 345}}>
+            <Card className="pet-card" key={pet._id} sx={{maxWidth: 345, zIndex: -1}}>
                 <CardActionArea onClick={handleClick}>
                     <CardMedia
                         component="img"
                         height="250"
                         image={pet.picture}
-                        alt={pet.petName}t
+                        alt={pet.petName}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -73,9 +96,15 @@ export default function PetCard({pet}) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button onClick={handleShareButtonClick}>
+                    <Button onClick={handleShareButtonClick} >
                         Share
                     </Button>
+
+                    <Snackbar open={shareOpen} onClose={handleShareClose} autoHideDuration={6000}>
+                        <Alert onClose={handleShareClose} severity="success" sx={{width: '100%'}}>
+                            Link copied to clipboard!
+                        </Alert>
+                    </Snackbar>
                     {isOwner ?
                         (<></>) :
                         (<IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites"

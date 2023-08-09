@@ -6,7 +6,8 @@ import {clearSelectInUserPets, getSelectedItem, openUpdateView} from "../../redu
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {deletePetAsync, getUserPetsAsync} from "../../redux/userPets/thunks";
 import {capitalizeEachWord} from "../../utils";
-import {Button, Card, CardContent, CardMedia, Grid, Stack} from "@mui/material";
+import {Button, Card, CardContent, CardMedia, Fab, Grid, SpeedDial, SpeedDialAction, Stack} from "@mui/material";
+import {FavoriteBorder, Share, Sort} from "@mui/icons-material";
 
 export default function PetDetail({}) {
     const dispatch = useDispatch();
@@ -16,6 +17,8 @@ export default function PetDetail({}) {
 
     const id = petInfo._id;
     const nav = useNavigate();
+
+
 
     const [token, setToken] = useState("");
 
@@ -42,7 +45,8 @@ export default function PetDetail({}) {
     }, []);
 
     return (
-        <aside className="popupWindow">
+        <>
+
             <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center" justifyContent="center">
                 <Grid item xs={12} sm={4}>
                     <Card sx={{
@@ -122,6 +126,8 @@ export default function PetDetail({}) {
                     </Card>
                 </Grid>
             </Grid>
-        </aside>
+
+        </>
+
     )
 }
