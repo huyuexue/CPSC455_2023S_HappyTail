@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3001';
+const baseURL = 'https://happytails-be-alpha.onrender.com';
 const getPets = async () => {
     const res = await fetch(`${baseURL}/pets/all`, {
         method: 'GET'

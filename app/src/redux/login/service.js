@@ -1,5 +1,4 @@
-//const baseURL = 'http://happytails.tech:3001';
-const baseURL = 'http://localhost:3001';
+const baseURL = 'https://happytails-be-alpha.onrender.com';
 
 
 const getUser = async ({token}) => {

@@ -17,7 +17,7 @@ export default function Profile(){
     const dispatch = useDispatch();
 
     const userupdate=async (values)=>{
-        const res = await fetch("http://localhost:3001/users/update/info", {
+        const res = await fetch("https://happytails-be-alpha.onrender.com/users/update/info", {
           method: 'POST',
           headers: { 
                       'Content-Type': 'application/json',

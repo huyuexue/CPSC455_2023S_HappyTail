@@ -4,7 +4,7 @@ import {Tooltip} from "@mui/material";
 
 export default function ShareButton ({ petId, petName }) {
     const handleShareClicked = () => {
-        const baseURL = `http://localhost:3000/#`;
+        const baseURL = `https://happytails-alpha.onrender.com/#`;
         const url = `${baseURL}/pets/${petId}`;
         navigator.clipboard.writeText(url)
             .then(() => {

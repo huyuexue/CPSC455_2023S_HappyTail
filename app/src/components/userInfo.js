@@ -29,7 +29,7 @@ export default function UserInfo({setNextStep}) {
         }
 
         console.log( "input is ", input)
-        const res = await fetch("http://localhost:3001/users/signup", {
+        const res = await fetch("https://happytails-be-alpha.onrender.com/users/signup", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
