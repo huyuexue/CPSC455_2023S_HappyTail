@@ -1,36 +1,35 @@
 import {Share} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
-import {Tooltip} from "@mui/material";
+import {Alert, Snackbar, Tooltip} from "@mui/material";
+import {useState} from "react";
 
-export default function ShareButton ({ petId, petName }) {
-    const handleShareClicked = () => {
-        //TODO: add deployed FE base URL
-        const baseURL = `http://localhost:3000/#`;
-        const url = `${baseURL}/pets/${petId}`;
-        navigator.clipboard.writeText(url)
-            .then(() => {
-                showCopyTooltip();
-            })
-            .catch((error) => {
-                console.error("Error copying URL to clipboard:", error);
-            });
+export default function ShareButton({petId, petName}) {
+    const [shareOpen, setShareOpen] = useState(false);
+
+    const handleShareButtonClick = () => {
+        navigator.clipboard.writeText(`happytails.tech/pets/${petId}`);
+        setShareOpen(true)
     };
 
-    const showCopyTooltip = () => {
-        const tooltip = document.createElement('div');
-        tooltip.textContent = `Link of ${petName} copied! Feel free to share it!`;
-        tooltip.classList.add('copy-tooltip');
-        document.body.appendChild(tooltip);
-        setTimeout(() => {
-            tooltip.remove();
-        }, 2000); // Remove the tooltip after 2 seconds
+    const handleShareClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setShareOpen(false);
     };
 
     return (
-        <Tooltip title="Share" placement="top">
-            <IconButton onClick={handleShareClicked}>
-                <Share />
+        <>
+            <IconButton onClick={handleShareButtonClick}>
+                <Share/>
             </IconButton>
-        </Tooltip>
+            <Snackbar open={shareOpen} onClose={handleShareClose} autoHideDuration={6000}>
+                <Alert onClose={handleShareClose} severity="success" sx={{width: '100%'}}>
+                    Link to {petName} copied to clipboard!
+                </Alert>
+            </Snackbar>
+        </>
+
     );
 }

@@ -35,7 +35,13 @@ export default function PetResults() {
                 <p>Loading...</p>
             ) : (
                 <>
-                    <Box sx={{ width: "150px", marginLeft: "10px", marginRight: "10px" , marginTop: "10px", marginBottom: "10px"  }}>
+                    <Box sx={{
+                        width: "150px",
+                        marginLeft: "10px",
+                        marginRight: "10px",
+                        marginTop: "10px",
+                        marginBottom: "10px"
+                    }}>
                         <PetPropertySelections
                             label="Species"
                             value={species}
@@ -44,11 +50,13 @@ export default function PetResults() {
                         />
                     </Box>
                     {/* render pet card view*/}
-                    <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
-                        {petsResult.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
-                            <PetCard key={pet.id} pet={pet} ></PetCard>
-                        </Grid>))}
-                    </Grid>
+                    <Box sx={{maxHeight: "65vh"}}>
+                        <Grid container spacing={3} sx={{padding: 2}} direction={{xs: 'column', md: 'row'}}>
+                            {petsResult.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
+                                <PetCard key={pet.id} pet={pet}></PetCard>
+                            </Grid>))}
+                        </Grid>
+                    </Box>
                 </>
             )}
         </>
