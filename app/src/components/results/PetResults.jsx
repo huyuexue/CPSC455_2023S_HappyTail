@@ -43,7 +43,6 @@ export default function PetResults() {
                             onChange={handleSpeciesChange}
                         />
                     </Box>
-                    {/* render pet card view*/}
                     <Grid container spacing={3} sx={{ padding: 2 }} direction={{ xs: 'column', md: 'row' }}>
                         {petsResult.map(pet => (<Grid item xs={4} key={`${pet._id}-${pet.species}`}>
                             <PetCard key={pet.id} pet={pet} ></PetCard>

@@ -32,7 +32,6 @@ const dbName = 'happytails';
 async function connectDB(){
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, dbName });
     const db = mongoose.connection;
-    //console.log(db);
     return db;
 }
 app.use(logger('dev'));

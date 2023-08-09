@@ -37,14 +37,13 @@ export default function PetCard({pet}) {
     const nav = useNavigate();
     const isFavorite = favoritePets.includes(petId);
 
-
     const handleFavoriteToggle = () => {
         if (token) {
             dispatch(updateFavoriteAsync({token, petId}))
         } else{
             const petId = pet._id;
             dispatch(getDetailAsync(petId));
-            localStorage.setItem('prevURL', window.location.href);
+            localStorage.setItem('prevURL', `/pets/${petId}`);
             nav('/login');
         }
     };

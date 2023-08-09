@@ -1,7 +1,4 @@
-// https://mui.com/material-ui/react-button/#complex-button
-
 import {ButtonBase, styled} from "@mui/material";
-
 export const LargeIconButton = styled(ButtonBase)(({theme}) => ({
     position: 'relative',
     height: 200,

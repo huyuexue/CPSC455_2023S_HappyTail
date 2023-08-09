@@ -51,16 +51,11 @@ export default function LoginPage(){
                             dispatch(getFavoriteAsync({token}));
                             const prevUrl = localStorage.getItem('prevURL');
                             if (prevUrl) {
-                                //console.log(prevUrl);
                                 localStorage.removeItem('prevURL');
                                 if (prevUrl.indexOf('login') >=0 ){
                                     nav('/addNewPet');
                                 } else {
-                                    dispatch(openDetailView());
-                                    const index = prevUrl.indexOf('#');
-                                    const url = prevUrl.slice(index+1);
-                                    //console.log(url);
-                                    nav(url);
+                                    nav(prevUrl);
                                 }
                             } else {
                                 nav("/dashboard");

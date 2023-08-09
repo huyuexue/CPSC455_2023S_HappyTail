@@ -1,8 +1,6 @@
 import ImageUpload from "../imageUpload/upload";
 import React, {useState} from "react";
 import {Grid} from "@mui/material";
-import {PetPropertySelections} from "../results/FilterSelection";
-import {ageItems, furTypeItems, genderItems, sizeItems} from "../results/options";
 
 export default function BasicInfo({formData, handleChange, update}) {
 
@@ -105,7 +103,6 @@ export default function BasicInfo({formData, handleChange, update}) {
             </Grid>
             <span className="required-field" style={{ fontStyle: 'italic', fontSize: '14px', color: 'grey' }}> Requires Fields.</span>
         </Grid>
-
 
     )
 }

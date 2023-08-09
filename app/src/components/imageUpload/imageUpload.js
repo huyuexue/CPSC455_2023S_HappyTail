@@ -4,7 +4,6 @@ import AWS from 'aws-sdk';
 const awsKey = process.env.REACT_APP_ACCESS_KEY_ID;
 const awsSecretKey = process.env.REACT_APP_SECRET_ACCESS_KEY;
 
-//const s3 = new AWS.S3();
 const s3 = new AWS.S3({
     accessKeyId: awsKey,
     secretAccessKey: awsSecretKey,
@@ -30,7 +29,7 @@ async function uploadImageToS3(file) {
         console.error('Error uploading image:', error);
         throw new Error('Image upload failed');
     }
-  }
-  
-  export default uploadImageToS3;
+  };
+
+export default uploadImageToS3;
   

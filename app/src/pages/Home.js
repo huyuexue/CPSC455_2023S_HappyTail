@@ -1,6 +1,4 @@
 import PetsBrief from "../components/pets/PetsBrief";
-import PetDetail from "../components/pets/PetDetail";
-import {useSelector} from "react-redux";
 import ButtonBar from "../components/elements/ButtonBar";
 import {Grid, Stack, useMediaQuery, Box} from "@mui/material";
 import React from "react";
@@ -12,7 +10,6 @@ import {useTheme} from "@mui/material/styles";
 
 
 export default function Home() {
-    const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     return (
@@ -42,7 +39,6 @@ export default function Home() {
                     </Box>
                 </Grid>
             </Grid>
-            {detailViewIsOpen && <PetDetail/>}
         </div>
     );
 }

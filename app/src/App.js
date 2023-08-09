@@ -5,7 +5,6 @@ import Dashboard from './pages/Dashboard';
 import About from "./pages/About";
 import Layout from "./components/Layout";
 import BrowsePage from "./pages/BrowsePage";
-import AccountDetailsPage from "./pages/AccountDetails";
 import SignUpPage from './pages/SignUp';
 import LoginPage from './pages/LoginPage';
 import AddNewPet from "./pages/AddNewPet";
@@ -27,7 +26,6 @@ function App() {
                         <Route path="about" element={<About />}/>
                         <Route path="browse" element={<BrowsePage />}/>
                         <Route path="addNewPet" element={<AddNewPet />}/>
-                        <Route path="account/details" element={<AccountDetailsPage />}/>
                         <Route path="login" element={<LoginPage />}/>
                         <Route path="signup" element={<SignUpPage />}/>
                         <Route path="dashboard" element={<Dashboard />}/>

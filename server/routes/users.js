@@ -36,10 +36,9 @@ async function AuthCheck(req, res, next)  {
   if (req.uid==undefined) {
     return res.status(403).json({ error: 'invaid token' });
   }
-  const petId = req.params.id; // Get the pet ID from the route parameter
+  const petId = req.params.id;
   const pet = await Pet.findById(petId);
   if (!pet) {
-    // If the pet is not found, return an appropriate response
     return res.status(404).json({ error: 'Pet not found' });
   }
   if (pet.uid==req.uid){
@@ -234,14 +233,14 @@ router.post('/signup', middleware, async (req, res) => {
     const savedUser = await newUser.save(); // Save the new pet to the database
     res.status(200).send({
       success:true,
-    }); // Respond with the saved pet as JSON
+    });
     return;
   } catch (error) {
     console.error('Error adding a pet:', error);
     res.status(500).send({
       success:false,
       message: error
-    }); // Respond with the saved pet as JSON
+    });
     return;
   }
 });
@@ -265,8 +264,6 @@ router.patch('/:id', async (req, res, next) => {
     res.status(500).json({ error: 'Failed to update a user' });
   }
 });
-
-
 
 
 module.exports = router;

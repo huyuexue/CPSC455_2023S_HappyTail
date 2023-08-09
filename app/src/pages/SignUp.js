@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import UserInfo from '../components/forms/UserInfo/userInfo';
+import UserInfo from '../components/userInfo';
 import { useDispatch } from "react-redux";
 
 

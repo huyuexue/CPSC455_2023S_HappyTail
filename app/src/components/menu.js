@@ -63,10 +63,6 @@ export default function UserMenu() {
                     nav("/profile");
                     setAnchorEl(null);
                 }}>Profile</MenuItem>
-                <MenuItem onClick={() => {
-                    nav("/account/details");
-                    setAnchorEl(null);
-                }}>Account</MenuItem>
                 <MenuItem onClick={() => signout()}>Logout</MenuItem>
             </Menu>
         </div>

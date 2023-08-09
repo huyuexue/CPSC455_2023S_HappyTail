@@ -4,7 +4,6 @@ import {Tooltip} from "@mui/material";
 
 export default function ShareButton ({ petId, petName }) {
     const handleShareClicked = () => {
-        //TODO: add deployed FE base URL
         const baseURL = `http://localhost:3000/#`;
         const url = `${baseURL}/pets/${petId}`;
         navigator.clipboard.writeText(url)
@@ -23,7 +22,7 @@ export default function ShareButton ({ petId, petName }) {
         document.body.appendChild(tooltip);
         setTimeout(() => {
             tooltip.remove();
-        }, 2000); // Remove the tooltip after 2 seconds
+        }, 2000);
     };
 
     return (

@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import UserMenu from "./menu";
 import {useSelector} from "react-redux";
 
-
-
 export default function NavBar() {
     const buttonRoutes = {
         "Home": "/",

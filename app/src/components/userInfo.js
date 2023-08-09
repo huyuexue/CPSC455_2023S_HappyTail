@@ -1,13 +1,11 @@
 import * as React from "react";
-import {Input, Stack, TextField,Button, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio} from "@mui/material";
+import { Stack, TextField,Button, Typography, FormControl, RadioGroup, FormControlLabel, Radio} from "@mui/material";
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { TurnLogin,  } from "../../../redux/login/reducer"
 import { useDispatch, useSelector } from "react-redux";
-import { getUserAsync } from "../../../redux/login/thunks";
+import { getUserAsync } from "../redux/login/thunks";
 export default function UserInfo({setNextStep}) {
     const token = useSelector(state => state.login.token);
-    const isLogin = useSelector(state => !state.login.value);
     const [firstName, setFirstName] = useState('');
     const [lastName, setlastName] = useState('');
     const [number, setNumber] = useState('');
@@ -32,14 +30,13 @@ export default function UserInfo({setNextStep}) {
 
         console.log( "input is ", input)
         const res = await fetch("http://localhost:3001/users/signup", {
-          method: 'POST',
-          headers: { 
-                      'Content-Type': 'application/json',
-                      authorization: token},
-          body: JSON.stringify(input)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: token},
+            body: JSON.stringify(input)
         });
         const data=await res.json();
-        console.log(data)
 
         if(res.status!=200){
             setError(data?.message)
@@ -54,14 +51,12 @@ export default function UserInfo({setNextStep}) {
     }
 
     return (
-
         <Stack spacing={4}>
             <FormControl sx={{ display:"flex", justifyContent:"center", alignItems:"center"}}>
                 <RadioGroup
                     row
                     value={petfinder}
-                    onChange={(e)=>{setPetfinder(e.target.value); console.log(petfinder)}}
-                >
+                    onChange={(e)=>{setPetfinder(e.target.value); console.log(petfinder)}}>
                     <FormControlLabel value={false} control={<Radio />} label="I'm currently seeking a new home for a pet."  />
                     <FormControlLabel value={true} control={<Radio />} label="I'm interested in adopting a pet." />
                 </RadioGroup>
@@ -71,44 +66,35 @@ export default function UserInfo({setNextStep}) {
                 label="First Name"
                 value={firstName}
                 onChange={e =>setFirstName(e.target.value)}
-                variant="filled"
-            />
+                variant="filled"/>
             <TextField
                 label="Last Name"
                 value={lastName}
-                onChange={e =>setlastName(e.target.value)}
-            />
-
+                onChange={e =>setlastName(e.target.value)}/>
             <TextField
                 label="Number"
                 value={number}
-                onChange={e =>setNumber(e.target.value)}
-            />
+                onChange={e =>setNumber(e.target.value)}/>
             <TextField
                 label="Postal Code"
                 value={postalCode}
-                onChange={e =>setPostalCode(e.target.value)}
-            />
+                onChange={e =>setPostalCode(e.target.value)}/>
             <TextField
                 label="Address"
                 value={address}
-                onChange={e =>setAddress(e.target.value)}
-            />
+                onChange={e =>setAddress(e.target.value)}/>
             <TextField
                 label="City"
                 value={city}
                 onChange={e =>setCity(e.target.value)}
             />
-
-
-                                <Button
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2}}
-                      onClick={()=>{ submit()}}
-                    >
-                      next step
-                    </Button>
+            <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2}}
+                onClick={()=>{ submit()}}>
+                next step
+            </Button>
 
             <Typography sx={{color:"red", fontSize: "12px", marginY:"12px"}}>
                   {error}

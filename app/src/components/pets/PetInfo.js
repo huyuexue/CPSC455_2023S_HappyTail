@@ -1,6 +1,5 @@
 import IconButton from "@mui/material/IconButton";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
-import {closeDetailView, } from "../../redux/detail/reducer";
 import {Favorite, FavoriteBorder, MailOutline, Share} from "@mui/icons-material";
 import {CardMedia, Tooltip} from "@mui/material";
 import {capitalizeEachWord} from "../../utils";
@@ -35,8 +34,7 @@ export default function PetInfo() {
         if (isLogIn) {
             setShowMessageInput(true)
         } else {
-            dispatch(closeDetailView());
-            localStorage.setItem('prevURL', window.location.href);
+            localStorage.setItem('prevURL', `/pets/${petId}`);
             nav('/login');
         }
     };
@@ -46,8 +44,7 @@ export default function PetInfo() {
             console.log("in PetDetail and is log in, token: " + token);
             dispatch(updateFavoriteAsync({token, petId}))
         } else {
-            dispatch(closeDetailView());
-            localStorage.setItem('prevURL', window.location.href);
+            localStorage.setItem('prevURL', `/pets/${petId}`);
             nav('/login');
         }
     };
