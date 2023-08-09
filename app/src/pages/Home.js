@@ -20,14 +20,14 @@ export default function Home() {
             <Grid container spacing={0} alignItems="center">
                 <Grid item xs={0} sm={2}>
                 </Grid>
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={2} sx={{paddingTop: 5}}>
                     <PetsBrief/>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                    <Box display="flex" flexDirection="column" alignItems="center" sx={{paddingTop: 5}}>
+                    <Box display="flex" flexDirection="column" alignItems="center" sx={{marginTop: 5}}>
                         <Stack spacing={isSmallScreen ? 1 : 2} alignItems={isSmallScreen ? "center" : "flex-start"}
-                               justifyContent={isSmallScreen ? "center" : "flex-start"}
-                               direction={isSmallScreen ? "row" : "column"}>
+                            justifyContent={isSmallScreen ? "center" : "flex-start"}
+                            direction={isSmallScreen ? "row" : "column"}>
                             <ButtonBar/>
                             <Link to="/addNewPet" style={{textDecoration: 'none'}}>
                                 <LargeIconButton sx={{
@@ -35,6 +35,7 @@ export default function Home() {
                                     width: isSmallScreen ? "100%" : 446,
                                     flexGrow: isSmallScreen ? 1 : 0,
                                     textAlign: isSmallScreen ? "center" : "left",
+                                    backgroundColor: "#bc6c25"
                                 }}>
                                     <Stack spacing={1}>
                                         <FontAwesomeIcon icon={faHouseChimney} size={isSmallScreen ? "2x" : "5x"}/>

@@ -26,6 +26,7 @@ export function PetPropertySelections(props) {
                     inputProps={{
                         'aria-label': label,
                     }}
+                    sx={{ borderRadius: '20px' }} // added border radius
                 />
             ) : (
                 <Select
@@ -34,6 +35,7 @@ export function PetPropertySelections(props) {
                     value={value}
                     label={label}
                     onChange={handleChange}
+                    sx={{ borderRadius: '20px' }} // added border radius
                 >
                     {items.map((item) => (
                         <MenuItem key={item.value} value={item.value}>

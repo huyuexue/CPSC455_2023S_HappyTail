@@ -59,7 +59,7 @@ export function SelectPetProperties() {
 
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2}}>
             <PetPropertySelections
                 label="Age"
                 value={age}
@@ -89,7 +89,8 @@ export function SelectPetProperties() {
                 items={furTypeItems}
                 onChange={handleFurTypeChange}
             />
-            <Button variant="contained" onClick={handleApplyFilters}>Apply Filters</Button>
+            <br/>
+            <Button variant="contained" onClick={handleApplyFilters} sx={{borderRadius: '20px', width: '200px', height: "50px"}}>Apply Filters</Button>
         </Box>
     );
 }

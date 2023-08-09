@@ -38,7 +38,7 @@ export default function PetsList() {
                                         <p>No pets to display.</p>
                                     )}
                                 <Grid item xs={4}
-                                      display="flex" justifyContent="center" alignItems="center"
+                                    display="flex" justifyContent="center" alignItems="center"
                                 >
                                     <AddCircleOutlineRoundedIcon fontSize="large" color="primary" onClick={()=>navigate('/addNewPet')}/>
                                 </Grid>
@@ -67,6 +67,5 @@ export default function PetsList() {
                 </div>
             </Box>
         </Box>
-      );
-      
+    );  
 }

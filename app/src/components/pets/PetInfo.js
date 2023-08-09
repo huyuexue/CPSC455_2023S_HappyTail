@@ -75,33 +75,34 @@ export default function PetInfo() {
     return (
             <>
                 <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center" justifyContent="center">
-                    <Grid item xs={12} sm={8}>
-                        <h1>{petInfo.petName}</h1>
+                    <Grid item xs={12} sm={8} sx={{ border: '3px solid #597133', padding: '30px', margin: '30px', borderRadius: '20px' }}>
+                        <h1 style={{ color: '#597133', fontSize: '50px' }}>{petInfo.petName}</h1>
 
                         <CardMedia
                             component="img"
                             height="400"
                             image={petInfo.picture}
                             alt="Not Available"
-                            sx={{borderRadius: 3}}
+                            sx={{borderRadius: 10}}
                         />
                         <CardContent>
                             <Stack sx={{}}>
-                                <p>Breed: {capitalizeEachWord(petInfo.breed)}</p>
-                                <p>Gender: {capitalizeEachWord(petInfo.gender)}</p>
-                                <p>Age: {petInfo.age >= 12
+                                <h1><span>About</span></h1>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Breed</span><br></br>{capitalizeEachWord(petInfo.breed)}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Gender</span><br></br> {capitalizeEachWord(petInfo.gender)}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Age</span><br></br> {petInfo.age >= 12
                                     ? `${Math.floor(petInfo.age / 12)} Year ${petInfo.age % 12} Month`
                                     : `${petInfo.age} Month`
                                 }</p>
-                                <p>Size: {capitalizeEachWord(petInfo.size)}</p>
-                                <p>Spayed: {capitalizeEachWord(petInfo.spayed)}</p>
-                                <p>House Trained: {petInfo.houseTrained ? "Yes" : "No"}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Size</span><br></br> {capitalizeEachWord(petInfo.size)}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Spayed</span><br></br> {capitalizeEachWord(petInfo.spayed)}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>House Trained</span><br></br> {petInfo.houseTrained ? "Yes" : "No"}</p>
                                 <div className="horizontalLine"></div>
-                                <p>Location: {petInfo.postCode}</p>
-                                <p>Fur Type: {capitalizeEachWord(petInfo.furType)}</p>
-                                <p>Pet Personality: {petInfo.petPersonality ?
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Location</span><br></br> {petInfo.postCode}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Fur Type</span><br></br> {capitalizeEachWord(petInfo.furType)}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Pet Personality</span><br></br> {petInfo.petPersonality ?
                                     petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
-                                <p>Description:{petInfo.description}</p>
+                                <p><span style={{fontWeight: 'bold', fontSize: '20px'}}>Description</span><br></br>{petInfo.description}</p>
                                 <div className='btn-container'>
                                     <ShareButton petId={petInfo._id} petName={petInfo.petName}/>
                                     {isOwner ?

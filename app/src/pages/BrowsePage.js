@@ -10,19 +10,20 @@ export default function BrowsePage() {
     const paperHeight = isSmallScreen ? '40vh' : '100vh';
     return (
         <>
-            <Grid container spacing={0} justifyContent={isSmallScreen ? "center" : "flex-start"}>
-                <Grid item xs={12} sm={2}>
+            <Grid container spacing={5} justifyContent={isSmallScreen ? "center" : "flex-start"}>
+                <Grid item xs={12} sm={2.5}>
                     <Paper elevation={0} sx={{
                         borderRadius: 0,
-                        padding: 2,
+                        padding: 5,
                         height: paperHeight,
+                        marginLeft: isSmallScreen ? '0px' : '10px' // Updated marginLeft property
                     }}>
                         <SelectPetProperties></SelectPetProperties>
                     </Paper>
 
                 </Grid>
 
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={8} sx={{marginLeft: isSmallScreen ? '0px' : '10px', marginRight: isSmallScreen ? '0px' : '30px'}}>
                     <PetResults></PetResults>
                 </Grid>
             </Grid>

@@ -16,7 +16,7 @@ export default function Dashboard(){
                 nav("/login");
             }
         }
-      }, [isLogin, finishStatusLoading, nav]);
+    }, [isLogin, finishStatusLoading, nav]);
 
     return (
         <div className="Dashboard">
