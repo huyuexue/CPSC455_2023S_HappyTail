@@ -1,7 +1,7 @@
 import IconButton from "@mui/material/IconButton";
 import {updateFavoriteAsync} from "../../redux/userPets/thunks";
 import {Favorite, FavoriteBorder, MailOutline, Share} from "@mui/icons-material";
-import {CardMedia, Tooltip} from "@mui/material";
+import {CardContent, CardMedia, Grid, Stack, Tooltip} from "@mui/material";
 import {capitalizeEachWord} from "../../utils";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
@@ -74,51 +74,57 @@ export default function PetInfo() {
 
     return (
             <>
-                <div className="detailPage">
-                    <CardMedia
-                        component="img"
-                        height="350px"
-                        image={petInfo.picture}
-                        alt={petInfo.petName}
-                    />
-                    <div className= "textContainer">
-                        <h3>{petInfo.petName}</h3>
-                        <p>Breed: {capitalizeEachWord(petInfo.breed)}</p>
-                        <p>Gender: {capitalizeEachWord(petInfo.gender)}</p>
-                        <p>Age: {petInfo.age >= 12
-                            ? `${Math.floor(petInfo.age / 12)} Year ${petInfo.age % 12} Month`
-                            : `${petInfo.age} Month`
-                        }</p>
-                        <p>Size: {capitalizeEachWord(petInfo.size)}</p>
-                        <p>Spayed: {capitalizeEachWord(petInfo.spayed)}</p>
-                        <p>House Trained: {petInfo.houseTrained ? "Yes" : "No"}</p>
-                        <p>Location: {petInfo.postCode}</p>
-                        <p>Fur Type: {capitalizeEachWord(petInfo.furType)}</p>
-                        <p>Pet Personality: {petInfo.petPersonality ?
-                            petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
-                        <p>Description:{petInfo.description}</p>
-                    </div >
+                <Grid container spacing={0} paddingTop={5} direction="column" alignItems="center" justifyContent="center">
+                    <Grid item xs={12} sm={8}>
+                        <h1>{petInfo.petName}</h1>
 
-
-                    <div className='btn-container'>
-                        {isOwner ?
-                            <></> :
-                            <>
-                                <ShareButton petId={petInfo._id} petName={petInfo.petName} />
-                                <Tooltip title="Contact" placement="top">
-                                    <IconButton onClick={handleContactClicked}>
-                                        <MailOutline />
-                                    </IconButton>
-                                </Tooltip>
-                                <Tooltip title="Favorite" placement="top">
-                                    <IconButton color={isFavorite ? 'secondary' : 'default'} aria-label="add to favorites" onClick={handleFavoriteToggle}>
-                                        {isFavorite? <Favorite /> : <FavoriteBorder />}
-                                    </IconButton>
-                                </Tooltip>
-                            </>
-                        }
-                    </div>
-                </div>
+                        <CardMedia
+                            component="img"
+                            height="400"
+                            image={petInfo.picture}
+                            alt="Not Available"
+                            sx={{borderRadius: 3}}
+                        />
+                        <CardContent>
+                            <Stack sx={{}}>
+                                <p>Breed: {capitalizeEachWord(petInfo.breed)}</p>
+                                <p>Gender: {capitalizeEachWord(petInfo.gender)}</p>
+                                <p>Age: {petInfo.age >= 12
+                                    ? `${Math.floor(petInfo.age / 12)} Year ${petInfo.age % 12} Month`
+                                    : `${petInfo.age} Month`
+                                }</p>
+                                <p>Size: {capitalizeEachWord(petInfo.size)}</p>
+                                <p>Spayed: {capitalizeEachWord(petInfo.spayed)}</p>
+                                <p>House Trained: {petInfo.houseTrained ? "Yes" : "No"}</p>
+                                <div className="horizontalLine"></div>
+                                <p>Location: {petInfo.postCode}</p>
+                                <p>Fur Type: {capitalizeEachWord(petInfo.furType)}</p>
+                                <p>Pet Personality: {petInfo.petPersonality ?
+                                    petInfo.petPersonality.map(capitalizeEachWord).join(', ') : ''}</p>
+                                <p>Description:{petInfo.description}</p>
+                                <div className='btn-container'>
+                                    <ShareButton petId={petInfo._id} petName={petInfo.petName}/>
+                                    {isOwner ?
+                                        <></> :
+                                        <>
+                                            <Tooltip title="Contact" placement="top">
+                                                <IconButton onClick={handleContactClicked}>
+                                                    <MailOutline/>
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Favorite" placement="top">
+                                                <IconButton color={isFavorite ? 'secondary' : 'default'}
+                                                            aria-label="add to favorites" onClick={handleFavoriteToggle}>
+                                                    {isFavorite ? <Favorite/> : <FavoriteBorder/>}
+                                                </IconButton>
+                                            </Tooltip>
+                                        </>
+                                    }
+                                </div>
+                            </Stack>
+                        </CardContent>
+                    </Grid>
+                </Grid>
                 {showMessageInput && (
                     <div className="messagePopup">
                         <textarea

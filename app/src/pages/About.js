@@ -1,4 +1,3 @@
-// Accordion from: https://mui.com/material-ui/react-accordion/
 
 import '../style/index.css';
 import React from 'react';
@@ -21,13 +20,13 @@ export default function About() {
                     padding: 7,
                     paddingTop: 0,
                     paddingBottom: 0,
-                    maxHeight: "70vh",
+                    maxHeight: "80vh",
                     overflow: 'auto'
-                }}>
+                }} elevation={8}>
                     <h1>About Us</h1>
                     <CardMedia
                         component="img"
-                        height="250"
+                        height="400"
                         image='https://www.thesprucepets.com/thmb/AUhVkJo7GEsadFm4jevINielAuQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/black-lab-names-5093386-hero-5d14645833114fda9f7e3e620e5e4d67.jpg'
                         sx={{borderRadius: 10}}
                     />
@@ -38,9 +37,6 @@ export default function About() {
                             </p>
                             <p>
                                 Developed for CPSC 445 in 2023
-                            </p>
-                            <p> Contact Us:<br/>
-                                contact@happytails.tech
                             </p>
                         </Stack>
                     </CardContent>

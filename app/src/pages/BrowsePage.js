@@ -12,7 +12,7 @@ export default function BrowsePage() {
         <>
             <Grid container spacing={0} justifyContent={isSmallScreen ? "center" : "flex-start"}>
                 <Grid item xs={12} sm={2}>
-                    <Paper elevation={8} sx={{
+                    <Paper elevation={0} sx={{
                         borderRadius: 0,
                         padding: 2,
                         height: paperHeight,
