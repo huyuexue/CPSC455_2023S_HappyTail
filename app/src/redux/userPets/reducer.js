@@ -50,7 +50,6 @@ const userPetsReducer = createSlice({
                 state.isLoading = false;
             })
             .addCase(addPetAsync.pending, (state, action) => {
-                console.log("waiting to add");
             })
             .addCase(addPetAsync.fulfilled, (state, action) => {
                 state.list.push(action.payload);
@@ -60,7 +59,6 @@ const userPetsReducer = createSlice({
                 console.log("rejected to add");
             })
             .addCase(deletePetAsync.pending, (state, action) => {
-                console.log("waiting to delete");
             })
             .addCase(deletePetAsync.fulfilled, (state, action) => {
                 const id = action.payload;
@@ -70,7 +68,6 @@ const userPetsReducer = createSlice({
                 console.log("rejected to delete");
             })
             .addCase(updateDetailAsync.pending, (state, action) => {
-                console.log("waiting to update detail");
             })
             .addCase(updateDetailAsync.fulfilled, (state, action) => {
                 state.selectItem = action.payload;
@@ -90,7 +87,6 @@ const userPetsReducer = createSlice({
                 state.isLoading = false;
             })
             .addCase(updateFavoriteAsync.pending, (state, action) => {
-                console.log("waiting to update favorite");
             })
             .addCase(updateFavoriteAsync.fulfilled, (state, action) => {
                 state.favorite = action.payload.favoriteList;
@@ -102,5 +98,5 @@ const userPetsReducer = createSlice({
     }
 });
 
-export const {getSelectedItem, openUpdateView, clearSelectInUserPets, clearAll} = userPetsReducer.actions;
+export const {getSelectedItem,clearSelectInUserPets, clearAll} = userPetsReducer.actions;
 export default userPetsReducer.reducer

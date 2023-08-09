@@ -26,7 +26,6 @@ const loginReducer = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getUserAsync.pending, (state, action) => {
-              console.log("waiting to get list by user");
               state.isLoading = true;
             })
             .addCase(getUserAsync.fulfilled, (state, action) => {

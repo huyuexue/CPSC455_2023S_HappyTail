@@ -29,7 +29,7 @@ export default function PetForm({originalData, update}) {
     useEffect(() => {
         if (finishStatusLoading) {
             if (!isLogin) {
-                localStorage.setItem('prevURL', window.location.href);
+                localStorage.setItem('prevURL', '/addNewPet');
                 nav('/login');
             } else {
                 setIsLoading(false);

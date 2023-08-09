@@ -1,6 +1,7 @@
+const baseURL = 'http://localhost:3001';
 
 const getPet = async (id) => {
-    const link = `http://happytails.tech:3001/pets/${id.id}`;
+    const link = `${baseURL}/pets/${id.id}`;
     const res = await fetch(link, {
         method: 'GET'
     });

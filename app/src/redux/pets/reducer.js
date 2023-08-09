@@ -62,7 +62,6 @@ const petsReducer = createSlice({
                 state.isLoading = false;
             })
             .addCase(getFilteredPetsAsync.pending, (state, action) => {
-                console.log("waiting to get filtered pets");
             })
             .addCase(getFilteredPetsAsync.fulfilled, (state, action) => {
                 state.list = action.payload;

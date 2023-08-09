@@ -20,7 +20,6 @@ import {signInWithEmailAndPassword, setPersistence, browserSessionPersistence} f
 import{auth} from "../firebase/firebaseConfig"
 import { useState } from 'react';
 import {getUserAsync} from "../redux/login/thunks";
-import {openDetailView} from "../redux/detail/reducer";
 import {getFavoriteAsync, getUserPetsAsync} from "../redux/userPets/thunks";
 
 export default function LoginPage(){
@@ -42,7 +41,6 @@ export default function LoginPage(){
             .then(() => {
                 signInWithEmailAndPassword(auth, email,password)
                     .then(() => {
-                        console.log('firebase signin sucess')
                         auth.currentUser.getIdToken(true)
                         .then((token) => {
                             dispatch(TurnLogin(token));
@@ -52,16 +50,10 @@ export default function LoginPage(){
                             const prevUrl = localStorage.getItem('prevURL');
                             if (prevUrl) {
                                 localStorage.removeItem('prevURL');
-                                if (prevUrl.indexOf('login') >=0 ){
-                                    nav('/addNewPet');
-                                } else {
-                                    nav(prevUrl);
-                                }
+                                nav(prevUrl);
                             } else {
                                 nav("/dashboard");
                             }
-
-
                         })
                     })
                     .catch(() => {

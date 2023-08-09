@@ -27,7 +27,6 @@ export default function UserMenu() {
 
     const signout = async () => {
         await auth.signOut();
-        console.log("logout");
         dispatch(TurnLogout());
         localStorage.removeItem('tokenId');
         dispatch(clearAll());

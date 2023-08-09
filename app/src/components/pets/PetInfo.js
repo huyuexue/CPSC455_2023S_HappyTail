@@ -41,7 +41,6 @@ export default function PetInfo() {
 
     const handleFavoriteToggle = () => {
         if (isLogIn) {
-            console.log("in PetDetail and is log in, token: " + token);
             dispatch(updateFavoriteAsync({token, petId}))
         } else {
             localStorage.setItem('prevURL', `/pets/${petId}`);

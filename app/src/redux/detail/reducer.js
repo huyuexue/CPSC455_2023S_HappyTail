@@ -35,7 +35,6 @@ const detailReducer = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getDetailAsync.pending, (state, action) => {
-                console.log("waiting to open detail view");
             })
             .addCase(getDetailAsync.fulfilled, (state, action) => {
                 state.selectItem = action.payload
