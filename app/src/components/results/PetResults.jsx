@@ -8,6 +8,7 @@ import {PetPropertySelections} from "./FilterSelection";
 import * as React from "react";
 import {updateSpecies} from "../../redux/pets/reducer";
 import {useLocation} from "react-router-dom";
+import {getPetsAsync} from "../../redux/pets/thunks";
 
 export default function PetResults() {
     const dispatch = useDispatch();
@@ -23,6 +24,10 @@ export default function PetResults() {
     useEffect(() => {
         dispatch(updateSpecies(species));
     }, [dispatch, species,pets.length]);
+
+    useEffect(() => {
+        dispatch(getPetsAsync());
+    }, []);
 
     const handleSpeciesChange = (event) => {
         setSpecies(event);

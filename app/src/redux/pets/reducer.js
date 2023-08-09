@@ -1,11 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addPetAsync, deletePetAsync, getPetsAsync, getSearchResultsAsync, getFilteredPetsAsync} from "./thunks";
+import {getPetsAsync, getSearchResultsAsync, getFilteredPetsAsync} from "./thunks";
 
 const initialState  = {
     list:[],
     species:'',
     searchList:[],
-    isLoading: false
+    isLoading: false,
 }
 
 const petsReducer = createSlice({
@@ -25,15 +25,9 @@ const petsReducer = createSlice({
                 }
             }
         },
-        setSort: {
-            reducer: (state, action) => {
-                state.sort = action.payload;
-            }
-        },
         setSearch: {
             reducer: (state, action) => {
                 state.search = action.payload;
-
             },
         },
     },
@@ -73,5 +67,5 @@ const petsReducer = createSlice({
     }
 });
 
-export const {updateSpecies, setSort, setSearch} = petsReducer.actions;
+export const {updateSpecies, setSearch} = petsReducer.actions;
 export default petsReducer.reducer
