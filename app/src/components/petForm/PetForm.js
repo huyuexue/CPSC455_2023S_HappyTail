@@ -10,9 +10,10 @@ import StepButton from "@mui/material/StepButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
-import {addPetAsync, updateDetailAsync} from "../../redux/userPets/thunks";
+import {addPetAsync, getUserPetsAsync, updateDetailAsync} from "../../redux/userPets/thunks";
 import {useEffect} from "react";
 import {Container} from "@mui/material";
+import {getPetsAsync} from "../../redux/pets/thunks";
 
 const steps = ['Pet Info', 'Extra Info', 'Contact Info', 'Preview'];
 
@@ -80,6 +81,8 @@ export default function PetForm({originalData, update}) {
     const updatePet = async () => {
         const input = generatePetInput(formData);
         await dispatch(updateDetailAsync({ pet: input, token }));
+        dispatch(getPetsAsync());
+        dispatch(getUserPetsAsync({token}));
     };
 
     const checkFill = () => {

@@ -17,8 +17,6 @@ export default function Profile(){
     const dispatch = useDispatch();
 
     const userupdate=async (values)=>{
-        console.log( "input is ", values)
-
         const res = await fetch("http://localhost:3001/users/update/info", {
           method: 'POST',
           headers: { 
@@ -27,11 +25,9 @@ export default function Profile(){
           body: JSON.stringify(values)
         });
         const data=await res.json();
-        console.log(data)
 
         if(res.status !== 200){
             console.log("update failed")
-          
         }else{
           setInputOnly(true);
         }
@@ -41,13 +37,11 @@ export default function Profile(){
         if (!isLogin) {
             dispatch(getUserAsync({token}));
         }
-        console.log(user)
       }, [refresh]); 
 
 
 
     const handleFormSubmit = (values) => {
-        console.log(values)
         userupdate(values)
         setTimeout(function(){
             console.log("Executed after 1 second");
