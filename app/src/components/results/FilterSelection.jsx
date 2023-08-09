@@ -4,36 +4,44 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Theme, useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Chip from '@mui/material/Chip';
+import {Input} from "@mui/material";
 
 
 export function PetPropertySelections(props) {
-    const { label, value, items } = props;
-    const [initialValue, setInitialValue] = React.useState(value);
+    const { label, value, items, onChange } = props;
 
     const handleChange = (event) => {
-        setInitialValue(event.target.value);
+        onChange(event.target.value);
     };
 
     return (
         <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-            <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={initialValue}
-            label={label}
-            onChange={handleChange}
-            >
-            {items.map((item) => (
-                <MenuItem key={item.value} value={item.value}>
-                {item.label}
-                </MenuItem>
-            ))}
-            </Select>
+            {!items ? (
+                <Input
+                    id={`input-${label}`}
+                    value={value}
+                    onChange={handleChange}
+                    inputProps={{
+                        'aria-label': label,
+                    }}
+                />
+            ) : (
+                <Select
+                    labelId={`input-${label}`}
+                    id={`input-${label}`}
+                    value={value}
+                    label={label}
+                    onChange={handleChange}
+                >
+                    {items.map((item) => (
+                        <MenuItem key={item.value} value={item.value}>
+                            {item.label}
+                        </MenuItem>
+                    ))}
+                </Select>
+            )}
         </FormControl>
         </Box>
     );

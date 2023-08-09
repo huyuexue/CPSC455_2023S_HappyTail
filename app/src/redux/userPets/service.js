@@ -1,68 +1,25 @@
-const getUserPets = async ({}) => {
-    const res = await fetch("http://localhost:3001/pets/all", {
-        method: 'GET'
+const baseURL = 'https://happytails-be-alpha.onrender.com';
+
+
+const getUserPets = async ({token}) => {
+    const res = await fetch(`${baseURL}/pets/byuser`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: token,
+        }
     });
-    const data=await res.json()
-    console.log("fukcu ")
     return res.json();
 };
 
-
-
-const addPet = async ({     
-                          token,
-                          petName,
-                          species,
-                          breed,
-                          gender,
-                          age,
-                          picture,
-                          description,
-                          houseTrained,
-                          furType,
-                          size,
-                          spayed,
-                          petPersonality,
-                          postCode,
-                          reason,
-                          length,
-                          email,
-                          firstName,
-                          lastName,
-                          phoneNumber,
-                          postalCode,
-                          city,
-                          province
-                      }) => {
-    const res = await fetch("http://localhost:3001/pets", {
+const addPet = async ({input, token}) => {
+    const res = await fetch(`${baseURL}/pets`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            authorization: token,
         },
-        body: JSON.stringify({
-            petName,
-            species,
-            breed,
-            gender,
-            age,
-            picture,
-            description,
-            houseTrained,
-            furType,
-            size,
-            spayed,
-            petPersonality,
-            postCode,
-            reason,
-            length,
-            email,
-            firstName,
-            lastName,
-            phoneNumber,
-            postalCode,
-            city,
-            province
-        })
+        body: JSON.stringify(input)
     });
 
     const data = await res.json();
@@ -73,12 +30,12 @@ const addPet = async ({
     return data;
 };
 
-const deletePet = async ({id}) => {
-    console.log(`http://localhost:3001/pets/${id}`);
-    const res = await fetch(`http://localhost:3001/pets/${id}`, {
+const deletePet = async ({id,token}) => {
+    const res = await fetch(`${baseURL}/pets/${id}`, {
         method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            authorization: token,
         },
     });
     const data = await res.json();
@@ -89,16 +46,65 @@ const deletePet = async ({id}) => {
     return data;
 };
 
-const getSearchResults = async ({searchTerm, sortTerm}) => {
-    const res = await fetch(`http://localhost:8080/pets/search?query=${searchTerm}&sort=${sortTerm}`, {
-        method: 'GET'
+const updatePet = async ({pet, token}) => {
+    const link = `${baseURL}/pets/${pet._id}`;
+    const res = await fetch(link, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: token,
+        },
+        body: JSON.stringify({pet})
     });
-    return res.json();
+    const data = await res.json();
+    if (!res.ok) {
+        const error = data?.message;
+        throw new Error (error);
+    }
+    return data;
 };
+
+const getFavorite = async ({token}) => {
+    const res = await fetch(`${baseURL}/users/favorites`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: token,
+        },
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        const error = data?.message;
+        throw new Error (error);
+    }
+    return data;
+};
+
+const updateFavorite = async ({token, petId}) => {
+    const res = await fetch(`${baseURL}/users/updateFavorites`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: token,
+        },
+        body: JSON.stringify({petId})
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        const error = data?.message;
+        throw new Error (error);
+    }
+    return data;
+};
+
 
 export default {
     getUserPets,
     addPet,
     deletePet,
-    getSearchResults
+    updatePet,
+    getFavorite,
+    updateFavorite,
 };

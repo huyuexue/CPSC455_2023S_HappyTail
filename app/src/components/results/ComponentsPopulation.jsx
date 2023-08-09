@@ -2,52 +2,37 @@ import { PetPropertySelections } from "./FilterSelection";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import {ageItems, breedItems, coatlengthItems, genderItems, sizeItems, speciesItems} from "../forms/options";
-import {useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {updateSpecies} from "../../redux/pets/reducer";
+import {ageItems, furTypeItems, genderItems, sizeItems} from "./options";
+import {useDispatch,} from "react-redux";
+import {getSearchResultsAsync} from "../../redux/pets/thunks";
 
-export function SelectPetProperties({ onApplyFilters }) {
-    // filter properties get inspired by https://www.petfinder.com/search/dogs-for-adoption/ca/british-columbia/vancouver/
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const initialSpecies = queryParams.get('type') || '';
-    const [species, setSpecies] = React.useState(initialSpecies);
-    // update global store based on specie
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(updateSpecies(initialSpecies));
-    }, []); // Empty dependency array means this effect runs once on mount
 
+export function SelectPetProperties() {
     const [age, setAge] = React.useState("");
     const [breed, setBreed] = React.useState("");
     const [size, setSize] = React.useState("");
     const [gender, setGender] = React.useState("");
-    const [coatlength, setCoatlength] = React.useState("");
+    const [furType, setFurType] = React.useState("");
 
-    const handleSpeciesChange = (event) => {
-        setSpecies(event.target.value);
-    };
-
-    const handleAgeChange = (event) => {
-        setAge(event.target.value);
+    const dispatch = useDispatch();
+    const handleAgeChange = (event) => {;
+        setAge(event);
     };
 
     const handleBreedChange = (event) => {
-        setBreed(event.target.value);
+        setBreed(event);
     };
 
     const handleSizeChange = (event) => {
-        setSize(event.target.value); 
+        setSize(event);
     };
 
     const handleGenderChange = (event) => {
-        setGender(event.target.value);
+        setGender(event);
     };
 
-    const handleCoatlengthChange = (event) => {
-        setCoatlength(event.target.value);
+    const handleFurTypeChange = (event) => {
+        setFurType(event);
     };
 
     const handleApplyFilters = async () => {
@@ -56,28 +41,25 @@ export function SelectPetProperties({ onApplyFilters }) {
             breed,
             size,
             gender,
-            coatlength
+            furType,
         };
-        const response = await fetch('/pets', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(filters)
-        });
-        const result = await response.json();
-        onApplyFilters(result);
+        const filteredFilters = {};
+        for (const key in filters) {
+            if (filters[key] !== '') {
+                filteredFilters[key] = filters[key];
+            } else {
+                filteredFilters[key] = 'any';
+            }
+        }
+        const filterString = Object.entries(filteredFilters)
+            .map(([key, value]) => `${key}=${value}`)
+            .join('&');
+        dispatch(getSearchResultsAsync({searchTerm: filterString}));
     };
 
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <PetPropertySelections
-                label="Species"
-                value={species}
-                items={speciesItems}
-                onChange={handleSpeciesChange}
-            />
             <PetPropertySelections
                 label="Age"
                 value={age}
@@ -87,7 +69,6 @@ export function SelectPetProperties({ onApplyFilters }) {
             <PetPropertySelections
                 label="Breed"
                 value={breed}
-                items={breedItems}
                 onChange={handleBreedChange}
             />
             <PetPropertySelections
@@ -103,10 +84,10 @@ export function SelectPetProperties({ onApplyFilters }) {
                 onChange={handleGenderChange}
             />
             <PetPropertySelections
-                label="Coat Length"
-                value={coatlength}
-                items={coatlengthItems}
-                onChange={handleCoatlengthChange}
+                label="Fur Type"
+                value={furType}
+                items={furTypeItems}
+                onChange={handleFurTypeChange}
             />
             <Button variant="contained" onClick={handleApplyFilters}>Apply Filters</Button>
         </Box>

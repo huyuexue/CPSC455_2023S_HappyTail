@@ -4,16 +4,15 @@ import Home from "./pages/Home";
 import Dashboard from './pages/Dashboard';
 import About from "./pages/About";
 import Layout from "./components/Layout";
-import BrowsePage from "./pages/Browse";
-import AccountDetailsPage from "./pages/AccountDetails";
-import LoginPage from './pages/Login';
-
-
-import AddNewPet from "./components/forms/addPetForm/AddNewPet";
-
-
+import BrowsePage from "./pages/BrowsePage";
+import SignUpPage from './pages/SignUp';
+import LoginPage from './pages/LoginPage';
+import AddNewPet from "./pages/AddNewPet";
 import {CssBaseline, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {GlobalTheme} from "./style/theme";
+import UpdatePet from "./pages/UpdatePet";
+import Profile from './pages/Profile';
+import PetInfo from "./components/pets/PetInfo";
 
 
 function App() {
@@ -22,14 +21,17 @@ function App() {
             <ThemeProvider theme={GlobalTheme}>
                 <CssBaseline/>
                 <Routes>
-                    <Route path="/" element={<Layout/>}>
-                        <Route index element={<Home/>}/>
-                        <Route path="about" element={<About/>}/>
-                        <Route path="browse" element={<BrowsePage/>}/>
-                        <Route path="addNewPet" element={<AddNewPet/>}/>
-                        <Route path="account/details" element={<AccountDetailsPage/>}/>
-                        <Route path="login" element={<LoginPage/>}/>
-                        <Route path="dashboard" element={<Dashboard/>}/>
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<Home />}/>
+                        <Route path="about" element={<About />}/>
+                        <Route path="browse" element={<BrowsePage />}/>
+                        <Route path="addNewPet" element={<AddNewPet />}/>
+                        <Route path="login" element={<LoginPage />}/>
+                        <Route path="signup" element={<SignUpPage />}/>
+                        <Route path="dashboard" element={<Dashboard />}/>
+                        <Route path="profile" element={<Profile />}/>
+                        <Route path="updatePet" element={<UpdatePet />}/>
+                        <Route path="pets/:id" element={<PetInfo />} />
                     </Route>
                 </Routes>
             </ThemeProvider>

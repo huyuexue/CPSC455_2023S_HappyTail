@@ -1,27 +1,27 @@
-import PetDetail from "../components/petDetail/PetDetail";
+import PetDetail from "../components/pets/PetDetail";
 import {useSelector} from "react-redux";
-
-import {updateStatus} from "../components/updatePet/updateFormSlice";
-import UpdateForm from "../components/updatePet/UpdateFrom";
 import PetsList from "../components/pets/PetsList";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
+import { useEffect} from "react";
 
-export default function Dashboard({itemsList}){
+export default function Dashboard(){
     const detailViewIsOpen = useSelector(state => state.petDetail.detailOpen);
-    const updateIsOpen = useSelector(updateStatus)
-
     const nav = useNavigate();
+    const isLogin = useSelector(state => !state.login.value);
+    const finishStatusLoading = useSelector(state => state.login.finishStatusLoading);
 
-
+    useEffect(() => {
+        if (finishStatusLoading) {
+            if (!isLogin) {
+                nav("/login");
+            }
+        }
+      }, [isLogin, finishStatusLoading, nav]);
 
     return (
         <div className="Dashboard">
-
             <PetsList />
             {detailViewIsOpen && <PetDetail />}
-            {updateIsOpen && <UpdateForm />}
         </div>
     );
 }

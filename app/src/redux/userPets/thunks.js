@@ -1,75 +1,43 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import PetsService from "./service"
+import UserService from "./service"
 
 export const getUserPetsAsync = createAsyncThunk(
     'getUserPets',
-    async () => {
-        return await PetsService.getUserPets();
+    async ({token}) => {
+        return await UserService.getUserPets({token});
     }
 );
 
 export const addPetAsync = createAsyncThunk(
     'addItem',
-    async ({
-               petName,
-               species,
-               breed,
-               gender,
-                age,
-                picture,
-                description,
-                houseTrained,
-                furType,
-                size,
-                spayed,
-                petPersonality,
-                postCode,
-                reason,
-                length,
-                email,
-                firstName,
-                lastName,
-                phoneNumber,
-                postalCode,
-                city,
-                province}) => {
-        return await PetsService.addPet({
-            petName,
-            species,
-            breed,
-            gender,
-            age,
-            picture,
-            description,
-            houseTrained,
-            furType,
-            size,
-            spayed,
-            petPersonality,
-            postCode,
-            reason,
-            length,
-            email,
-            firstName,
-            lastName,
-            phoneNumber,
-            postalCode,
-            city,
-            province
-        });
+    async ({input, token}) => {
+        return await UserService.addPet({input, token});
     }
 );
 
 export const deletePetAsync = createAsyncThunk(
     'deleteItem',
-    async (id) => {
-        return await PetsService.deletePet({id});
+    async ({id,token}) => {
+        return await UserService.deletePet({id,token});
     }
 );
 
-export const getSearchResultsAsync = createAsyncThunk(
-    'getSearchResults',
-    async ({searchTerm, sortTerm}) => {
-        return await PetsService.getSearchResults({searchTerm, sortTerm});
+export const updateDetailAsync = createAsyncThunk(
+    'updateItemDetail',
+    async ({pet, token}) => {
+        return await UserService.updatePet({pet, token});
+    }
+);
+
+export const getFavoriteAsync = createAsyncThunk(
+    'getFavoriteList',
+    async ({token}) => {
+        return await UserService.getFavorite({token});
+    }
+);
+export const updateFavoriteAsync = createAsyncThunk(
+    'updateFavoriteList',
+    async ({token, petId}) => {
+        return await UserService.updateFavorite({token, petId});
     }
 );

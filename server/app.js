@@ -16,16 +16,13 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
 
-
 var app = express();
-
-
-app.use(cors());
-
-
+const corsOptions = {
+    origin: '*',
+}
+app.use(cors(corsOptions));
 
 //database
-
 require('dotenv').config();
 const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;
@@ -35,13 +32,8 @@ const dbName = 'happytails';
 async function connectDB(){
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, dbName });
     const db = mongoose.connection;
-    //console.log(db);
     return db;
 }
-
-
-
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -52,7 +44,5 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/pets', petsRouter);
 connectDB();
-
-
 
 module.exports = app;
