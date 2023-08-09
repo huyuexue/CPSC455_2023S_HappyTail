@@ -231,11 +231,14 @@ export default function PetForm({originalData, update}) {
                                         </Button>
                                     </Box>
                                     
-                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                        <Button onClick={() => handleSubmit()} sx={{mr: 1}}>
+                                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', pt: 2}}>
+                                        <Button onClick={() => handleSubmit()} sx={{mr: 1, backgroundColor: '#bc6c25',
+                                            borderRadius: '15px',
+                                            padding: '10px',
+                                            color: 'white', marginBottom: 5}}>
                                             {activeStep === 3
                                                 ? update? 'Update' : 'Submit'
-                                                : ''}
+                                                : 'Submit'}
                                         </Button>
                                         <Button onClick={() => nav('/dashboard')} sx={{mr: 1}}>
                                             {activeStep === 3 && update

@@ -30,7 +30,7 @@ export default function ContactInfo({formData, handleChange}) {
 
                 <Grid item xs={12} sm={6}>
                     <label style={{fontWeight: 'bold', fontSize: '16px'}}>Additional Information:<br/>
-                        <textarea type="text" name="description" value={formData.addInfo} style={{borderRadius: '20px', fontSize: '16px', height: '30px'}}
+                        <textarea type="text" name="description" value={formData.addInfo} style={{borderRadius: '20px', fontSize: '16px'}}
                             onChange={handleChange}/>
                     </label>
                 </Grid>
